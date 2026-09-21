@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import type { StimulusItem } from '@/types/experiment';
 import { getStimulusImagePath, getStimulusAlternativePath } from '@/lib/assets';
@@ -31,28 +31,12 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
 
   
 
-  const completedRef = useRef(false);
-  const rafRef = useRef<number | null>(null);
 
   // Trigger countdown completion
-  const handleFinished = useCallback(() => {
-    if (completedRef.current) return;
-    completedRef.current = true;
-    if (rafRef.current) {
-      cancelAnimationFrame(rafRef.current);
-    }
-    setElapsedMs(EXPOSURE_DURATION_MS);
-    if (onExposureComplete) {
-      onExposureComplete(EXPOSURE_DURATION_MS);
-    }
-    if (onComplete) {
-      onComplete(EXPOSURE_DURATION_MS);
-    }
-  }, [onComplete, onExposureComplete]);
 
   // Latch timer start strictly when image is loaded
   const handleImageLoad = useCallback(() => {
-    if (imageLoaded || completedRef.current) return;
+    if (imageLoaded) return;
     setImageLoaded(true);
 
   }, [imageLoaded]);
@@ -77,31 +61,34 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
 
   // High-precision animation frame timer loop
   useEffect(() => {
-    if (!imageLoaded || completedRef.current) return;
+    if (!imageLoaded) return;
     
-    // Start timing EXACTLY when this effect runs (meaning the image is visible on screen)
+    let isUnmounted = false;
+    let rafId: number | null = null;
     const start = performance.now();
 
     const tick = () => {
-      if (completedRef.current) return;
+      if (isUnmounted) return;
       const elapsed = performance.now() - start;
 
       if (elapsed >= EXPOSURE_DURATION_MS) {
-        handleFinished();
+        setElapsedMs(EXPOSURE_DURATION_MS);
+        if (onExposureComplete) onExposureComplete(EXPOSURE_DURATION_MS);
+        if (onComplete) onComplete(EXPOSURE_DURATION_MS);
       } else {
         setElapsedMs(elapsed);
-        rafRef.current = requestAnimationFrame(tick);
+        rafId = requestAnimationFrame(tick);
       }
     };
 
-    rafRef.current = requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
 
     return () => {
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
+      isUnmounted = true;
+      if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [imageLoaded, handleFinished]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageLoaded]);
 
   // Derived progress metrics
   const progressPercent = Math.min(100, Math.max(0, (elapsedMs / EXPOSURE_DURATION_MS) * 100));
