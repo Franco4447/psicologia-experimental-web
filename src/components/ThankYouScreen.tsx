@@ -7,9 +7,7 @@ export interface ThankYouScreenProps {
   participantId: string;
 }
 
-export const ThankYouScreen: React.FC<ThankYouScreenProps> = ({
-  participantId,
-}) => {
+export const ThankYouScreen: React.FC<ThankYouScreenProps> = () => {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6 text-center">

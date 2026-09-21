@@ -107,7 +107,7 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
 
   // Derived progress metrics
   const progressPercent = Math.min(100, Math.max(0, (elapsedMs / EXPOSURE_DURATION_MS) * 100));
-  const remainingSeconds = Math.max(0, Math.ceil((EXPOSURE_DURATION_MS - elapsedMs) / 1000));
+
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center px-4 py-6 select-none">

@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import type { StimulusItem, ResponseCode } from '@/types/experiment';
 import { RESPONSE_OPTIONS } from '@/data/stimuli';
-import { getStimulusImagePath, getStimulusAlternativePath } from '@/lib/assets';
+import { getStimulusImagePath } from '@/lib/assets';
 import { CheckCircle2, ArrowRight, HelpCircle } from 'lucide-react';
 
 export interface RatingSubmission {
@@ -28,7 +28,7 @@ export const RatingScreen: React.FC<RatingScreenProps> = ({
   onSubmitRating,
 }) => {
   const [selectedOption, setSelectedOption] = useState<ResponseCode | null>(null);
-  const [imageSrc, setImageSrc] = useState<string>(() => getStimulusImagePath(stimulus.id));
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Mount timestamp for millisecond reaction time capture
