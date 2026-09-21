@@ -180,13 +180,15 @@ export default function ExperimentPage() {
                   demographics,
                   telemetry,
                   assignedGroup: sessionResult.inductionGroup,
+                  participantId: sessionResult.participantId,
                 },
               });
             } catch (err) {
               console.warn('[ExperimentPage] Session registration fallback:', err);
+              const fallbackId = crypto.randomUUID();
               dispatch({
                 type: 'SUBMIT_DEMOGRAPHICS',
-                payload: { demographics, telemetry },
+                payload: { demographics, telemetry, participantId: fallbackId },
               });
             } finally {
               setIsRegisteringSession(false);
