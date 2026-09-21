@@ -129,18 +129,13 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
           </span>
         </div>
 
-        {/* Loading Badge or Live Countdown */}
-        {!imageLoaded ? (
+        {/* Loading indicator (only while image loads) */}
+        {!imageLoaded && (
           <div className="flex items-center space-x-2 text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-full">
             <Clock className="w-4 h-4 animate-spin-slow" />
             <span className="text-xs font-semibold">
               Cargando titular...
             </span>
-          </div>
-        ) : (
-          <div className="flex items-center space-x-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded-full">
-            <Clock className="w-3.5 h-3.5" />
-            <span>{remainingSeconds}s restantes</span>
           </div>
         )}
       </div>
