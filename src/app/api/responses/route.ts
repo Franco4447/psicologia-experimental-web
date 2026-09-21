@@ -105,9 +105,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (items.length > 20) {
+    if (items.length > 200) {
       return jsonResponse(
-        { success: false, error: `Too many records: received ${items.length}, maximum is 20 trials per participant.` },
+        { success: false, error: `Too many records: received ${items.length}, maximum is 200 trials per payload.` },
         400
       );
     }
@@ -230,10 +230,16 @@ export async function POST(req: NextRequest) {
     }
 
     if (validationErrors.length > 0) {
+      console.warn('[Responses Route] Some items failed validation and were skipped:', validationErrors);
+      // We do not reject the whole batch. We proceed with the valid normalizedRows
+      // so the client queue can successfully flush the good data.
+    }
+
+    if (normalizedRows.length === 0) {
       return jsonResponse(
         {
           success: false,
-          error: 'Validation failed',
+          error: 'No valid records to insert after validation',
           details: validationErrors,
         },
         400
