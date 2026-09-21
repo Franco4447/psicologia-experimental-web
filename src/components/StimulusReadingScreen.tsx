@@ -15,7 +15,7 @@ export interface StimulusReadingScreenProps {
   onExposureComplete?: (readingTimeMs: number) => void;
 }
 
-const EXPOSURE_DURATION_MS = 10000; // Exact 10.0-second exposure window
+const EXPOSURE_DURATION_MS = 15000; // Exact 10.0-second exposure window
 
 export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
   stimulus,

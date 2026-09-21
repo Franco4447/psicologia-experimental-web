@@ -77,9 +77,9 @@ export const InductionScreen: React.FC<InductionScreenProps> = ({
                 1
               </span>
               <div>
-                <p className="text-sm font-semibold text-slate-900">Lectura del Titular (10 seg)</p>
+                <p className="text-sm font-semibold text-slate-900">Lectura del Titular (15 seg)</p>
                 <p className="text-xs text-slate-600 mt-1 leading-normal">
-                  Cada titular se mostrará durante 10 segundos continuos con una barra de progreso visual. Léalo detenidamente.
+                  Cada titular se mostrará durante 15 segundos continuos con una barra de progreso visual. Léalo detenidamente.
                 </p>
               </div>
             </div>

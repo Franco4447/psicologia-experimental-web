@@ -47,7 +47,7 @@ export const ConsentScreen: React.FC<ConsentScreenProps> = ({
             Formulario de Consentimiento Informado
           </h1>
           <p className="text-xs text-slate-600">
-            Universidad Favaloro · Comité de Ética en Investigación Psicológica
+            Universidad Favaloro
           </p>
         </div>
       </div>
@@ -55,29 +55,39 @@ export const ConsentScreen: React.FC<ConsentScreenProps> = ({
       {/* Informed Consent Document Box */}
       <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mb-6">
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-6 text-sm text-slate-700 leading-relaxed max-h-80 overflow-y-auto space-y-4">
-          <p className="font-semibold text-slate-900">
-            Información al participante:
-          </p>
           <p>
-            Usted ha sido invitado/a a participar en un estudio científico llevado a cabo por investigadores y estudiantes de la carrera de Psicología de la Universidad Favaloro. El propósito de este estudio es explorar cómo las personas procesan, evalúan y recuerdan información periodística contemporánea.
+            Somos estudiantes de la Licenciatura en Psicología de la Universidad Favaloro. En el marco de la asignatura Psicología Experimental, nos encontramos realizando una investigación con fines exclusivamente académicos cuyo objetivo general es examinar la relación entre distintas modalidades de procesamiento de la información y el recuerdo de noticias. Se invita a participar a personas mayores de 18 años que sean estudiantes o graduadas de Psicología.
           </p>
-          <p className="font-semibold text-slate-900 text-xs uppercase tracking-wider text-indigo-900">
-            Voluntariedad y Anonimato
-          </p>
-          <p>
-            La participación es estrictamente voluntaria y anónima. Puede retirarse en cualquier momento sin necesidad de justificación y sin que ello conlleve perjuicio alguno. No se recopilarán datos de filiación directa (tales como nombre, apellido, DNI ni dirección IP personal). Toda la información recolectada se identificará únicamente mediante un código alfanumérico aleatorio y se empleará exclusivamente para análisis estadístico grupal.
-          </p>
-          <p className="font-semibold text-slate-900 text-xs uppercase tracking-wider text-indigo-900">
+
+          <p className="font-semibold text-slate-900 text-xs uppercase tracking-wider text-indigo-900 mt-4">
             Procedimiento
           </p>
           <p>
-            Completará un breve cuestionario demográfico, seguido de la lectura guiada de una serie de titulares de noticias de interés general y preguntas breves sobre su recuerdo o familiaridad con ellos. La duración total no superará los 15 minutos.
+            La participación consiste en completar un breve cuestionario sociodemográfico y académico, responder preguntas sobre la afinidad con distintas corrientes psicológicas, leer una serie de noticias y contestar consignas vinculadas con su interpretación y recuerdo. La actividad tendrá una duración aproximada de 10-15 minutos. Se solicita responder con atención y de acuerdo con la propia experiencia; no se evaluará el desempeño individual.
           </p>
-          <p className="font-semibold text-slate-900 text-xs uppercase tracking-wider text-indigo-900">
-            Riesgos y Beneficios
+          <p className="mt-2">
+            Para evitar que el conocimiento anticipado de ciertos aspectos del estudio influya en las respuestas, parte de la información sobre sus objetivos específicos y los materiales utilizados se proporcionará al concluir todas las actividades. En esa instancia se explicará el propósito de la investigación y se podrán formular consultas sobre el procedimiento.
+          </p>
+
+          <p className="font-semibold text-slate-900 text-xs uppercase tracking-wider text-indigo-900 mt-4">
+            Riesgos y beneficios
           </p>
           <p>
-            La participación no presenta riesgos físicos, psicológicos ni legales superiores a los de la lectura habitual de noticias en medios digitales. Al concluir, se brindará una explicación detallada sobre los objetivos y diseño del experimento.
+            La participación no supone intervenciones físicas. No obstante, el contenido de algunas noticias podría ocasionar incomodidad o malestar emocional. Podrá interrumpir la actividad si lo considera necesario. La participación no es remunerada ni implica beneficios personales directos; sus resultados podrán contribuir a la comprensión académica de los procesos de evaluación y recuerdo de información.
+          </p>
+
+          <p className="font-semibold text-slate-900 text-xs uppercase tracking-wider text-indigo-900 mt-4">
+            Confidencialidad y participación voluntaria
+          </p>
+          <p>
+            Las respuestas se utilizarán únicamente con fines académicos y se analizarán de forma grupal, sin divulgar información que permita identificar a quienes participen. Los datos se tratarán de manera confidencial, conforme a la normativa aplicable de protección de datos personales. La participación es voluntaria: puede negarse a participar o retirarse en cualquier momento, sin dar explicaciones ni sufrir consecuencias. Podrá solicitar la exclusión de sus respuestas mientras sea posible identificarlas; una vez anonimizadas, su eliminación individual podría no resultar posible.
+          </p>
+
+          <p className="font-semibold text-slate-900 text-xs uppercase tracking-wider text-indigo-900 mt-4">
+            Consultas
+          </p>
+          <p>
+            Para solicitar información adicional sobre el estudio o realizar consultas relacionadas con la participación, podrá comunicarse con el equipo investigador a través del siguiente correo electrónico: pilardicriscenzo@gmail.com
           </p>
         </div>
 
