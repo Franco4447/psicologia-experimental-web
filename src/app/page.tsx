@@ -10,14 +10,12 @@ import { captureClientTelemetry } from '@/lib/telemetry';
 import {
   saveSessionToStorage,
   loadSessionFromStorage,
-  clearSessionFromStorage,
 } from '@/lib/sessionRecovery';
 import {
   registerSession,
   syncTrialResponse,
   completeSession,
   flushPendingSync,
-  clearSyncStorage,
 } from '@/lib/sync';
 
 import { WelcomeScreen } from '@/components/WelcomeScreen';
