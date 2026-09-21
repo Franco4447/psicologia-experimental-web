@@ -73,13 +73,7 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
     }
   }, [imageSrc, stimulus.id, imageLoaded]);
 
-  // Check if image is already cached and loaded immediately
-  useEffect(() => {
-    const img = imgRef.current;
-    if (img && img.complete && img.naturalWidth > 0 && !imageLoaded) {
-      handleImageLoad();
-    }
-  }, [handleImageLoad, imageLoaded]);
+
 
   // High-precision animation frame timer loop
   useEffect(() => {
