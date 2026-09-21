@@ -247,22 +247,25 @@ export async function POST(req: NextRequest) {
 
     if (liveDbAvailable) {
       try {
-        // Upsert on (participant_id, presentation_order) to ensure idempotency on retries
-        const { error: upsertError } = await client
+        // Use insert instead of upsert since anon role doesn't have UPDATE privileges.
+        // We will ignore unique constraint violations (code 23505) which just mean 
+        // the client retried a request that already succeeded.
+        const { error: insertError } = await client
           .from('responses')
-          .upsert(normalizedRows, {
-            onConflict: 'participant_id,presentation_order',
-            ignoreDuplicates: false,
-          });
+          .insert(normalizedRows);
 
-        if (!upsertError) {
+        if (!insertError) {
+          persistedToDb = true;
+        } else if (insertError.code === '23505') {
+          // 23505 = unique_violation. This means the (participant_id, presentation_order) 
+          // already exists. Since this is an append-only experiment, we consider this a success.
           persistedToDb = true;
         } else {
-          console.error('[Responses Route] Supabase upsert error:', upsertError);
+          console.error('[Responses Route] Supabase insert error:', insertError);
           mockStore.insertResponses(normalizedRows);
         }
-      } catch (upsertErr) {
-        console.error('[Responses Route] Supabase upsert threw exception:', upsertErr);
+      } catch (insertErr) {
+        console.error('[Responses Route] Supabase insert threw exception:', insertErr);
         mockStore.insertResponses(normalizedRows);
       }
     } else {
