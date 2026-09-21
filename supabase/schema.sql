@@ -1,4 +1,4 @@
--- ============================================================================
+﻿-- ============================================================================
 -- Universidad Favaloro - Cátedra de Psicología Experimental
 -- Parcial 2 - Investigación: Efecto de la Inducción Cognitiva sobre Falsos Recuerdos
 -- 
