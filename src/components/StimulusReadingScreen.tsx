@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import type { StimulusItem } from '@/types/experiment';
 import { getStimulusImagePath, getStimulusAlternativePath } from '@/lib/assets';
 import { Clock, Eye, AlertTriangle } from 'lucide-react';
@@ -28,7 +29,7 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
   const [hasError, setHasError] = useState(false);
   const [elapsedMs, setElapsedMs] = useState(0);
 
-  const imgRef = useRef<HTMLImageElement | null>(null);
+  
   const startTimeRef = useRef<number | null>(null);
   const completedRef = useRef(false);
   const rafRef = useRef<number | null>(null);
@@ -136,26 +137,27 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
       {/* Stimulus Banner Card */}
       <div className="w-full bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col items-center">
         {/* Skeleton / Loading state before onLoad fires */}
-        {!imageLoaded && !hasError && (
-          <div className="w-full h-48 md:h-56 bg-slate-100 flex flex-col items-center justify-center animate-pulse p-6 text-center">
-            <Eye className="w-8 h-8 text-slate-400 mb-2 animate-bounce" />
-            <p className="text-sm font-medium text-slate-500">Cargando estímulo visual...</p>
-            <p className="text-xs text-slate-400 mt-1">El tiempo de lectura comenzará una vez visible</p>
-          </div>
-        )}
+          {!imageLoaded && !hasError && (
+            <div className="w-full h-[380px] bg-slate-100 flex flex-col items-center justify-center animate-pulse p-6 text-center">
+              <Eye className="w-8 h-8 text-slate-400 mb-2 animate-bounce" />
+              <p className="text-sm font-medium text-slate-500">Cargando est�mulo visual...</p>
+              <p className="text-xs text-slate-400 mt-1">El tiempo de lectura comenzar� una vez visible</p>
+            </div>
+          )}
 
-        {/* Headline Image Banner */}
-        <div className={`w-full flex justify-center bg-slate-50 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-          <img
-            ref={imgRef}
-            src={imageSrc}
-            alt={stimulus.title}
-            onLoad={handleImageLoad}
-            onError={handleImageError}
-            className="w-full max-h-[380px] object-contain shadow-inner"
-            draggable={false}
-          />
-        </div>
+          {/* Headline Image Banner */}
+          <div className={`w-full flex justify-center bg-slate-50 transition-opacity duration-300 ${imageLoaded ? 'opacity-100 relative h-[380px]' : 'absolute opacity-0 pointer-events-none h-0 overflow-hidden'}`}>
+            <Image
+              src={imageSrc}
+              alt={stimulus.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 896px"
+              style={{ objectFit: 'contain' }}
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+              priority
+            />
+          </div>
 
         {/* Fallback Text Headline (if image missing/corrupt) */}
         {hasError && (
