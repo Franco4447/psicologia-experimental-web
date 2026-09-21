@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import type { StimulusItem, ResponseCode } from '@/types/experiment';
 import { RESPONSE_OPTIONS } from '@/data/stimuli';
-import { getStimulusImagePath } from '@/lib/assets';
+
 import { CheckCircle2, ArrowRight, HelpCircle } from 'lucide-react';
 
 export interface RatingSubmission {
@@ -21,7 +21,7 @@ export interface RatingScreenProps {
 }
 
 export const RatingScreen: React.FC<RatingScreenProps> = ({
-  stimulus,
+
   trialNumber,
   totalTrials = 20,
   onSubmitResponse,
