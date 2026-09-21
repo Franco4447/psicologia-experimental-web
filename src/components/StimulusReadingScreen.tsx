@@ -30,7 +30,7 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
   const [elapsedMs, setElapsedMs] = useState(0);
 
   
-  const startTimeRef = useRef<number | null>(null);
+
   const completedRef = useRef(false);
   const rafRef = useRef<number | null>(null);
 
@@ -54,7 +54,7 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
   const handleImageLoad = useCallback(() => {
     if (imageLoaded || completedRef.current) return;
     setImageLoaded(true);
-    startTimeRef.current = performance.now();
+
   }, [imageLoaded]);
 
   // Handle asset load failure with fallback to alternative extension
@@ -68,7 +68,7 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
       // start timer so participant can read fallback headline text card.
       if (!imageLoaded) {
         setImageLoaded(true);
-        startTimeRef.current = performance.now();
+    
       }
     }
   }, [imageSrc, stimulus.id, imageLoaded]);
@@ -78,10 +78,13 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
   // High-precision animation frame timer loop
   useEffect(() => {
     if (!imageLoaded || completedRef.current) return;
+    
+    // Start timing EXACTLY when this effect runs (meaning the image is visible on screen)
+    const start = performance.now();
 
     const tick = () => {
-      if (!startTimeRef.current || completedRef.current) return;
-      const elapsed = performance.now() - startTimeRef.current;
+      if (completedRef.current) return;
+      const elapsed = performance.now() - start;
 
       if (elapsed >= EXPOSURE_DURATION_MS) {
         handleFinished();
@@ -134,8 +137,8 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
           {!imageLoaded && !hasError && (
             <div className="w-full h-[380px] bg-slate-100 flex flex-col items-center justify-center animate-pulse p-6 text-center">
               <Eye className="w-8 h-8 text-slate-400 mb-2 animate-bounce" />
-              <p className="text-sm font-medium text-slate-500">Cargando est�mulo visual...</p>
-              <p className="text-xs text-slate-400 mt-1">El tiempo de lectura comenzar� una vez visible</p>
+              <p className="text-sm font-medium text-slate-500">Cargando estímulo visual...</p>
+              <p className="text-xs text-slate-400 mt-1">El tiempo de lectura comenzará una vez visible</p>
             </div>
           )}
 
@@ -150,6 +153,7 @@ export const StimulusReadingScreen: React.FC<StimulusReadingScreenProps> = ({
               onLoad={handleImageLoad}
               onError={handleImageError}
               priority
+              unoptimized={true}
             />
           </div>
 
