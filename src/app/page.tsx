@@ -286,18 +286,12 @@ export default function ExperimentPage() {
         />
       );
 
-    case 'thankyou':
-      return (
-        <ThankYouScreen
-          participantId={state.participantId}
-          onRestart={() => {
-            clearSessionFromStorage();
-            clearSyncStorage();
-            syncedResponsesCountRef.current = 0;
-            dispatch({ type: 'RESET_EXPERIMENT' });
-          }}
-        />
-      );
+      case 'thankyou':
+        return (
+          <ThankYouScreen
+            participantId={state.participantId!}
+          />
+        );
 
     default:
       return null;
