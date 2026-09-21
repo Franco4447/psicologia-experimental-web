@@ -21,6 +21,7 @@ import {
 } from '../data/stimuli';
 import type { ClientTelemetry } from './telemetry';
 import type { ExperimentStage } from './sessionRecovery';
+import { STIMULUS_EXPOSURE_DURATION_MS } from './timing';
 
 export interface ExperimentState {
   isHydrated: boolean;
@@ -91,7 +92,7 @@ export function getInitialExperimentState(): ExperimentState {
     fakeNewsSet: null,
     deck: [],
     currentTrialIndex: 0,
-    currentReadingTimeMs: 10000,
+    currentReadingTimeMs: STIMULUS_EXPOSURE_DURATION_MS,
     responses: [],
     telemetry: {
       deviceType: 'desktop',
@@ -199,7 +200,7 @@ export function experimentReducer(
         fakeNewsSet,
         deck,
         currentTrialIndex: 0,
-        currentReadingTimeMs: 10000,
+        currentReadingTimeMs: STIMULUS_EXPOSURE_DURATION_MS,
         responses: [],
         telemetry,
       };
@@ -257,7 +258,7 @@ export function experimentReducer(
         responses: updatedResponses,
         currentTrialIndex: isComplete ? state.currentTrialIndex : nextIndex,
         stage: isComplete ? 'debriefing' : 'reading',
-        currentReadingTimeMs: 10000,
+        currentReadingTimeMs: STIMULUS_EXPOSURE_DURATION_MS,
       };
     }
 
