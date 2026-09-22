@@ -39,6 +39,9 @@ export interface ExperimentState {
   currentReadingTimeMs: number;
   responses: TrialRecord[];
   telemetry: ClientTelemetry;
+  mcReportedInduction?: 'Emoción' | 'Razón' | null;
+  mcEmotionUsage?: number | null;
+  mcReasonUsage?: number | null;
   isSaving: boolean;
   error: string | null;
 }
@@ -63,6 +66,14 @@ export type ExperimentAction =
       payload: {
         responseOption: ResponseCode;
         responseTimeMs: number;
+      };
+    }
+  | {
+      type: 'SUBMIT_MANIPULATION_CHECK';
+      payload: {
+        reportedInduction?: 'Emoción' | 'Razón';
+        emotionUsage: number;
+        reasonUsage: number;
       };
     }
   | { type: 'COMPLETE_DEBRIEFING' }
@@ -258,8 +269,19 @@ export function experimentReducer(
         ...state,
         responses: updatedResponses,
         currentTrialIndex: isComplete ? state.currentTrialIndex : nextIndex,
-        stage: isComplete ? 'debriefing' : 'reading',
+        stage: isComplete ? 'manipulation_check' : 'reading',
         currentReadingTimeMs: STIMULUS_EXPOSURE_DURATION_MS,
+      };
+    }
+
+    case 'SUBMIT_MANIPULATION_CHECK': {
+      if (state.stage !== 'manipulation_check') return state;
+      return {
+        ...state,
+        stage: 'debriefing',
+        mcReportedInduction: action.payload.reportedInduction,
+        mcEmotionUsage: action.payload.emotionUsage,
+        mcReasonUsage: action.payload.reasonUsage,
       };
     }
 

@@ -152,6 +152,9 @@ export interface ParticipantSession {
   deviceType?: DeviceType;        // 'desktop' | 'mobile' | 'tablet'
   screenResolution?: string;      // e.g. "1920x1080"
   userAgent?: string;
+  mcReportedInduction?: 'Emoción' | 'Razón' | null;
+  mcEmotionUsage?: number | null;
+  mcReasonUsage?: number | null;
 }
 
 // ============================================================================
@@ -237,6 +240,9 @@ export interface CsvExportRow {
   device_type: string;
   screen_resolution: string;
   user_agent: string;
+  mc_reported_induction: string;
+  mc_emotion_usage: number;
+  mc_reason_usage: number;
 }
 
 /**

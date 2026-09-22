@@ -75,6 +75,9 @@ export interface SessionCompletionPayload {
   participantId: string;
   status: 'completed';
   completedAt: string;
+  mcReportedInduction?: 'Emoción' | 'Razón' | null;
+  mcEmotionUsage?: number | null;
+  mcReasonUsage?: number | null;
 }
 
 export interface SyncStateSummary {
@@ -394,11 +397,18 @@ export function syncTrialResponse(trialRecord: TrialRecord): void {
 /**
  * Marks session as completed and enqueues completion payload.
  */
-export function completeSession(participantId: string, completedAt?: string): void {
+export function completeSession(
+  participantId: string, 
+  completedAt?: string,
+  mcData?: { reportedInduction?: 'Emoción' | 'Razón' | null; emotionUsage?: number | null; reasonUsage?: number | null; }
+): void {
   const payload: SessionCompletionPayload = {
     participantId,
     status: 'completed',
     completedAt: completedAt || new Date().toISOString(),
+    mcReportedInduction: mcData?.reportedInduction,
+    mcEmotionUsage: mcData?.emotionUsage,
+    mcReasonUsage: mcData?.reasonUsage,
   };
 
   safeSetItem(PENDING_COMPLETION_KEY, JSON.stringify(payload));

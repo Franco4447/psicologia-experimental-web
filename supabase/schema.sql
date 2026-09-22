@@ -1,4 +1,4 @@
-﻿-- ============================================================================
+-- ============================================================================
 -- Universidad Favaloro - Cátedra de Psicología Experimental
 -- Parcial 2 - Investigación: Efecto de la Inducción Cognitiva sobre Falsos Recuerdos
 -- 
@@ -33,6 +33,9 @@ CREATE TABLE IF NOT EXISTS public.participants (
     screen_resolution VARCHAR(50) NULL,
     user_agent TEXT NULL,
     client_timestamp TIMESTAMPTZ NULL,
+    mc_reported_induction VARCHAR(50) NULL,
+    mc_emotion_usage INT NULL,
+    mc_reason_usage INT NULL,
 
     -- Domain Constraints
     CONSTRAINT chk_participant_age 
@@ -51,6 +54,10 @@ CREATE TABLE IF NOT EXISTS public.participants (
         CHECK (status IN ('started', 'reading', 'completed', 'abandoned')),
     CONSTRAINT chk_participant_device_type 
         CHECK (device_type IS NULL OR device_type IN ('desktop', 'mobile', 'tablet')),
+    CONSTRAINT chk_participant_mc_emotion_usage 
+        CHECK (mc_emotion_usage IS NULL OR (mc_emotion_usage >= 1 AND mc_emotion_usage <= 5)),
+    CONSTRAINT chk_participant_mc_reason_usage 
+        CHECK (mc_reason_usage IS NULL OR (mc_reason_usage >= 1 AND mc_reason_usage <= 5)),
     CONSTRAINT chk_participant_exclusion_logic 
         CHECK (
             (is_included = true) OR 
@@ -429,7 +436,10 @@ SELECT
     r.response_time_ms,
     COALESCE(p.device_type, '') AS device_type,
     COALESCE(p.screen_resolution, '') AS screen_resolution,
-    COALESCE(p.user_agent, '') AS user_agent
+    COALESCE(p.user_agent, '') AS user_agent,
+    COALESCE(p.mc_reported_induction, '') AS mc_reported_induction,
+    p.mc_emotion_usage,
+    p.mc_reason_usage
 FROM public.participants p
 JOIN public.responses r ON p.id = r.participant_id
 ORDER BY p.created_at DESC, r.presentation_order ASC;

@@ -35,6 +35,9 @@ export interface Database {
           screen_resolution: string | null;
           user_agent: string | null;
           client_timestamp: string | null;
+          mc_reported_induction: string | null;
+          mc_emotion_usage: number | null;
+          mc_reason_usage: number | null;
         };
         Insert: {
           id?: string;
@@ -54,6 +57,9 @@ export interface Database {
           screen_resolution?: string | null;
           user_agent?: string | null;
           client_timestamp?: string | null;
+          mc_reported_induction?: string | null;
+          mc_emotion_usage?: number | null;
+          mc_reason_usage?: number | null;
         };
         Update: {
           id?: string;
@@ -73,6 +79,9 @@ export interface Database {
           screen_resolution?: string | null;
           user_agent?: string | null;
           client_timestamp?: string | null;
+          mc_reported_induction?: string | null;
+          mc_emotion_usage?: number | null;
+          mc_reason_usage?: number | null;
         };
         Relationships: [];
       };
@@ -349,6 +358,9 @@ export class InMemoryMockStore {
       screen_resolution: input.screen_resolution || null,
       user_agent: input.user_agent || null,
       client_timestamp: input.client_timestamp || null,
+      mc_reported_induction: input.mc_reported_induction || null,
+      mc_emotion_usage: input.mc_emotion_usage || null,
+      mc_reason_usage: input.mc_reason_usage || null,
     };
     this.participants.set(id, row);
     return row;

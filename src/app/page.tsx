@@ -24,6 +24,7 @@ import { DemographicsScreen } from '@/components/DemographicsScreen';
 import { InductionScreen } from '@/components/InductionScreen';
 import { StimulusReadingScreen } from '@/components/StimulusReadingScreen';
 import { RatingScreen } from '@/components/RatingScreen';
+import { ManipulationCheckScreen } from '@/components/ManipulationCheckScreen';
 import { DebriefingScreen } from '@/components/DebriefingScreen';
 import { ThankYouScreen } from '@/components/ThankYouScreen';
 
@@ -253,6 +254,16 @@ export default function ExperimentPage() {
       );
     }
 
+    case 'manipulation_check':
+      return (
+        <ManipulationCheckScreen
+          inductionGroup={state.inductionGroup || 'control'}
+          onSubmit={(data) => {
+            dispatch({ type: 'SUBMIT_MANIPULATION_CHECK', payload: data });
+          }}
+        />
+      );
+
     case 'debriefing':
       return (
         <DebriefingScreen
@@ -260,7 +271,11 @@ export default function ExperimentPage() {
             setIsFinalizingSession(true);
             try {
               const nowIso = new Date().toISOString();
-              completeSession(state.participantId, nowIso);
+              completeSession(state.participantId, nowIso, {
+                reportedInduction: state.mcReportedInduction,
+                emotionUsage: state.mcEmotionUsage,
+                reasonUsage: state.mcReasonUsage,
+              });
               // Final flush gateway: attempts batch sync of all trials and completion status
               await flushPendingSync(state.participantId, { timeoutMs: 5000 });
             } catch (err) {
@@ -274,7 +289,11 @@ export default function ExperimentPage() {
             setIsFinalizingSession(true);
             try {
               const nowIso = new Date().toISOString();
-              completeSession(state.participantId, nowIso);
+              completeSession(state.participantId, nowIso, {
+                reportedInduction: state.mcReportedInduction,
+                emotionUsage: state.mcEmotionUsage,
+                reasonUsage: state.mcReasonUsage,
+              });
               await flushPendingSync(state.participantId, { timeoutMs: 5000 });
             } catch (err) {
               console.warn('[ExperimentPage] Final flush gateway caught warning:', err);

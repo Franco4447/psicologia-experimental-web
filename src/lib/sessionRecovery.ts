@@ -24,6 +24,7 @@ export type ExperimentStage =
   | 'induction'
   | 'reading'
   | 'rating'
+  | 'manipulation_check'
   | 'debriefing'
   | 'thankyou';
 
@@ -43,6 +44,9 @@ export interface StoredSessionPayload {
   currentReadingTimeMs: number;
   responses: TrialRecord[];
   telemetry: ClientTelemetry;
+  mcReportedInduction?: 'Emoción' | 'Razón' | null;
+  mcEmotionUsage?: number | null;
+  mcReasonUsage?: number | null;
   savedAt: string;
 }
 
@@ -61,6 +65,9 @@ export type SavableState = {
   currentReadingTimeMs: number;
   responses: TrialRecord[];
   telemetry: ClientTelemetry;
+  mcReportedInduction?: 'Emoción' | 'Razón' | null;
+  mcEmotionUsage?: number | null;
+  mcReasonUsage?: number | null;
 };
 
 /**
@@ -88,6 +95,9 @@ export function saveSessionToStorage(state: SavableState): boolean {
       currentReadingTimeMs: state.currentReadingTimeMs,
       responses: state.responses,
       telemetry: state.telemetry,
+      mcReportedInduction: state.mcReportedInduction,
+      mcEmotionUsage: state.mcEmotionUsage,
+      mcReasonUsage: state.mcReasonUsage,
       savedAt: new Date().toISOString(),
     };
 

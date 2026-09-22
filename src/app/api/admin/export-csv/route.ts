@@ -78,7 +78,10 @@ export async function GET() {
           response_time_ms: r.response_time_ms,
           device_type: p.device_type,
           screen_resolution: p.screen_resolution,
-          user_agent: p.user_agent
+          user_agent: p.user_agent,
+          mc_reported_induction: p.mc_reported_induction,
+          mc_emotion_usage: p.mc_emotion_usage,
+          mc_reason_usage: p.mc_reason_usage
         });
       }
     }

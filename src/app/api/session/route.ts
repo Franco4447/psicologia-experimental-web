@@ -299,6 +299,9 @@ export interface SessionUpdateBody {
   status?: SessionStatus;
   completedAt?: string;
   clientTimestamp?: string;
+  mcReportedInduction?: 'Emoción' | 'Razón' | null;
+  mcEmotionUsage?: number | null;
+  mcReasonUsage?: number | null;
 }
 
 export async function PATCH(req: NextRequest) {
@@ -313,7 +316,15 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    const { participantId, status, completedAt, clientTimestamp } = body;
+    const { 
+      participantId, 
+      status, 
+      completedAt, 
+      clientTimestamp,
+      mcReportedInduction,
+      mcEmotionUsage,
+      mcReasonUsage
+    } = body;
 
     if (!participantId || !isValidUuid(participantId)) {
       return jsonResponse(
@@ -349,6 +360,10 @@ export async function PATCH(req: NextRequest) {
     if (clientTimestamp) {
       updatePayload.client_timestamp = clientTimestamp;
     }
+
+    if (mcReportedInduction !== undefined) updatePayload.mc_reported_induction = mcReportedInduction;
+    if (mcEmotionUsage !== undefined) updatePayload.mc_emotion_usage = mcEmotionUsage;
+    if (mcReasonUsage !== undefined) updatePayload.mc_reason_usage = mcReasonUsage;
 
     const client = getSupabaseAdminClient();
     const liveDbAvailable = isSupabaseConfigured() && client !== null;
