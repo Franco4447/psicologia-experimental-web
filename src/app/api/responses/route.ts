@@ -267,12 +267,28 @@ export async function POST(req: NextRequest) {
           // already exists. Since this is an append-only experiment, we consider this a success.
           persistedToDb = true;
         } else {
+          // CRITICAL: Return a real error so the client retries instead of deleting data
           console.error('[Responses Route] Supabase insert error:', insertError);
-          mockStore.insertResponses(normalizedRows);
+          return jsonResponse(
+            {
+              success: false,
+              error: 'Database insert failed',
+              message: insertError.message,
+              code: insertError.code,
+            },
+            500
+          );
         }
       } catch (insertErr) {
         console.error('[Responses Route] Supabase insert threw exception:', insertErr);
-        mockStore.insertResponses(normalizedRows);
+        return jsonResponse(
+          {
+            success: false,
+            error: 'Database exception',
+            message: insertErr instanceof Error ? insertErr.message : 'Unknown error',
+          },
+          500
+        );
       }
     } else {
       mockStore.insertResponses(normalizedRows);

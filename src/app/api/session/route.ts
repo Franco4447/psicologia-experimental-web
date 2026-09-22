@@ -68,6 +68,7 @@ export async function OPTIONS() {
 
 export interface SessionCreateBody {
   id?: string;
+  participantId?: string;
   age: number;
   gender: Gender;
   studiesPsychology: boolean;
@@ -93,6 +94,7 @@ export async function POST(req: NextRequest) {
 
     const {
       id,
+      participantId: bodyParticipantId,
       age,
       gender,
       studiesPsychology,
@@ -199,8 +201,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 4. Session ID: Client-supplied UUID or generate new UUID v4
-    const participantId = id && isValidUuid(id) ? id : crypto.randomUUID();
+    // 4. Session ID: Client-supplied UUID (from 'id' or 'participantId' field) or generate new UUID v4
+    const suppliedId = id || bodyParticipantId;
+    const participantId = suppliedId && isValidUuid(suppliedId) ? suppliedId : crypto.randomUUID();
     const nowIso = new Date().toISOString();
 
     const participantData: ParticipantInsert = {
