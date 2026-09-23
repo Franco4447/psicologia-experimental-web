@@ -156,6 +156,10 @@ export interface Database {
         Args: Record<string, never>;
         Returns: string;
       };
+      cleanup_abandoned_sessions: {
+        Args: Record<string, never>;
+        Returns: undefined;
+      };
       create_participant_session: {
         Args: {
           p_id?: string;

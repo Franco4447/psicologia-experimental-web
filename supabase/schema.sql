@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS public.participants (
     CONSTRAINT chk_participant_orientation 
         CHECK (therapeutic_orientation IN ('Psicoanálisis', 'Basada en Evidencia Científica', 'Otros')),
     CONSTRAINT chk_participant_exclusion_reason 
-        CHECK (exclusion_reason IS NULL OR exclusion_reason IN ('menor_de_edad', 'no_estudia_psicologia', 'orientacion_otros')),
+        CHECK (exclusion_reason IS NULL OR exclusion_reason IN ('menor_de_edad', 'no_estudia_psicologia', 'orientacion_otros', 'session_timeout_1h')),
     CONSTRAINT chk_participant_induction_group 
         CHECK (induction_group IN ('racional', 'emocional', 'control')),
     CONSTRAINT chk_participant_fake_news_set 
@@ -446,3 +446,28 @@ ORDER BY p.created_at DESC, r.presentation_order ASC;
 
 GRANT SELECT ON public.v_admin_stats TO service_role;
 GRANT SELECT ON public.v_experimental_dataset_long TO service_role;
+
+-- ----------------------------------------------------------------------------
+-- 11. Cleanup Abandoned Sessions
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION public.cleanup_abandoned_sessions()
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+    UPDATE public.participants
+    SET 
+        status = 'abandoned',
+        is_included = false,
+        exclusion_reason = 'session_timeout_1h',
+        induction_group = 'control',
+        fake_news_set = 'control_random'
+    WHERE 
+        status = 'started' 
+        AND created_at < NOW() - INTERVAL '1 hour';
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.cleanup_abandoned_sessions() TO service_role;
+
