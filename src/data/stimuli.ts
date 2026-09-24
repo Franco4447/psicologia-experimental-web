@@ -318,7 +318,7 @@ export const STIMULI: readonly StimulusItem[] = Object.freeze([
     title: 'Suspenden la licencia de un psicoanalista que desvestía a sus pacientes para ayudarlos a conectarse con sus cuerpos.',
     englishTitle: 'License suspended for psychoanalyst who undressed patients to help them connect with their bodies',
     isFake: true,
-    imageFileName: 'Noticia_26.png', // NOTE: CRITICAL VARIATION - THIS ASSET IS A PNG FILE
+    imageFileName: 'Noticia_26.jpg', // NOTE: CRITICAL VARIATION - THIS ASSET IS A PNG FILE
     congruence: 'evidencia',
     targetCritique: 'Ataca Psicoanálisis / Freudiano',
     mirrorPairId: 18,
@@ -632,7 +632,7 @@ export function classifyResponse(
  * 
  * @param newsIdOrItem Number (1-28) or StimulusItem object
  * @param basePath Base path where assets are hosted (default: '/noticias')
- * @returns Fully qualified relative URL (e.g. "/noticias/Noticia_01.jpg" or "/noticias/Noticia_26.png")
+ * @returns Fully qualified relative URL (e.g. "/noticias/Noticia_01.jpg" or "/noticias/Noticia_26.jpg")
  */
 export function getStimulusImagePath(
   newsIdOrItem: number | StimulusItem,
