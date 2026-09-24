@@ -1,14 +1,18 @@
 'use client';
 
 import React from 'react';
-import { ShieldAlert, ArrowRight } from 'lucide-react';
+import { ShieldAlert, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
+import type { TrialRecord } from '../types/experiment';
+import { STIMULI } from '../data/stimuli';
 
 export interface DebriefingScreenProps {
+  responses?: TrialRecord[];
   onConfirmDebriefing?: () => void;
   onComplete?: () => void;
 }
 
 export const DebriefingScreen: React.FC<DebriefingScreenProps> = ({
+  responses = [],
   onConfirmDebriefing,
   onComplete,
 }) => {
@@ -18,6 +22,13 @@ export const DebriefingScreen: React.FC<DebriefingScreenProps> = ({
     } else if (onComplete) {
       onComplete();
     }
+  };
+
+  const trueNews = responses.filter((item) => !item.isFake);
+  const fakeNews = responses.filter((item) => item.isFake);
+
+  const getTitle = (newsId: number) => {
+    return STIMULI.find((s) => s.id === newsId)?.title || `News ${newsId}`;
   };
 
   return (
@@ -75,6 +86,40 @@ export const DebriefingScreen: React.FC<DebriefingScreenProps> = ({
           </p>
         </div>
 
+        {/* News Lists */}
+        {responses.length > 0 && (
+          <div className="grid sm:grid-cols-2 gap-6 mt-6">
+            {/* Fake News List */}
+            <div className="bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <XCircle className="w-5 h-5 text-rose-600" />
+                <h3 className="font-bold text-rose-900 text-sm">Noticias Falsas (Inventadas)</h3>
+              </div>
+              <ul className="space-y-2">
+                {fakeNews.map((news) => (
+                  <li key={news.newsId} className="text-xs text-rose-800 bg-white p-2 rounded border border-rose-100 shadow-sm">
+                    {getTitle(news.newsId)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* True News List */}
+            <div className="bg-emerald-50/50 border border-emerald-100 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                <h3 className="font-bold text-emerald-900 text-sm">Noticias Verdaderas (Reales)</h3>
+              </div>
+              <ul className="space-y-2">
+                {trueNews.map((news) => (
+                  <li key={news.newsId} className="text-xs text-emerald-800 bg-white p-2 rounded border border-emerald-100 shadow-sm">
+                    {getTitle(news.newsId)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Final Action CTA */}
@@ -93,3 +138,4 @@ export const DebriefingScreen: React.FC<DebriefingScreenProps> = ({
 };
 
 export default DebriefingScreen;
+

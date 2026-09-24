@@ -267,6 +267,7 @@ export default function ExperimentPage() {
     case 'debriefing':
       return (
         <DebriefingScreen
+          responses={state.responses}
           onConfirmDebriefing={async () => {
             setIsFinalizingSession(true);
             try {
