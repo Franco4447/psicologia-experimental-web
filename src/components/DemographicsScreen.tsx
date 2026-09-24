@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { argentineUniversities } from '@/data/universities';
 import type {
   Gender,
   TherapeuticOrientation,
@@ -26,6 +27,22 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
     initialData?.therapeuticOrientation || ''
   );
   const [university, setUniversity] = useState<string>(initialData?.university || '');
+  const [showUniversityDropdown, setShowUniversityDropdown] = useState(false);
+  const universityDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (universityDropdownRef.current && !universityDropdownRef.current.contains(event.target as Node)) {
+        setShowUniversityDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const filteredUniversities = argentineUniversities.filter(u => 
+    u.toLowerCase().includes(university.toLowerCase())
+  );
 
   // Validation errors
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -295,7 +312,7 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
         </div>
 
         {/* Field 5: University */}
-        <div>
+        <div ref={universityDropdownRef} className="relative">
           <label htmlFor="university-input" className="block text-sm font-semibold text-slate-900 mb-1">
             5. Universidad o Institución Académica <span className="text-rose-500">*</span>
           </label>
@@ -305,15 +322,35 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
             value={university}
             onChange={(e) => {
               setUniversity(e.target.value);
+              setShowUniversityDropdown(true);
               if (errors.university) setErrors((prev) => ({ ...prev, university: '' }));
             }}
-            placeholder="Ej: Universidad Favaloro, UBA, etc."
+            onFocus={() => setShowUniversityDropdown(true)}
+            onClick={() => setShowUniversityDropdown(true)}
+            placeholder="Ej: Universidad Favaloro, UBA, etc. (Puede escribir otra)"
             className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 transition-colors focus:outline-none focus:ring-2 ${
               errors.university
                 ? 'border-rose-300 focus:ring-rose-500 bg-rose-50/30'
                 : 'border-slate-300 focus:ring-indigo-500 bg-white'
             }`}
           />
+          {showUniversityDropdown && filteredUniversities.length > 0 && (
+            <ul className="absolute z-10 w-full mt-1 max-h-60 overflow-auto bg-white border border-slate-200 rounded-xl shadow-lg">
+              {filteredUniversities.map((uni) => (
+                <li
+                  key={uni}
+                  className="px-4 py-2 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-900 cursor-pointer"
+                  onClick={() => {
+                    setUniversity(uni);
+                    setShowUniversityDropdown(false);
+                    if (errors.university) setErrors((prev) => ({ ...prev, university: '' }));
+                  }}
+                >
+                  {uni}
+                </li>
+              ))}
+            </ul>
+          )}
           {errors.university && (
             <p className="mt-1 text-xs text-rose-600 font-medium">{errors.university}</p>
           )}
