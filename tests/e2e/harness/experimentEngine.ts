@@ -63,6 +63,8 @@ export class ExperimentEngine {
       errors.push('Debe indicar la universidad o institución.');
     }
 
+    if (typeof input.hasMemoryCondition !== 'boolean') { errors.push('Debe indicar si presenta condición de memoria.'); }
+    if (typeof input.hasVisualDifficulty !== 'boolean') { errors.push('Debe indicar si presenta dificultad visual.'); }
     return {
       valid: errors.length === 0,
       errors,

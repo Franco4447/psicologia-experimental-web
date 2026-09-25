@@ -27,6 +27,12 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
     initialData?.therapeuticOrientation || ''
   );
   const [university, setUniversity] = useState<string>(initialData?.university || '');
+  const [hasMemoryCondition, setHasMemoryCondition] = useState<boolean | null>(
+    typeof initialData?.hasMemoryCondition === 'boolean' ? initialData.hasMemoryCondition : null
+  );
+  const [hasVisualDifficulty, setHasVisualDifficulty] = useState<boolean | null>(
+    typeof initialData?.hasVisualDifficulty === 'boolean' ? initialData.hasVisualDifficulty : null
+  );
   const [showUniversityDropdown, setShowUniversityDropdown] = useState(false);
   const universityDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -86,6 +92,16 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
       errs.university = 'Debe indicar la universidad o institución.';
     }
 
+    // 6. Memory condition validation
+    if (hasMemoryCondition === null || typeof hasMemoryCondition !== 'boolean') {
+      errs.hasMemoryCondition = 'Debe indicar si presenta alguna condición de memoria.';
+    }
+
+    // 7. Visual difficulty validation
+    if (hasVisualDifficulty === null || typeof hasVisualDifficulty !== 'boolean') {
+      errs.hasVisualDifficulty = 'Debe indicar si presenta alguna dificultad visual no corregida.';
+    }
+
     const isValid = Object.keys(errs).length === 0;
 
     return {
@@ -98,6 +114,8 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
             studiesPsychology: studiesPsychology as boolean,
             therapeuticOrientation: therapeuticOrientation as TherapeuticOrientation,
             university: university.trim(),
+            hasMemoryCondition: hasMemoryCondition as boolean,
+            hasVisualDifficulty: hasVisualDifficulty as boolean,
           }
         : undefined,
     };
@@ -353,6 +371,84 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
           )}
           {errors.university && (
             <p className="mt-1 text-xs text-rose-600 font-medium">{errors.university}</p>
+          )}
+        </div>
+
+        {/* Field 6: Memory Condition */}
+        <div>
+          <label className="block text-sm font-semibold text-slate-900 mb-2">
+            6. ¿Presenta alguna condición o diagnóstico que afecte significativamente los procesos de memoria y pueda interferir con la realización de la tarea? <span className="text-rose-500">*</span>
+          </label>
+          <div className="grid grid-cols-2 gap-3 max-w-xs">
+            {[
+              { label: 'Sí', value: true },
+              { label: 'No', value: false },
+            ].map((opt) => (
+              <label
+                key={`memory-${opt.label}`}
+                className={`flex items-center justify-center p-3 rounded-xl border text-sm font-medium cursor-pointer transition-colors ${
+                  hasMemoryCondition === opt.value
+                    ? 'bg-indigo-50 border-indigo-600 text-indigo-900 ring-2 ring-indigo-500'
+                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="hasMemoryCondition"
+                  checked={hasMemoryCondition === opt.value}
+                  onChange={() => {
+                    setHasMemoryCondition(opt.value);
+                    if (errors.hasMemoryCondition) {
+                      setErrors((prev) => ({ ...prev, hasMemoryCondition: '' }));
+                    }
+                  }}
+                  className="sr-only"
+                />
+                <span>{opt.label}</span>
+              </label>
+            ))}
+          </div>
+          {errors.hasMemoryCondition && (
+            <p className="mt-1 text-xs text-rose-600 font-medium">{errors.hasMemoryCondition}</p>
+          )}
+        </div>
+
+        {/* Field 7: Visual Difficulty */}
+        <div>
+          <label className="block text-sm font-semibold text-slate-900 mb-2">
+            7. ¿Presenta una dificultad visual no corregida que impida realizar adecuadamente la tarea de lectura dentro del tiempo establecido? <span className="text-rose-500">*</span>
+          </label>
+          <div className="grid grid-cols-2 gap-3 max-w-xs">
+            {[
+              { label: 'Sí', value: true },
+              { label: 'No', value: false },
+            ].map((opt) => (
+              <label
+                key={`visual-${opt.label}`}
+                className={`flex items-center justify-center p-3 rounded-xl border text-sm font-medium cursor-pointer transition-colors ${
+                  hasVisualDifficulty === opt.value
+                    ? 'bg-indigo-50 border-indigo-600 text-indigo-900 ring-2 ring-indigo-500'
+                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="hasVisualDifficulty"
+                  checked={hasVisualDifficulty === opt.value}
+                  onChange={() => {
+                    setHasVisualDifficulty(opt.value);
+                    if (errors.hasVisualDifficulty) {
+                      setErrors((prev) => ({ ...prev, hasVisualDifficulty: '' }));
+                    }
+                  }}
+                  className="sr-only"
+                />
+                <span>{opt.label}</span>
+              </label>
+            ))}
+          </div>
+          {errors.hasVisualDifficulty && (
+            <p className="mt-1 text-xs text-rose-600 font-medium">{errors.hasVisualDifficulty}</p>
           )}
         </div>
 

@@ -47,6 +47,8 @@ export type ExclusionReason =
   | 'menor_de_edad'
   | 'no_estudia_psicologia'
   | 'orientacion_otros'
+  | 'condicion_memoria'
+  | 'dificultad_visual'
   | null;
 
 /**
@@ -122,6 +124,8 @@ export interface ParticipantDemographicsInput {
   studiesPsychology: boolean;
   therapeuticOrientation: TherapeuticOrientation;
   university: string;
+  hasMemoryCondition: boolean;
+  hasVisualDifficulty: boolean;
 }
 
 /**

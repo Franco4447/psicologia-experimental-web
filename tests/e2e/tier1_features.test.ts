@@ -101,6 +101,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       // Without consent, creation should not occur
       const hasConsent = true;
@@ -122,6 +124,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, true);
@@ -134,6 +138,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, false);
@@ -149,7 +155,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
-        };
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      };
         assert.equal(engine.validateDemographics(input).valid, true);
       });
     });
@@ -163,7 +171,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
           studiesPsychology: true,
           therapeuticOrientation: o as any,
           university: 'Favaloro',
-        };
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      };
         assert.equal(engine.validateDemographics(input).valid, true);
       });
     });
@@ -175,6 +185,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: '   ',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, false);
@@ -193,6 +205,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       assert.equal(engine.evaluateInclusion(input), true);
     });
@@ -204,6 +218,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       assert.equal(engine.evaluateInclusion(input), true);
     });
@@ -215,6 +231,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Otros',
         university: 'Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       assert.equal(engine.evaluateInclusion(input), false);
     });
@@ -226,6 +244,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: false,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'UTN',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       assert.equal(engine.evaluateInclusion(input), false);
     });
@@ -237,6 +257,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: false,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'ITBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       assert.equal(engine.evaluateInclusion(input), false);
     });
@@ -326,6 +348,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: false,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const session = engine.createSession(input);
       assert.equal(session.isIncluded, false);
@@ -339,6 +363,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: false,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const session = engine.createSession(input);
       assert.equal(session.fakeNewsSet, 'control_random');
@@ -469,7 +495,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const orders = trials.map((t) => t.presentationOrder).sort((a, b) => a - b);
       const expected = Array.from({ length: 20 }, (_, i) => i + 1);
@@ -483,7 +511,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const run1 = engine.initializeTrials(session).map((t) => t.newsId);
       const run2 = engine.initializeTrials(session).map((t) => t.newsId);
       // While it is theoretically possible to get the same 20-element permutation, probability is 1/20! (2.4e-18)
@@ -527,7 +557,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const recorded = engine.recordResponse(trials[0], 1, 10000, 1500);
       assert.equal(recorded.readingTimeMs, 10000);
@@ -623,7 +655,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       assert.throws(() => {
         engine.recordResponse(trials[0], 1, 10000, -50);
@@ -637,7 +671,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const recorded = engine.recordResponse(trials[0], 2, 10000, 1850);
       assert.equal(recorded.readingTimeMs, 10000);
@@ -706,7 +742,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const completed = engine.completeSession(session, trials);
       assert.equal(completed.status, 'completed');
@@ -719,7 +757,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const completed = engine.completeSession(session, trials);
       assert.ok(completed.completedAt);
@@ -733,7 +773,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const incompleteTrials = engine.initializeTrials(session).slice(0, 19);
       assert.throws(() => {
         engine.completeSession(session, incompleteTrials);
@@ -747,7 +789,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       assert.ok(session.id.length >= 36);
     });
   });
@@ -766,7 +810,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Favaloro',
-          },
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      },
           { deviceType: d as any }
         );
         assert.equal(session.deviceType, d);
@@ -781,7 +827,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
-        },
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      },
         { screenResolution: '2560x1440' }
       );
       assert.equal(session.screenResolution, '2560x1440');
@@ -796,7 +844,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
-        },
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      },
         { userAgent: ua }
       );
       assert.equal(session.userAgent, ua);
@@ -809,7 +859,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       assert.equal(session.deviceType, 'desktop');
       assert.equal(session.screenResolution, '1920x1080');
     });
@@ -822,7 +874,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
-        },
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      },
         { deviceType: 'mobile', screenResolution: '390x844' }
       );
       const trials = engine.initializeTrials(session);
@@ -891,7 +945,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const json = JSON.stringify(session);
       assert.doesNotMatch(json, /undefined/);
       assert.ok(json.includes(session.id));
@@ -948,7 +1004,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const rows = generateParticipantCsvRows(session, trials);
       assert.equal(rows.length, 20);
@@ -961,7 +1019,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const rows = generateParticipantCsvRows(session, trials);
       const csv = serializeToCsv(rows, true);
@@ -982,7 +1042,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       // Force trial 0 to be a fake news with response 1
       trials[0].isFake = true;
@@ -999,7 +1061,9 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       // Force trial 0 to be fake news with response 2
       trials[0].isFake = true;

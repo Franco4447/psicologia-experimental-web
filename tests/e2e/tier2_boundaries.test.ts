@@ -18,6 +18,8 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, true);
@@ -30,6 +32,8 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, false);
@@ -43,6 +47,8 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, true);
@@ -55,6 +61,8 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, false);
@@ -70,7 +78,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
-        };
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      };
         const res = engine.validateDemographics(input);
         assert.equal(res.valid, false, `Age ${age} should be invalid`);
       });
@@ -97,6 +107,8 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Facultad de Psicología (UBA) — Sede San Isidro / N° 45 & Co.',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, true);
@@ -110,6 +122,8 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: longName,
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const res = engine.validateDemographics(input);
       assert.equal(res.valid, true);
@@ -158,7 +172,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
               studiesPsychology: true,
               therapeuticOrientation: 'Psicoanálisis',
               university: 'Favaloro',
-            },
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      },
           }),
         /Unconsented/
       );
@@ -197,7 +213,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const recorded = engine.recordResponse(trials[0], 1, 10000, 45); // 45 ms RT
       assert.equal(recorded.responseTimeMs, 45);
@@ -210,7 +228,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const recorded = engine.recordResponse(trials[0], 4, 10000, 600000);
       assert.equal(recorded.responseTimeMs, 600000);
@@ -224,7 +244,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       assert.throws(() => engine.recordResponse(trials[0], 1, -100, 1500), /Reading time cannot be negative/);
     });
@@ -236,7 +258,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       assert.throws(() => engine.recordResponse(trials[0], 1, 10000, -1), /Response time cannot be negative/);
     });
@@ -253,7 +277,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const offlineQueue: any[] = [];
 
@@ -281,7 +307,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const offlineQueue: any[] = [];
 
@@ -366,7 +394,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session).slice(0, 15); // only 15 trials
       assert.throws(() => engine.completeSession(session, trials), /20 trials/);
     });
@@ -378,7 +408,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const invalidCodes = [0, 5, -1, 99];
       invalidCodes.forEach((code) => {
@@ -393,7 +425,9 @@ describe('Tier 2: Boundary, Corner Cases & Resilience Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
       const completed = engine.completeSession(session, trials);
       assert.equal(completed.status, 'completed');

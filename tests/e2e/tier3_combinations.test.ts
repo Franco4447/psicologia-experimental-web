@@ -26,6 +26,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -51,6 +53,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -70,6 +74,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad de Belgrano',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -89,6 +95,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -113,6 +121,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'Universidad Torcuato Di Tella',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -131,6 +141,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'UBA',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -152,6 +164,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Otros',
         university: 'Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -168,6 +182,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: false,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'UADE',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -184,6 +200,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: false,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'San Andrés',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -200,6 +218,8 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: false,
         therapeuticOrientation: 'Otros',
         university: 'UBA Medicina',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       const session = engine.createSession(input);
@@ -221,7 +241,9 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
 
       // Participant answers Option 1 to all 20 trials
@@ -255,7 +277,9 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
 
       // Participant answers Option 2 to all 20 trials
@@ -283,7 +307,9 @@ describe('Tier 3: Cross-Feature Combinations (Pairwise Permutations)', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
-      });
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        });
       const trials = engine.initializeTrials(session);
 
       const answered = trials.map((t) => engine.recordResponse(t, 4, 10000, 1200));

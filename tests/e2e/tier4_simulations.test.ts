@@ -28,6 +28,8 @@ describe('Tier 4: Real-World End-to-End Simulation Scenarios', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       },
       responseStrategy: 'realistic_mixed',
       telemetry: {
@@ -76,6 +78,8 @@ describe('Tier 4: Real-World End-to-End Simulation Scenarios', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'Universidad de Buenos Aires (UBA)',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       },
       responseStrategy: 'all_false_beliefs',
       telemetry: {
@@ -125,6 +129,8 @@ describe('Tier 4: Real-World End-to-End Simulation Scenarios', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       },
       responseStrategy: 'all_false_memories',
       telemetry: {
@@ -165,6 +171,8 @@ describe('Tier 4: Real-World End-to-End Simulation Scenarios', () => {
         studiesPsychology: false, // EXCLUDED
         therapeuticOrientation: 'Psicoanálisis',
         university: 'ITBA Ingeniería',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       },
       responseStrategy: 'skeptical_none',
     });
@@ -203,6 +211,8 @@ describe('Tier 4: Real-World End-to-End Simulation Scenarios', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'Universidad Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       },
       responseStrategy: 'realistic_mixed',
       simulateNetworkFailuresAtTrials: [14, 15, 16],
@@ -248,7 +258,9 @@ describe('Tier 4: Real-World End-to-End Simulation Scenarios', () => {
           studiesPsychology: true,
           therapeuticOrientation: orientation as any,
           university: 'Universidad Favaloro',
-        },
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      },
         responseStrategy: 'realistic_mixed',
       });
 

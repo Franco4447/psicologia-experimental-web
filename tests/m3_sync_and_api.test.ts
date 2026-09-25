@@ -159,6 +159,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
         }),
       });
       const resUnderage = await sessionPost(reqUnderage);
@@ -175,6 +177,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
         }),
       });
       const resExtreme = await sessionPost(reqExtreme);
@@ -189,6 +193,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Invalida',
           university: 'Favaloro',
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
         }),
       });
       const resBadOrientation = await sessionPost(reqBadOrientation);
@@ -203,6 +209,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: '   ',
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
         }),
       });
       const resNoUni = await sessionPost(reqNoUni);
@@ -218,6 +226,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Universidad Favaloro',
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
         }),
       });
       const res = await sessionPost(req);
@@ -239,6 +249,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: false,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'UBA',
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
         }),
       });
       const res = await sessionPost(req);
@@ -260,6 +272,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Otros',
           university: 'Favaloro',
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
         }),
       });
       const res = await sessionPost(req);
@@ -336,9 +350,9 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
       assert.equal((await responsesPost(reqEmpty)).status, 400);
 
       // Over 20 items
-      const oversized = Array.from({ length: 25 }, (_, i) => ({
+      const oversized = Array.from({ length: 201 }, (_, i) => ({
         participantId: crypto.randomUUID(),
-        presentationOrder: i + 1,
+        presentationOrder: (i % 20) + 1,
         newsId: 1,
         responseOption: 1,
         readingTimeMs: 10000,
@@ -526,6 +540,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const telemetry: ClientTelemetry = {
         deviceType: 'desktop',
@@ -556,6 +572,8 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'Favaloro',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const telemetry: ClientTelemetry = {
         deviceType: 'desktop',

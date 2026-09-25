@@ -24,6 +24,8 @@ export interface DemographicsInput {
   studiesPsychology: boolean;
   therapeuticOrientation: TherapeuticOrientation;
   university: string;
+  hasMemoryCondition: boolean;
+  hasVisualDifficulty: boolean;
 }
 
 export interface ParticipantSession {

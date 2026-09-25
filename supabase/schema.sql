@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS public.participants (
     CONSTRAINT chk_participant_orientation 
         CHECK (therapeutic_orientation IN ('Psicoanálisis', 'Basada en Evidencia Científica', 'Otros')),
     CONSTRAINT chk_participant_exclusion_reason 
-        CHECK (exclusion_reason IS NULL OR exclusion_reason IN ('menor_de_edad', 'no_estudia_psicologia', 'orientacion_otros', 'session_timeout_1h')),
+        CHECK (exclusion_reason IS NULL OR exclusion_reason IN ('menor_de_edad', 'no_estudia_psicologia', 'orientacion_otros', 'session_timeout_1h', 'condicion_memoria', 'dificultad_visual')),
     CONSTRAINT chk_participant_induction_group 
         CHECK (induction_group IN ('racional', 'emocional', 'control')),
     CONSTRAINT chk_participant_fake_news_set 

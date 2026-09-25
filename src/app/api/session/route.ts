@@ -74,6 +74,8 @@ export interface SessionCreateBody {
   studiesPsychology: boolean;
   therapeuticOrientation: TherapeuticOrientation;
   university: string;
+  hasMemoryCondition: boolean;
+  hasVisualDifficulty: boolean;
   deviceType?: DeviceType;
   screenResolution?: string;
   userAgent?: string;
@@ -100,6 +102,8 @@ export async function POST(req: NextRequest) {
       studiesPsychology,
       therapeuticOrientation,
       university,
+      hasMemoryCondition,
+      hasVisualDifficulty,
       deviceType,
       screenResolution,
       userAgent,
@@ -138,6 +142,14 @@ export async function POST(req: NextRequest) {
       errors.push('La institución o universidad es obligatoria.');
     }
 
+    if (hasMemoryCondition === undefined || typeof hasMemoryCondition !== 'boolean') {
+      errors.push('Debe indicar si presenta alguna condición de memoria (booleano).');
+    }
+
+    if (hasVisualDifficulty === undefined || typeof hasVisualDifficulty !== 'boolean') {
+      errors.push('Debe indicar si presenta alguna dificultad visual no corregida (booleano).');
+    }
+
     if (errors.length > 0) {
       return jsonResponse(
         {
@@ -154,6 +166,8 @@ export async function POST(req: NextRequest) {
       age,
       studiesPsychology,
       therapeuticOrientation,
+      hasMemoryCondition,
+      hasVisualDifficulty,
     });
     const isIncluded = inclusionEval.isIncluded;
     const exclusionReason = inclusionEval.exclusionReason;

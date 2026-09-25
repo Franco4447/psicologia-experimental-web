@@ -459,11 +459,27 @@ export function evaluateInclusion(demographics: {
   age: number;
   studiesPsychology: boolean;
   therapeuticOrientation: TherapeuticOrientation;
+  hasMemoryCondition?: boolean;
+  hasVisualDifficulty?: boolean;
 }): InclusionEvaluation {
   if (demographics.age < 18) {
     return {
       isIncluded: false,
       exclusionReason: 'menor_de_edad'
+    };
+  }
+
+  if (demographics.hasMemoryCondition) {
+    return {
+      isIncluded: false,
+      exclusionReason: 'condicion_memoria'
+    };
+  }
+
+  if (demographics.hasVisualDifficulty) {
+    return {
+      isIncluded: false,
+      exclusionReason: 'dificultad_visual'
     };
   }
 
