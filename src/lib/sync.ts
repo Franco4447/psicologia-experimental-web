@@ -53,6 +53,8 @@ export interface SessionRegistrationPayload {
   studiesPsychology: boolean;
   therapeuticOrientation: string;
   university: string;
+  hasMemoryCondition?: boolean;
+  hasVisualDifficulty?: boolean;
   isIncluded: boolean;
   exclusionReason: ExclusionReason;
   deviceType: DeviceType;
@@ -249,6 +251,8 @@ export async function registerSession(
     studiesPsychology: demographics.studiesPsychology,
     therapeuticOrientation: demographics.therapeuticOrientation,
     university: demographics.university,
+    hasMemoryCondition: demographics.hasMemoryCondition,
+    hasVisualDifficulty: demographics.hasVisualDifficulty,
     isIncluded,
     exclusionReason,
     deviceType: telemetry.deviceType,
