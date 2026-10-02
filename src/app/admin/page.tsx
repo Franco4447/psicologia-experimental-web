@@ -41,6 +41,23 @@ export default function AdminDashboard() {
     fetchStats();
   }, []);
 
+  const sortedParticipants = React.useMemo(() => {
+    if (!stats) return [];
+    const sortableItems = [...stats.participantsList];
+    if (sortConfig !== null) {
+      sortableItems.sort((a: any, b: any) => {
+        let aVal = a[sortConfig.key];
+        let bVal = b[sortConfig.key];
+        if (aVal === null) aVal = '';
+        if (bVal === null) bVal = '';
+        if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [stats, sortConfig]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -66,6 +83,14 @@ export default function AdminDashboard() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const requestSort = (key: string) => {
+    let direction: 'asc' | 'desc' = 'asc';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
   };
 
   if (loading) {
@@ -101,31 +126,6 @@ export default function AdminDashboard() {
       </div>
     );
   }
-
-  const sortedParticipants = React.useMemo(() => {
-    if (!stats) return [];
-    const sortableItems = [...stats.participantsList];
-    if (sortConfig !== null) {
-      sortableItems.sort((a: any, b: any) => {
-        let aVal = a[sortConfig.key];
-        let bVal = b[sortConfig.key];
-        if (aVal === null) aVal = '';
-        if (bVal === null) bVal = '';
-        if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
-        if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
-        return 0;
-      });
-    }
-    return sortableItems;
-  }, [stats, sortConfig]);
-
-  const requestSort = (key: string) => {
-    let direction: 'asc' | 'desc' = 'asc';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-    setSortConfig({ key, direction });
-  };
 
   return (
     <div className="min-h-screen bg-slate-50 p-8">
