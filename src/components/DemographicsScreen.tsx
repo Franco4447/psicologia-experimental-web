@@ -287,7 +287,7 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
               },
               {
                 id: 'Basada en Evidencia Científica',
-                title: 'Basada en Evidencia Científica',
+                title: 'Cognitivo-Conductual',
                 description: 'Terapia cognitivo-conductual (TCC), terapias conductuales contextuales o de tercera ola.',
               },
               {
