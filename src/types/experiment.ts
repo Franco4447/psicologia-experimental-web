@@ -270,4 +270,50 @@ export interface AdminDashboardStats {
   };
   isBalanced: boolean;            // max discrepancy <= 2 across included induction groups
   maxDiscrepancy: number;
+
+  // New fields
+  participantsList: {
+    id: string;
+    age: number;
+    gender: string;
+    university: string;
+    therapeuticOrientation: string;
+    inductionGroup: string;
+    status: string;
+    isIncluded: boolean;
+    exclusionReason: string | null;
+    completedAt: string | null;
+  }[];
+
+  exclusionBreakdown: Record<string, number>;
+
+  kpis: {
+    overall: {
+      falseMemoryRate: number;
+      falseBeliefRate: number;
+      trueMemoryRate: number;
+      avgReadingTimeMs: number;
+      avgResponseTimeMs: number;
+    };
+    byGroup: Record<string, {
+      falseMemoryRate: number;
+      falseBeliefRate: number;
+      trueMemoryRate: number;
+      avgReadingTimeMs: number;
+      avgResponseTimeMs: number;
+    }>;
+  };
+
+  manipulationCheck: {
+    reportedInduction: Record<string, number>;
+    scoresByGroup: Record<string, {
+      avgEmotionUsage: number;
+      avgReasonUsage: number;
+    }>;
+  };
+
+  demographics: {
+    age: { mean: number; sd: number; min: number; max: number };
+    gender: Record<string, number>;
+  };
 }
