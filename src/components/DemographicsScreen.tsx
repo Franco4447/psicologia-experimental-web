@@ -293,7 +293,7 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
               {
                 id: 'Otros',
                 title: 'Otros / Ninguna en particular',
-                description: 'Sistémica, humanista, neuropsicología, o sin preferencia definida.',
+                description: 'Gestalt, Integrativa / Ecléctica, otros, o sin preferencia definida.',
               },
             ].map((opt) => (
               <label
