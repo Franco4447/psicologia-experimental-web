@@ -376,7 +376,9 @@ export default function AdminDashboard() {
                         <td className="px-4 py-2 capitalize">{p.inductionGroup}</td>
                         <td className="px-4 py-2">{p.age}</td>
                         <td className="px-4 py-2">{p.gender}</td>
-                        <td className="px-4 py-2 truncate max-w-[150px]" title={p.therapeuticOrientation}>{p.therapeuticOrientation}</td>
+                        <td className="px-4 py-2 truncate max-w-[150px]" title={p.therapeuticOrientation === 'Basada en Evidencia Científica' ? 'Cognitivo-Conductual' : p.therapeuticOrientation}>
+                          {p.therapeuticOrientation === 'Basada en Evidencia Científica' ? 'Cognitivo-Conductual' : p.therapeuticOrientation}
+                        </td>
                         <td className="px-4 py-2 text-xs text-red-600">{p.exclusionReason || '-'}</td>
                         <td className="px-4 py-2 text-xs">{p.completedAt ? new Date(p.completedAt).toLocaleString() : '-'}</td>
                       </tr>
