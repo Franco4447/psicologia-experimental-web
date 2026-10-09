@@ -444,8 +444,60 @@ FROM public.participants p
 JOIN public.responses r ON p.id = r.participant_id
 ORDER BY p.created_at DESC, r.presentation_order ASC;
 
+-- View with one row per participant (/api/admin/export-xlsx)
+CREATE OR REPLACE VIEW public.v_dataset_participantes
+WITH (security_invoker = true) AS
+WITH cte_base AS (
+    SELECT
+      participant_id, age, gender, mc_emotion_usage, mc_reason_usage,
+      CASE
+        WHEN university = 'U.B.A.' THEN 'Universidad de Buenos Aires (UBA)'
+        WHEN university = 'UNLZ'   THEN 'Universidad Nacional de Lomas de Zamora (UNLZ)'
+        WHEN university IN ('UFLO', 'Uflo') THEN 'Universidad de Flores (UFLO)'
+        ELSE university
+      END AS university,
+      CASE
+        WHEN induction_group = 'racional'  THEN 'Razón'
+        WHEN induction_group = 'emocional' THEN 'Emoción'
+        ELSE 'Control'
+      END AS induction_group,
+      CASE
+        WHEN therapeutic_orientation = 'Basada en Evidencia Científica' THEN 'Cognitivo-Conductual'
+        ELSE therapeutic_orientation
+      END AS therapeutic_orientation,
+      CASE
+        WHEN induction_group IN ('racional', 'emocional') THEN mc_reported_induction
+        ELSE '(control)'
+      END AS mc_reported_induction,
+      is_false_memory, is_false_belief, is_true_memory, response_time_ms
+    FROM public.v_experimental_dataset_long
+    WHERE is_included = true
+), cte_participants AS (
+    SELECT DISTINCT
+      participant_id AS id_participante, age AS edad, gender AS genero,
+      university AS universidad, induction_group AS grupo_induccion,
+      therapeutic_orientation AS orientacion_terapeutica,
+      mc_reported_induction AS induccion_reportada,
+      mc_emotion_usage AS emocion_reportada, mc_reason_usage AS razon_reportada
+    FROM cte_base
+), cte_metrics AS (
+    SELECT
+      participant_id AS id_participante,
+      SUM(is_false_memory) AS false_memory,
+      SUM(is_false_belief) AS false_belief,
+      SUM(is_true_memory)  AS true_memory,
+      CAST(AVG(response_time_ms / 1000) AS numeric(5,2)) AS promedio_segs_respuesta
+    FROM cte_base
+    GROUP BY participant_id
+)
+SELECT p.*, m.false_memory, m.false_belief, m.true_memory, m.promedio_segs_respuesta
+FROM cte_participants p
+INNER JOIN cte_metrics m ON p.id_participante = m.id_participante
+WHERE p.emocion_reportada IS NOT NULL;
+
 GRANT SELECT ON public.v_admin_stats TO service_role;
 GRANT SELECT ON public.v_experimental_dataset_long TO service_role;
+GRANT SELECT ON public.v_dataset_participantes TO service_role;
 
 -- ----------------------------------------------------------------------------
 -- 11. Cleanup Abandoned Sessions
