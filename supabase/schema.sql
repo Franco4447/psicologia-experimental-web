@@ -379,9 +379,10 @@ GRANT INSERT ON TABLE public.responses TO anon, authenticated;
 GRANT ALL ON TABLE public.participants TO service_role;
 GRANT ALL ON TABLE public.responses TO service_role;
 
-GRANT EXECUTE ON FUNCTION public.assign_induction_group() TO anon, authenticated, service_role;
--- Las funciones se crean con EXECUTE para PUBLIC. Solo assign_induction_group, que llama el servidor,
--- conserva el acceso de anon; las otras dos las llama únicamente el servidor (service_role).
+REVOKE EXECUTE ON FUNCTION public.assign_induction_group() FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.assign_induction_group() TO service_role;
+-- Las funciones se crean con EXECUTE para PUBLIC. Las tres las llama únicamente el servidor
+-- (service_role), así que se revoca el acceso a PUBLIC, anon y authenticated.
 REVOKE EXECUTE ON FUNCTION public.create_participant_session(UUID, INT, VARCHAR, BOOLEAN, VARCHAR, TEXT, BOOLEAN, VARCHAR, VARCHAR, VARCHAR, VARCHAR, TEXT) FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.create_participant_session(UUID, INT, VARCHAR, BOOLEAN, VARCHAR, TEXT, BOOLEAN, VARCHAR, VARCHAR, VARCHAR, VARCHAR, TEXT) TO service_role;
 
