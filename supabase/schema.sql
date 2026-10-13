@@ -510,15 +510,17 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
+    -- Saca del balance de grupos las sesiones iniciadas hace más de 1 hora, pero
+    -- conserva el grupo, el conjunto de noticias y el motivo de exclusión original,
+    -- para poder analizar el abandono por condición. Quien era elegible queda con
+    -- 'session_timeout_1h'; quien ya estaba excluido conserva su motivo.
     UPDATE public.participants
-    SET 
+    SET
         status = 'abandoned',
         is_included = false,
-        exclusion_reason = 'session_timeout_1h',
-        induction_group = 'control',
-        fake_news_set = 'control_random'
-    WHERE 
-        status = 'started' 
+        exclusion_reason = COALESCE(exclusion_reason, 'session_timeout_1h')
+    WHERE
+        status = 'started'
         AND created_at < NOW() - INTERVAL '1 hour';
 END;
 $$;
