@@ -1,7 +1,8 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import {
   ALL_STIMULI,
@@ -26,8 +27,8 @@ import {
 } from './harness/csvValidator.ts';
 import type { DemographicsInput } from './harness/types.ts';
 
-// Path to image stimuli on disk
-const ASSET_DIR = 'C:\\Users\\Fmendezcasariego\\OneDrive\\Carpetas\\Educación\\Universidad\\Favaloro\\Psicología\\2do Año\\Psicología Experimental\\PARCIAL 2 - INVESTIGACIÓN\\Noticias\\noticias imagenes';
+// Path to image stimuli on disk (the same folder Next.js serves as /noticias)
+const ASSET_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'public', 'noticias');
 
 describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
   const engine = new ExperimentEngine();
@@ -593,8 +594,12 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
     test('F11.5: All 28 image files physically exist on disk and have non-zero size', () => {
       for (let id = 1; id <= 28; id++) {
         const filename = resolveImageFileName(id);
-        const fullPath = join(ASSET_DIR, filename);
-        assert.ok(existsSync(fullPath), `Missing image file on disk: ${fullPath}`);
+        // The app falls back to the other extension when the first one fails (StimulusReadingScreen),
+        // so a file is valid under either .jpg or .png.
+        const stem = filename.replace(/\.(jpg|png)$/, '');
+        const fullPath = [join(ASSET_DIR, filename), join(ASSET_DIR, `${stem}.jpg`), join(ASSET_DIR, `${stem}.png`)]
+          .find((candidate) => existsSync(candidate));
+        assert.ok(fullPath, `Missing image file on disk: ${join(ASSET_DIR, stem)}.(jpg|png)`);
         const stats = statSync(fullPath);
         assert.ok(stats.size > 1000, `Image file ${filename} is unexpectedly small: ${stats.size} bytes`);
       }
