@@ -386,7 +386,8 @@ GRANT EXECUTE ON FUNCTION public.create_participant_session(UUID, INT, VARCHAR, 
 -- 10. Analytical Views (for Admin Dashboard & CSV Export)
 -- ----------------------------------------------------------------------------
 -- View for Admin Dashboard Stats (/api/admin/stats)
-CREATE OR REPLACE VIEW public.v_admin_stats AS
+CREATE OR REPLACE VIEW public.v_admin_stats
+WITH (security_invoker = true) AS
 WITH grp_counts AS (
     SELECT 
         COUNT(*) FILTER (WHERE induction_group = 'racional') AS n_racional,
@@ -409,7 +410,8 @@ SELECT
 FROM public.participants;
 
 -- View for Long-Format CSV Export (/api/admin/export-csv)
-CREATE OR REPLACE VIEW public.v_experimental_dataset_long AS
+CREATE OR REPLACE VIEW public.v_experimental_dataset_long
+WITH (security_invoker = true) AS
 SELECT 
     p.id AS participant_id,
     p.created_at,
@@ -500,6 +502,10 @@ WHERE p.emocion_reportada IS NOT NULL;
 GRANT SELECT ON public.v_admin_stats TO service_role;
 GRANT SELECT ON public.v_experimental_dataset_long TO service_role;
 GRANT SELECT ON public.v_dataset_participantes TO service_role;
+
+-- Supabase da SELECT a anon y authenticated por defecto en los objetos nuevos. Las vistas
+-- contienen datos de participantes y solo las lee el servidor (service_role).
+REVOKE ALL ON public.v_admin_stats, public.v_experimental_dataset_long, public.v_dataset_participantes FROM anon, authenticated;
 
 -- ----------------------------------------------------------------------------
 -- 11. Cleanup Abandoned Sessions
