@@ -2,10 +2,12 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { argentineUniversities } from '@/data/universities';
+import { RESIDENCE_OPTIONS, isValidResidence } from '@/data/residence';
 import type {
   Gender,
   TherapeuticOrientation,
   ParticipantDemographicsInput,
+  Residence,
 } from '@/types/experiment';
 import { UserCheck, AlertCircle, ArrowRight } from 'lucide-react';
 
@@ -27,6 +29,7 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
     initialData?.therapeuticOrientation || ''
   );
   const [university, setUniversity] = useState<string>(initialData?.university || '');
+  const [residence, setResidence] = useState<Residence | ''>(initialData?.residence || '');
   const [hasMemoryCondition, setHasMemoryCondition] = useState<boolean | null>(
     typeof initialData?.hasMemoryCondition === 'boolean' ? initialData.hasMemoryCondition : null
   );
@@ -92,12 +95,17 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
       errs.university = 'Debe indicar la universidad o institución.';
     }
 
-    // 6. Memory condition validation
+    // 6. Residence validation
+    if (!isValidResidence(residence)) {
+      errs.residence = 'Debe indicar la provincia o jurisdicción de residencia.';
+    }
+
+    // 7. Memory condition validation
     if (hasMemoryCondition === null || typeof hasMemoryCondition !== 'boolean') {
       errs.hasMemoryCondition = 'Debe indicar si presenta alguna condición de memoria.';
     }
 
-    // 7. Visual difficulty validation
+    // 8. Visual difficulty validation
     if (hasVisualDifficulty === null || typeof hasVisualDifficulty !== 'boolean') {
       errs.hasVisualDifficulty = 'Debe indicar si presenta alguna dificultad visual no corregida.';
     }
@@ -114,6 +122,7 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
             studiesPsychology: studiesPsychology as boolean,
             therapeuticOrientation: therapeuticOrientation as TherapeuticOrientation,
             university: university.trim(),
+            residence: residence as Residence,
             hasMemoryCondition: hasMemoryCondition as boolean,
             hasVisualDifficulty: hasVisualDifficulty as boolean,
           }
@@ -374,10 +383,42 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
           )}
         </div>
 
-        {/* Field 6: Memory Condition */}
+        {/* Field 6: Residence */}
+        <div>
+          <label htmlFor="residence-select" className="block text-sm font-semibold text-slate-900 mb-1">
+            6. Provincia o jurisdicción de residencia <span className="text-rose-500">*</span>
+          </label>
+          <select
+            id="residence-select"
+            value={residence}
+            onChange={(e) => {
+              setResidence(e.target.value as Residence | '');
+              if (errors.residence) setErrors((prev) => ({ ...prev, residence: '' }));
+            }}
+            className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 transition-colors focus:outline-none focus:ring-2 ${
+              errors.residence
+                ? 'border-rose-300 focus:ring-rose-500 bg-rose-50/30'
+                : 'border-slate-300 focus:ring-indigo-500 bg-white'
+            }`}
+          >
+            <option value="" disabled>
+              Seleccione una opción
+            </option>
+            {RESIDENCE_OPTIONS.map((opt) => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
+          {errors.residence && (
+            <p className="mt-1 text-xs text-rose-600 font-medium">{errors.residence}</p>
+          )}
+        </div>
+
+        {/* Field 7: Memory Condition */}
         <div>
           <label className="block text-sm font-semibold text-slate-900 mb-2">
-            6. ¿Presenta alguna condición o diagnóstico que afecte significativamente los procesos de memoria y pueda interferir con la realización de la tarea? <span className="text-rose-500">*</span>
+            7. ¿Presenta alguna condición o diagnóstico que afecte significativamente los procesos de memoria y pueda interferir con la realización de la tarea? <span className="text-rose-500">*</span>
           </label>
           <div className="grid grid-cols-2 gap-3 max-w-xs">
             {[
@@ -413,10 +454,10 @@ export const DemographicsScreen: React.FC<DemographicsScreenProps> = ({
           )}
         </div>
 
-        {/* Field 7: Visual Difficulty */}
+        {/* Field 8: Visual Difficulty */}
         <div>
           <label className="block text-sm font-semibold text-slate-900 mb-2">
-            7. ¿Presenta una dificultad visual no corregida que impida realizar adecuadamente la tarea de lectura dentro del tiempo establecido? <span className="text-rose-500">*</span>
+            8. ¿Presenta una dificultad visual no corregida que impida realizar adecuadamente la tarea de lectura dentro del tiempo establecido? <span className="text-rose-500">*</span>
           </label>
           <div className="grid grid-cols-2 gap-3 max-w-xs">
             {[

@@ -19,10 +19,12 @@ import {
   type ParticipantUpdate,
 } from '@/lib/supabase';
 import { evaluateInclusion } from '@/data/stimuli';
+import { isValidResidence } from '@/data/residence';
 import type {
   InductionGroup,
   TherapeuticOrientation,
   Gender,
+  Residence,
   FakeNewsSet,
   DeviceType,
   SessionStatus,
@@ -74,6 +76,7 @@ export interface SessionCreateBody {
   studiesPsychology: boolean;
   therapeuticOrientation: TherapeuticOrientation;
   university: string;
+  residence: Residence;
   hasMemoryCondition: boolean;
   hasVisualDifficulty: boolean;
   deviceType?: DeviceType;
@@ -102,6 +105,7 @@ export async function POST(req: NextRequest) {
       studiesPsychology,
       therapeuticOrientation,
       university,
+      residence,
       hasMemoryCondition,
       hasVisualDifficulty,
       deviceType,
@@ -142,6 +146,10 @@ export async function POST(req: NextRequest) {
       errors.push('La institución o universidad es obligatoria.');
     }
 
+    if (!isValidResidence(residence)) {
+      errors.push('Debe indicar una provincia o jurisdicción de residencia válida.');
+    }
+
     if (hasMemoryCondition === undefined || typeof hasMemoryCondition !== 'boolean') {
       errors.push('Debe indicar si presenta alguna condición de memoria (booleano).');
     }
@@ -166,6 +174,7 @@ export async function POST(req: NextRequest) {
       age,
       studiesPsychology,
       therapeuticOrientation,
+      residence,
       hasMemoryCondition,
       hasVisualDifficulty,
     });
@@ -229,6 +238,7 @@ export async function POST(req: NextRequest) {
       studies_psychology: studiesPsychology,
       therapeutic_orientation: therapeuticOrientation,
       university: university.trim().slice(0, 200),
+      residence,
       is_included: isIncluded,
       exclusion_reason: exclusionReason,
       induction_group: inductionGroup,
@@ -273,6 +283,7 @@ export async function POST(req: NextRequest) {
       studiesPsychology,
       therapeuticOrientation,
       university: university.trim(),
+      residence,
       isIncluded,
       exclusionReason,
       inductionGroup,

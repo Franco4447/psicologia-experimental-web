@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS public.participants (
     studies_psychology BOOLEAN NOT NULL,
     therapeutic_orientation VARCHAR(100) NOT NULL,
     university TEXT NOT NULL,
+    residence VARCHAR(60) NULL,
     is_included BOOLEAN NOT NULL,
     exclusion_reason VARCHAR(100) NULL,
     induction_group VARCHAR(50) NOT NULL,
@@ -45,7 +46,7 @@ CREATE TABLE IF NOT EXISTS public.participants (
     CONSTRAINT chk_participant_orientation 
         CHECK (therapeutic_orientation IN ('Psicoanálisis', 'Basada en Evidencia Científica', 'Otros')),
     CONSTRAINT chk_participant_exclusion_reason 
-        CHECK (exclusion_reason IS NULL OR exclusion_reason IN ('menor_de_edad', 'no_estudia_psicologia', 'orientacion_otros', 'session_timeout_1h', 'condicion_memoria', 'dificultad_visual')),
+        CHECK (exclusion_reason IS NULL OR exclusion_reason IN ('menor_de_edad', 'no_estudia_psicologia', 'orientacion_otros', 'session_timeout_1h', 'condicion_memoria', 'dificultad_visual', 'fuera_de_rango_etario', 'fuera_de_region')),
     CONSTRAINT chk_participant_induction_group 
         CHECK (induction_group IN ('racional', 'emocional', 'control')),
     CONSTRAINT chk_participant_fake_news_set 
@@ -439,7 +440,8 @@ SELECT
     COALESCE(p.user_agent, '') AS user_agent,
     COALESCE(p.mc_reported_induction, '') AS mc_reported_induction,
     p.mc_emotion_usage,
-    p.mc_reason_usage
+    p.mc_reason_usage,
+    COALESCE(p.residence, '') AS residence
 FROM public.participants p
 JOIN public.responses r ON p.id = r.participant_id
 ORDER BY p.created_at DESC, r.presentation_order ASC;
@@ -486,7 +488,7 @@ WITH cte_base AS (
       SUM(is_false_memory) AS false_memory,
       SUM(is_false_belief) AS false_belief,
       SUM(is_true_memory)  AS true_memory,
-      CAST(AVG(response_time_ms / 1000) AS numeric(5,2)) AS promedio_segs_respuesta
+      CAST(AVG(response_time_ms / 1000.0) AS numeric(5,2)) AS promedio_segs_respuesta
     FROM cte_base
     GROUP BY participant_id
 )

@@ -53,6 +53,7 @@ export interface SessionRegistrationPayload {
   studiesPsychology: boolean;
   therapeuticOrientation: string;
   university: string;
+  residence: string;
   hasMemoryCondition?: boolean;
   hasVisualDifficulty?: boolean;
   isIncluded: boolean;
@@ -251,6 +252,7 @@ export async function registerSession(
     studiesPsychology: demographics.studiesPsychology,
     therapeuticOrientation: demographics.therapeuticOrientation,
     university: demographics.university,
+    residence: demographics.residence,
     hasMemoryCondition: demographics.hasMemoryCondition,
     hasVisualDifficulty: demographics.hasVisualDifficulty,
     isIncluded,
