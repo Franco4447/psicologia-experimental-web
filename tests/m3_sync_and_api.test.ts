@@ -159,6 +159,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
+          residence: 'Ciudad Autónoma de Buenos Aires',
           hasMemoryCondition: false,
           hasVisualDifficulty: false,
         }),
@@ -177,6 +178,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Favaloro',
+          residence: 'Ciudad Autónoma de Buenos Aires',
           hasMemoryCondition: false,
           hasVisualDifficulty: false,
         }),
@@ -193,6 +195,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Invalida',
           university: 'Favaloro',
+          residence: 'Ciudad Autónoma de Buenos Aires',
           hasMemoryCondition: false,
           hasVisualDifficulty: false,
         }),
@@ -209,6 +212,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: '   ',
+          residence: 'Ciudad Autónoma de Buenos Aires',
           hasMemoryCondition: false,
           hasVisualDifficulty: false,
         }),
@@ -226,6 +230,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'Universidad Favaloro',
+          residence: 'Ciudad Autónoma de Buenos Aires',
           hasMemoryCondition: false,
           hasVisualDifficulty: false,
         }),
@@ -249,6 +254,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: false,
           therapeuticOrientation: 'Psicoanálisis',
           university: 'UBA',
+          residence: 'Ciudad Autónoma de Buenos Aires',
           hasMemoryCondition: false,
           hasVisualDifficulty: false,
         }),
@@ -272,6 +278,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
           studiesPsychology: true,
           therapeuticOrientation: 'Otros',
           university: 'Favaloro',
+          residence: 'Ciudad Autónoma de Buenos Aires',
           hasMemoryCondition: false,
           hasVisualDifficulty: false,
         }),
@@ -328,6 +335,76 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
 
       const patchRes = await sessionPatch(patchReq);
       assert.equal(patchRes.status, 400);
+    });
+
+    test('2.8: POST rejects a missing or unknown residence with HTTP 400', async () => {
+      for (const residence of [undefined, 'Montevideo']) {
+        const req = new NextRequest('http://localhost:3000/api/session', {
+          method: 'POST',
+          body: JSON.stringify({
+            age: 24,
+            gender: 'Femenino',
+            studiesPsychology: true,
+            therapeuticOrientation: 'Psicoanálisis',
+            university: 'Favaloro',
+            residence,
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
+          }),
+        });
+        const res = await sessionPost(req);
+        assert.equal(res.status, 400);
+        const data = await res.json();
+        assert.ok(data.details.some((e: string) => e.includes('residencia')));
+      }
+    });
+
+    test('2.9: POST marks as excluded a participant living outside CABA / Provincia de Buenos Aires', async () => {
+      const req = new NextRequest('http://localhost:3000/api/session', {
+        method: 'POST',
+        body: JSON.stringify({
+          age: 30,
+          gender: 'Femenino',
+          studiesPsychology: true,
+          therapeuticOrientation: 'Basada en Evidencia Científica',
+          university: 'UNC',
+          residence: 'Córdoba',
+          hasMemoryCondition: false,
+          hasVisualDifficulty: false,
+        }),
+      });
+      const res = await sessionPost(req);
+      assert.equal(res.status, 201);
+      const data = await res.json();
+      assert.equal(data.session.isIncluded, false);
+      assert.equal(data.session.exclusionReason, 'fuera_de_region');
+      assert.equal(data.session.inductionGroup, 'control');
+      assert.equal(data.session.fakeNewsSet, 'control_random');
+    });
+
+    test('2.10: POST marks as excluded a participant older than 65 and includes one aged 65', async () => {
+      const post = (age: number) =>
+        sessionPost(
+          new NextRequest('http://localhost:3000/api/session', {
+            method: 'POST',
+            body: JSON.stringify({
+              age,
+              gender: 'Masculino',
+              studiesPsychology: true,
+              therapeuticOrientation: 'Psicoanálisis',
+              university: 'UBA',
+              residence: 'Provincia de Buenos Aires',
+              hasMemoryCondition: false,
+              hasVisualDifficulty: false,
+            }),
+          })
+        );
+      const older = await (await post(66)).json();
+      assert.equal(older.session.isIncluded, false);
+      assert.equal(older.session.exclusionReason, 'fuera_de_rango_etario');
+      const limit = await (await post(65)).json();
+      assert.equal(limit.session.isIncluded, true);
+      assert.equal(limit.session.residence, 'Provincia de Buenos Aires');
     });
   });
 
@@ -540,6 +617,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Favaloro',
+        residence: 'Ciudad Autónoma de Buenos Aires',
         hasMemoryCondition: false,
         hasVisualDifficulty: false,
       };
@@ -572,6 +650,7 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'Favaloro',
+        residence: 'Ciudad Autónoma de Buenos Aires',
         hasMemoryCondition: false,
         hasVisualDifficulty: false,
       };

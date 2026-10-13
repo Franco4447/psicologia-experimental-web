@@ -33,6 +33,37 @@ export type TherapeuticOrientation =
 export type Gender = 'Femenino' | 'Masculino' | 'Otro';
 
 /**
+ * Self-reported jurisdiction of residence (23 Argentine provinces + CABA, or 'Otro').
+ * Only CABA and Provincia de Buenos Aires satisfy the inclusion criterion.
+ */
+export type Residence =
+  | 'Ciudad Autónoma de Buenos Aires'
+  | 'Provincia de Buenos Aires'
+  | 'Catamarca'
+  | 'Chaco'
+  | 'Chubut'
+  | 'Córdoba'
+  | 'Corrientes'
+  | 'Entre Ríos'
+  | 'Formosa'
+  | 'Jujuy'
+  | 'La Pampa'
+  | 'La Rioja'
+  | 'Mendoza'
+  | 'Misiones'
+  | 'Neuquén'
+  | 'Río Negro'
+  | 'Salta'
+  | 'San Juan'
+  | 'San Luis'
+  | 'Santa Cruz'
+  | 'Santa Fe'
+  | 'Santiago del Estero'
+  | 'Tierra del Fuego'
+  | 'Tucumán'
+  | 'Otro';
+
+/**
  * Fake news set assigned to the participant
  * - 'psicoanalisis': 8 fake news attacking cognitive/behavioral therapy (IDs: 14, 16, 18, 20, 21, 23, 25, 27)
  * - 'evidencia': 8 fake news attacking psychoanalysis/Freudian theory (IDs: 13, 15, 17, 19, 22, 24, 26, 28)
@@ -49,6 +80,8 @@ export type ExclusionReason =
   | 'orientacion_otros'
   | 'condicion_memoria'
   | 'dificultad_visual'
+  | 'fuera_de_rango_etario'
+  | 'fuera_de_region'
   | null;
 
 /**
@@ -124,6 +157,7 @@ export interface ParticipantDemographicsInput {
   studiesPsychology: boolean;
   therapeuticOrientation: TherapeuticOrientation;
   university: string;
+  residence: Residence;
   hasMemoryCondition: boolean;
   hasVisualDifficulty: boolean;
 }
@@ -148,6 +182,7 @@ export interface ParticipantSession {
   studiesPsychology: boolean;
   therapeuticOrientation: TherapeuticOrientation;
   university: string;
+  residence?: Residence | null;
   isIncluded: boolean;            // Screening result
   exclusionReason?: ExclusionReason;
   inductionGroup: InductionGroup; // 'racional' | 'emocional' | 'control'
@@ -225,6 +260,7 @@ export interface CsvExportRow {
   studies_psychology: boolean;
   therapeutic_orientation: string;
   university: string;
+  residence: string;
   is_included: boolean;
   exclusion_reason: string;
   induction_group: string;

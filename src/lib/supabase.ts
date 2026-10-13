@@ -26,6 +26,7 @@ export interface Database {
           studies_psychology: boolean;
           therapeutic_orientation: string;
           university: string;
+          residence: string | null;
           is_included: boolean;
           exclusion_reason: string | null;
           induction_group: string;
@@ -48,6 +49,7 @@ export interface Database {
           studies_psychology: boolean;
           therapeutic_orientation: string;
           university: string;
+          residence?: string | null;
           is_included: boolean;
           exclusion_reason?: string | null;
           induction_group: string;
@@ -70,6 +72,7 @@ export interface Database {
           studies_psychology?: boolean;
           therapeutic_orientation?: string;
           university?: string;
+          residence?: string | null;
           is_included?: boolean;
           exclusion_reason?: string | null;
           induction_group?: string;
@@ -353,6 +356,7 @@ export class InMemoryMockStore {
       studies_psychology: input.studies_psychology,
       therapeutic_orientation: input.therapeutic_orientation,
       university: input.university,
+      residence: input.residence ?? null,
       is_included: input.is_included,
       exclusion_reason: input.exclusion_reason || null,
       induction_group: input.induction_group,

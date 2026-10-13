@@ -15,6 +15,7 @@ import {
   TherapeuticOrientation,
   InclusionEvaluation
 } from '../types/experiment';
+import { INCLUDED_RESIDENCES } from './residence';
 
 
 // ============================================================================
@@ -446,19 +447,25 @@ export const INDUCTION_PROMPTS: Readonly<Record<InductionGroup, InductionPrompt>
 // 5. Screening & Inclusion Evaluation Algorithm
 // ============================================================================
 
+/** Upper bound of the target population's age range (inclusive). */
+export const MAX_INCLUDED_AGE = 65;
+
 /**
  * Evaluates whether a participant meets the academic inclusion criteria:
- * 1. Must be >= 18 years of age.
+ * 1. Must be between 18 and 65 years of age.
  * 2. Must be an active student or practitioner of Psychology (`studiesPsychology === true`).
- * 3. Must declare affinity with either 'Psicoanálisis' or 'Basada en Evidencia Científica'.
- * 
- * Participants answering 'Otros' or not studying psychology are routed through the
- * Control condition with a cohesive fake set, but marked as excluded to prevent quota skew.
+ * 3. Must reside in CABA or Provincia de Buenos Aires.
+ * 4. Must declare affinity with either 'Psicoanálisis' or 'Basada en Evidencia Científica'
+ *    (shown to participants as 'Cognitivo-Conductual').
+ *
+ * Participants who fail any criterion are routed through the Control condition with a
+ * cohesive fake set, but marked as excluded to prevent quota skew.
  */
 export function evaluateInclusion(demographics: {
   age: number;
   studiesPsychology: boolean;
   therapeuticOrientation: TherapeuticOrientation;
+  residence?: string | null;
   hasMemoryCondition?: boolean;
   hasVisualDifficulty?: boolean;
 }): InclusionEvaluation {
@@ -466,6 +473,13 @@ export function evaluateInclusion(demographics: {
     return {
       isIncluded: false,
       exclusionReason: 'menor_de_edad'
+    };
+  }
+
+  if (demographics.age > MAX_INCLUDED_AGE) {
+    return {
+      isIncluded: false,
+      exclusionReason: 'fuera_de_rango_etario'
     };
   }
 
@@ -487,6 +501,13 @@ export function evaluateInclusion(demographics: {
     return {
       isIncluded: false,
       exclusionReason: 'no_estudia_psicologia'
+    };
+  }
+
+  if (!(INCLUDED_RESIDENCES as readonly (string | null | undefined)[]).includes(demographics.residence)) {
+    return {
+      isIncluded: false,
+      exclusionReason: 'fuera_de_region'
     };
   }
 
