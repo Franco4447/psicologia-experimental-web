@@ -3,16 +3,12 @@
  * Target location: src/lib/assets.ts
  */
 
-export const NOTICIA_26_PNG = 'Noticia_26.png';
-
 /**
  * Returns the exact filename for a given stimulus ID.
- * Accurately handles Noticia_26.png vs 2-digit zero-padded Noticia_XX.jpg.
+ * All 28 stimulus images are served as zero-padded `Noticia_XX.jpg`.
+ * (Noticia_26.jpg holds PNG data under a .jpg name; browsers decode it by content.)
  */
 export function getStimulusImageFileName(id: number): string {
-  if (id === 26) {
-    return NOTICIA_26_PNG;
-  }
   const padded = String(id).padStart(2, '0');
   return `Noticia_${padded}.jpg`;
 }
@@ -28,9 +24,6 @@ export function getStimulusImagePath(id: number): string {
  * Returns alternative fallback path in case primary extension fails.
  */
 export function getStimulusAlternativePath(id: number): string {
-  if (id === 26) {
-    return '/noticias/Noticia_26.jpg';
-  }
   const padded = String(id).padStart(2, '0');
   return `/noticias/Noticia_${padded}.png`;
 }

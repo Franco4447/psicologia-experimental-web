@@ -319,7 +319,7 @@ export const STIMULI: readonly StimulusItem[] = Object.freeze([
     title: 'Suspenden la licencia de un psicoanalista que desvestía a sus pacientes para ayudarlos a conectarse con sus cuerpos.',
     englishTitle: 'License suspended for psychoanalyst who undressed patients to help them connect with their bodies',
     isFake: true,
-    imageFileName: 'Noticia_26.jpg', // NOTE: CRITICAL VARIATION - THIS ASSET IS A PNG FILE
+    imageFileName: 'Noticia_26.jpg', // NOTE: the file holds PNG data under a .jpg name; browsers decode it by content
     congruence: 'evidencia',
     targetCritique: 'Ataca Psicoanálisis / Freudiano',
     mirrorPairId: 18,
@@ -665,7 +665,7 @@ export function classifyResponse(
 
 /**
  * Resolves the public URL path for a stimulus image asset.
- * Automatically accounts for the unique `.png` extension of Noticia_26.
+ * All 28 images are served as `.jpg`.
  * 
  * @param newsIdOrItem Number (1-28) or StimulusItem object
  * @param basePath Base path where assets are hosted (default: '/noticias')
@@ -684,8 +684,7 @@ export function getStimulusImagePath(
   // Fallback if numerical ID given not found in registry
   const idNum = typeof newsIdOrItem === 'number' ? newsIdOrItem : 1;
   const paddedId = String(idNum).padStart(2, '0');
-  const extension = idNum === 26 ? 'png' : 'jpg';
-  return `${basePath}/Noticia_${paddedId}.${extension}`;
+  return `${basePath}/Noticia_${paddedId}.jpg`;
 }
 
 /**

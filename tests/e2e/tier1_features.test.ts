@@ -571,8 +571,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
   // FEATURE 11: Asset Extension Resolver
   // -------------------------------------------------------------
   describe('F11: Asset Extension Resolver', () => {
-    test('F11.1: Stimulus 26 strictly resolves to Noticia_26.png', () => {
-      assert.equal(resolveImageFileName(26), 'Noticia_26.png');
+    test('F11.1: Stimulus 26 resolves to Noticia_26.jpg', () => {
+      assert.equal(resolveImageFileName(26), 'Noticia_26.jpg');
     });
 
     test('F11.2: Stimulus 1 resolves to Noticia_01.jpg', () => {
@@ -583,9 +583,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
       assert.equal(resolveImageFileName(28), 'Noticia_28.jpg');
     });
 
-    test('F11.4: All 27 other stimuli have .jpg extension', () => {
+    test('F11.4: All 28 stimuli have .jpg extension', () => {
       for (let id = 1; id <= 28; id++) {
-        if (id === 26) continue;
         const filename = resolveImageFileName(id);
         assert.ok(filename.endsWith('.jpg'), `Expected ${filename} to end with .jpg`);
       }
@@ -594,12 +593,8 @@ describe('Tier 1: Feature Coverage (95 Assertions across 19 Features)', () => {
     test('F11.5: All 28 image files physically exist on disk and have non-zero size', () => {
       for (let id = 1; id <= 28; id++) {
         const filename = resolveImageFileName(id);
-        // The app falls back to the other extension when the first one fails (StimulusReadingScreen),
-        // so a file is valid under either .jpg or .png.
-        const stem = filename.replace(/\.(jpg|png)$/, '');
-        const fullPath = [join(ASSET_DIR, filename), join(ASSET_DIR, `${stem}.jpg`), join(ASSET_DIR, `${stem}.png`)]
-          .find((candidate) => existsSync(candidate));
-        assert.ok(fullPath, `Missing image file on disk: ${join(ASSET_DIR, stem)}.(jpg|png)`);
+        const fullPath = join(ASSET_DIR, filename);
+        assert.ok(existsSync(fullPath), `Missing image file on disk: ${fullPath}`);
         const stats = statSync(fullPath);
         assert.ok(stats.size > 1000, `Image file ${filename} is unexpectedly small: ${stats.size} bytes`);
       }

@@ -14,7 +14,7 @@ export interface StimulusItem {
   id: number; // 1 to 28
   title: string;
   isFake: boolean;
-  imageFileName: string; // e.g. "Noticia_01.jpg" or "Noticia_26.png"
+  imageFileName: string; // e.g. "Noticia_01.jpg"
   congruence: 'psicoanalisis' | 'evidencia' | 'true';
 }
 

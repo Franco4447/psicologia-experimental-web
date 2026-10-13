@@ -28,8 +28,7 @@ import {
 import {
   getStimulusImageFileName,
   getStimulusImagePath as getStimulusImagePathFromLib,
-  getStimulusAlternativePath,
-  NOTICIA_26_PNG
+  getStimulusAlternativePath
 } from '../src/lib/assets';
 
 import type { TherapeuticOrientation } from '../src/types/experiment';
@@ -75,7 +74,7 @@ async function runAdversarialSuite() {
   check('1.2 Exactly 28 canonical stimuli assets exist and have non-zero size', () => {
     for (let id = 1; id <= 28; id++) {
       const padded = String(id).padStart(2, '0');
-      const filename = id === 26 ? 'Noticia_26.png' : `Noticia_${padded}.jpg`;
+      const filename = `Noticia_${padded}.jpg`;
       const fullPath = path.join(NOTICIAS_DIR, filename);
       assert(fs.existsSync(fullPath), `Asset missing from public/noticias: ${filename}`);
       const stats = fs.statSync(fullPath);
@@ -83,9 +82,9 @@ async function runAdversarialSuite() {
     }
   });
 
-  check('1.3 Noticia_26.png is a genuine, non-corrupted PNG with correct IHDR chunk and dimensions', () => {
-    const pngPath = path.join(NOTICIAS_DIR, 'Noticia_26.png');
-    assert(fs.existsSync(pngPath), 'Noticia_26.png does not exist');
+  check('1.3 Noticia_26.jpg is a genuine, non-corrupted PNG with correct IHDR chunk and dimensions', () => {
+    const pngPath = path.join(NOTICIAS_DIR, 'Noticia_26.jpg');
+    assert(fs.existsSync(pngPath), 'Noticia_26.jpg does not exist');
     const buf = fs.readFileSync(pngPath);
 
     // PNG 8-byte magic header: 89 50 4E 47 0D 0A 1A 0A
@@ -186,12 +185,12 @@ async function runAdversarialSuite() {
     // Observe that defensive copy contains the exact PNG payload to prevent 404s
     const isPng = buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47;
     assert(isPng, 'Noticia_26.jpg defensive copy must match source Noticia_26 bytes');
-    assert.strictEqual(buf.length, 409356, 'Noticia_26.jpg byte size matches Noticia_26.png');
+    assert.strictEqual(buf.length, 409631, 'Noticia_26.jpg byte size');
   });
 
-  check('1.6 Total file count in public/noticias: exactly 29 files (28 canonical + 1 defensive copy)', () => {
+  check('1.6 Total file count in public/noticias: exactly 28 files (one per stimulus)', () => {
     const files = fs.readdirSync(NOTICIAS_DIR);
-    assert.strictEqual(files.length, 29, `Expected 29 files in public/noticias, found ${files.length}`);
+    assert.strictEqual(files.length, 28, `Expected 28 files in public/noticias, found ${files.length}`);
   });
 
   // ==========================================================================
@@ -199,27 +198,26 @@ async function runAdversarialSuite() {
   // ==========================================================================
   console.log('\n--- SECTION 2: Asset Resolver Contracts & Extension Routing ---');
 
-  check('2.1 getStimulusImagePath from src/data/stimuli routes ID 26 to .png', () => {
+  check('2.1 getStimulusImagePath from src/data/stimuli routes ID 26 to .jpg', () => {
     const path26 = getStimulusImagePathFromData(26);
-    assert.strictEqual(path26, '/noticias/Noticia_26.png');
+    assert.strictEqual(path26, '/noticias/Noticia_26.jpg');
   });
 
-  check('2.2 getStimulusImagePath from src/lib/assets routes ID 26 to .png', () => {
+  check('2.2 getStimulusImagePath from src/lib/assets routes ID 26 to .jpg', () => {
     const path26 = getStimulusImagePathFromLib(26);
-    assert.strictEqual(path26, '/noticias/Noticia_26.png');
+    assert.strictEqual(path26, '/noticias/Noticia_26.jpg');
   });
 
-  check('2.3 getStimulusImageFileName from src/lib/assets returns Noticia_26.png', () => {
+  check('2.3 getStimulusImageFileName from src/lib/assets returns Noticia_26.jpg', () => {
     const fn26 = getStimulusImageFileName(26);
-    assert.strictEqual(fn26, 'Noticia_26.png');
-    assert.strictEqual(fn26, NOTICIA_26_PNG);
+    assert.strictEqual(fn26, 'Noticia_26.jpg');
   });
 
-  check('2.4 StimulusItem #26 in STIMULI array specifies imageFileName === "Noticia_26.png"', () => {
+  check('2.4 StimulusItem #26 in STIMULI array specifies imageFileName === "Noticia_26.jpg"', () => {
     const item26 = STIMULI.find(s => s.id === 26);
     assert(item26, 'Item 26 not found in STIMULI');
-    assert.strictEqual(item26.imageFileName, 'Noticia_26.png');
-    assert.strictEqual(getStimulusImagePathFromData(item26), '/noticias/Noticia_26.png');
+    assert.strictEqual(item26.imageFileName, 'Noticia_26.jpg');
+    assert.strictEqual(getStimulusImagePathFromData(item26), '/noticias/Noticia_26.jpg');
   });
 
   check('2.5 All other 27 stimuli resolve to .jpg in both resolvers', () => {
@@ -238,7 +236,7 @@ async function runAdversarialSuite() {
   check('2.6 Custom basePath parameter in src/data/stimuli resolver', () => {
     assert.strictEqual(
       getStimulusImagePathFromData(26, 'https://cdn.example.com/assets'),
-      'https://cdn.example.com/assets/Noticia_26.png'
+      'https://cdn.example.com/assets/Noticia_26.jpg'
     );
     assert.strictEqual(
       getStimulusImagePathFromData(1, 'https://cdn.example.com/assets'),
@@ -247,8 +245,7 @@ async function runAdversarialSuite() {
   });
 
   check('2.7 Fallback alternative paths via getStimulusAlternativePath', () => {
-    // For 26, primary is .png, alternative is .jpg
-    assert.strictEqual(getStimulusAlternativePath(26), '/noticias/Noticia_26.jpg');
+        assert.strictEqual(getStimulusAlternativePath(26), '/noticias/Noticia_26.png');
 
     // For other IDs, primary is .jpg, alternative is .png
     assert.strictEqual(getStimulusAlternativePath(1), '/noticias/Noticia_01.png');
@@ -471,18 +468,18 @@ async function runAdversarialSuite() {
 
       // Verify specific filename for Noticia 26
       if (id === 26) {
-        assert.strictEqual(filename, 'Noticia_26.png', 'ID 26 must resolve to Noticia_26.png on disk');
+        assert.strictEqual(filename, 'Noticia_26.jpg', 'ID 26 must resolve to Noticia_26.jpg on disk');
       } else {
         assert(filename.endsWith('.jpg'), `ID ${id} must resolve to a .jpg file on disk`);
       }
     }
   });
 
-  check('6.2 Defensive fallback Noticia_26.jpg exists on disk and resolves via getStimulusAlternativePath(26)', () => {
-    const altPath26 = getStimulusAlternativePath(26);
-    assert.strictEqual(altPath26, '/noticias/Noticia_26.jpg');
+  check('6.2 Noticia_26.jpg exists on disk and its alternative path is the .png fallback', () => {
+    assert.strictEqual(getStimulusImagePathFromLib(26), '/noticias/Noticia_26.jpg');
+    assert.strictEqual(getStimulusAlternativePath(26), '/noticias/Noticia_26.png');
     const diskPath = path.join(NOTICIAS_DIR, 'Noticia_26.jpg');
-    assert(fs.existsSync(diskPath), 'Alternative path for ID 26 missing from disk');
+    assert(fs.existsSync(diskPath), 'Noticia_26.jpg missing from disk');
   });
 
   // ==========================================================================
@@ -534,8 +531,8 @@ async function runAdversarialSuite() {
   await new Promise<void>((resolve) => {
     check('8.1 preloadSingleImage and preloadStimuliBatch resolve cleanly in Node/SSR environment', async () => {
       const { preloadSingleImage, preloadStimuliBatch } = await import('../src/lib/assets');
-      const single = await preloadSingleImage('/noticias/Noticia_26.png');
-      assert.strictEqual(single, '/noticias/Noticia_26.png');
+      const single = await preloadSingleImage('/noticias/Noticia_26.jpg');
+      assert.strictEqual(single, '/noticias/Noticia_26.jpg');
 
       const batch = await preloadStimuliBatch([1, 26, 28]);
       assert.strictEqual(batch.successful.length, 3);
