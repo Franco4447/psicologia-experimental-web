@@ -204,7 +204,7 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
       assert.equal(state.responses.length, 20);
     });
 
-    test('Journey B: Evidence-Based student completes full 20-trial study with Noticia_26.png', () => {
+    test('Journey B: Evidence-Based student completes full 20-trial study with Noticia_26.jpg', () => {
       let state = getInitialExperimentState();
       state = experimentReducer(state, { type: 'START_CONSENT' });
       state = experimentReducer(state, { type: 'ACCEPT_CONSENT' });
@@ -235,10 +235,10 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         assert.equal(item.congruence, 'evidencia');
       });
 
-      // Special check: Stimulus 26 is included and has Noticia_26.png asset
+      // Special check: Stimulus 26 is included and has Noticia_26.jpg asset
       const item26 = state.deck.find((i) => i.id === 26);
       assert.ok(item26, 'Stimulus 26 must be in the Evidence-Based deck');
-      assert.equal(item26.imageFileName, 'Noticia_26.png');
+      assert.equal(item26.imageFileName, 'Noticia_26.jpg');
 
       state = experimentReducer(state, { type: 'ACKNOWLEDGE_INDUCTION' });
 

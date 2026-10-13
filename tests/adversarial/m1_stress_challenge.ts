@@ -12,7 +12,7 @@
  * 4. Excluded participant set cohesion & no mirror-pair collisions
  * 5. Zero duplicate news IDs
  * 6. Uniform Fisher-Yates shuffle distribution via Chi-Square goodness-of-fit
- * 7. Asset mapping & disk file existence (specifically Noticia_26.png)
+ * 7. Asset mapping & disk file existence (specifically Noticia_26.jpg)
  * 8. Execution latency & complexity benchmarking
  */
 
@@ -390,22 +390,22 @@ async function runEmpiricalStressChallenge() {
   }
 
   // ========================================================================
-  // CHALLENGE SUITE 7: Asset Path & Noticia_26.png Verification
+  // CHALLENGE SUITE 7: Asset Path & Noticia_26.jpg Verification
   // ========================================================================
   console.log('----------------------------------------------------------------------');
-  console.log('▶ [Challenge 7] Critical Asset Path Resolution (Noticia_26.png)');
+  console.log('▶ [Challenge 7] Critical Asset Path Resolution (Noticia_26.jpg)');
   console.log('----------------------------------------------------------------------');
 
   const item26 = STIMULI_BY_ID[26];
-  assertCondition(item26.imageFileName === 'Noticia_26.png', 'Item 26 must have imageFileName Noticia_26.png');
-  assertCondition(getStimulusImagePath(26) === '/noticias/Noticia_26.png', 'getStimulusImagePath(26) must return /noticias/Noticia_26.png');
-  assertCondition(getStimulusImagePath(item26) === '/noticias/Noticia_26.png', 'getStimulusImagePath(item26) must return /noticias/Noticia_26.png');
+  assertCondition(item26.imageFileName === 'Noticia_26.jpg', 'Item 26 must have imageFileName Noticia_26.jpg');
+  assertCondition(getStimulusImagePath(26) === '/noticias/Noticia_26.jpg', 'getStimulusImagePath(26) must return /noticias/Noticia_26.jpg');
+  assertCondition(getStimulusImagePath(item26) === '/noticias/Noticia_26.jpg', 'getStimulusImagePath(item26) must return /noticias/Noticia_26.jpg');
 
   // Verify file exists on disk
-  const file26Path = path.join(NOTICIAS_DIR, 'Noticia_26.png');
-  assertCondition(fs.existsSync(file26Path), 'Noticia_26.png missing from disk');
+  const file26Path = path.join(NOTICIAS_DIR, 'Noticia_26.jpg');
+  assertCondition(fs.existsSync(file26Path), 'Noticia_26.jpg missing from disk');
   const stat26 = fs.statSync(file26Path);
-  assertCondition(stat26.size === 409356, `Noticia_26.png size mismatch: ${stat26.size} vs 409356`);
+  assertCondition(stat26.size === 409631, `Noticia_26.jpg size mismatch: ${stat26.size} vs 409631`);
 
   // Verify all 28 assets exist and have non-zero size
   for (let id = 1; id <= 28; id++) {

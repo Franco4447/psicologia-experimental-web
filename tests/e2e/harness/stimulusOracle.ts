@@ -185,7 +185,7 @@ export const ALL_STIMULI: StimulusItem[] = [
     id: 26,
     title: 'Suspenden la licencia de un psicoanalista que desvestía a sus pacientes para ayudarlos a conectarse con sus cuerpos.',
     isFake: true,
-    imageFileName: 'Noticia_26.png', // CRITICAL: Only stimulus with .png extension!
+    imageFileName: 'Noticia_26.jpg',
     congruence: 'evidencia',
   },
   {
@@ -241,9 +241,6 @@ export function getStimulusById(id: number): StimulusItem {
 export function resolveImageFileName(id: number): string {
   if (id < 1 || id > 28) {
     throw new Error(`Invalid stimulus ID: ${id}. Valid range is 1-28.`);
-  }
-  if (id === 26) {
-    return 'Noticia_26.png';
   }
   const padded = id.toString().padStart(2, '0');
   return `Noticia_${padded}.jpg`;

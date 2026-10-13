@@ -342,8 +342,8 @@ describe('Challenger Gen3-1: R1 Visual Timer & Exposure Timing Engine', () => {
       // Also verify specialized PNG handling for Noticia_26
       const pngStimulus = STIMULI.find((s) => s.id === 26)!;
       assert.ok(pngStimulus, 'Stimulus id 26 must exist');
-      assert.strictEqual(getStimulusImagePath(pngStimulus.id), '/noticias/Noticia_26.png');
-      assert.strictEqual(getStimulusAlternativePath(pngStimulus.id), '/noticias/Noticia_26.jpg');
+      assert.strictEqual(getStimulusImagePath(pngStimulus.id), '/noticias/Noticia_26.jpg');
+      assert.strictEqual(getStimulusAlternativePath(pngStimulus.id), '/noticias/Noticia_26.png');
     });
 
     test('4.2: Double error fallback activates headline card and starts 15s timer without deadlock', () => {
