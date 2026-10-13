@@ -56,7 +56,7 @@ export const ConsentScreen: React.FC<ConsentScreenProps> = ({
       <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mb-6">
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-6 text-sm text-slate-700 leading-relaxed max-h-80 overflow-y-auto space-y-4">
           <p>
-            Somos estudiantes de la Licenciatura en Psicología de la Universidad Favaloro. En el marco de la asignatura Psicología Experimental, nos encontramos realizando una investigación con fines exclusivamente académicos cuyo objetivo general es examinar la relación entre distintas modalidades de procesamiento de la información y el recuerdo de noticias. Se invita a participar a personas mayores de 18 años que sean estudiantes o graduadas de Psicología.
+            Somos estudiantes de la Licenciatura en Psicología de la Universidad Favaloro. En el marco de la asignatura Psicología Experimental, nos encontramos realizando una investigación con fines exclusivamente académicos cuyo objetivo general es examinar la relación entre distintas modalidades de procesamiento de la información y el recuerdo de noticias. Se invita a participar a personas de 18 a 65 años que sean estudiantes o graduadas de Psicología y que residan en la Ciudad Autónoma de Buenos Aires o en la provincia de Buenos Aires.
           </p>
 
           <p className="font-semibold text-slate-900 text-xs uppercase tracking-wider text-indigo-900 mt-4">
