@@ -125,7 +125,7 @@ BEGIN
     NEW.is_true_memory  := (NEW.is_fake = false AND NEW.response_option = 1);
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = public;
 
 DROP TRIGGER IF EXISTS trg_responses_calculate_constructs ON public.responses;
 CREATE TRIGGER trg_responses_calculate_constructs
@@ -380,7 +380,10 @@ GRANT ALL ON TABLE public.participants TO service_role;
 GRANT ALL ON TABLE public.responses TO service_role;
 
 GRANT EXECUTE ON FUNCTION public.assign_induction_group() TO anon, authenticated, service_role;
-GRANT EXECUTE ON FUNCTION public.create_participant_session(UUID, INT, VARCHAR, BOOLEAN, VARCHAR, TEXT, BOOLEAN, VARCHAR, VARCHAR, VARCHAR, VARCHAR, TEXT) TO anon, authenticated, service_role;
+-- Las funciones se crean con EXECUTE para PUBLIC. Solo assign_induction_group, que llama el servidor,
+-- conserva el acceso de anon; las otras dos las llama únicamente el servidor (service_role).
+REVOKE EXECUTE ON FUNCTION public.create_participant_session(UUID, INT, VARCHAR, BOOLEAN, VARCHAR, TEXT, BOOLEAN, VARCHAR, VARCHAR, VARCHAR, VARCHAR, TEXT) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.create_participant_session(UUID, INT, VARCHAR, BOOLEAN, VARCHAR, TEXT, BOOLEAN, VARCHAR, VARCHAR, VARCHAR, VARCHAR, TEXT) TO service_role;
 
 -- ----------------------------------------------------------------------------
 -- 10. Analytical Views (for Admin Dashboard & CSV Export)
@@ -514,6 +517,7 @@ CREATE OR REPLACE FUNCTION public.cleanup_abandoned_sessions()
 RETURNS void
 LANGUAGE plpgsql
 SECURITY DEFINER
+SET search_path = public
 AS $$
 BEGIN
     -- Saca del balance de grupos las sesiones iniciadas hace más de 1 hora, pero
@@ -531,5 +535,6 @@ BEGIN
 END;
 $$;
 
+REVOKE EXECUTE ON FUNCTION public.cleanup_abandoned_sessions() FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.cleanup_abandoned_sessions() TO service_role;
 
