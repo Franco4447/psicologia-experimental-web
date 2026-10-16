@@ -31,6 +31,139 @@ const EXCLUSION_LABELS: Record<string, string> = {
 
 const exclusionLabel = (reason: string) => EXCLUSION_LABELS[reason] || reason;
 
+type InferentialAnalysis = AdminDashboardStats['inferential']['analyses'][number];
+
+const TEST_NAMES: Record<string, string> = {
+  anova: 'ANOVA de un factor',
+  welch: 'ANOVA de Welch',
+  kruskal: 'Kruskal-Wallis',
+};
+
+/** APA style: no leading zero, three decimals, "< .001" below that. */
+function formatP(p: number | null): string {
+  if (p === null || !Number.isFinite(p)) return '-';
+  if (p < 0.001) return '< .001';
+  return '= ' + p.toFixed(3).replace(/^0/, '');
+}
+
+const formatStat = (v: number, digits = 2) => (Number.isFinite(v) ? v.toFixed(digits) : '-');
+const formatSmall = (v: number) => (Number.isFinite(v) ? v.toFixed(2).replace(/^(-?)0\./, '$1.') : '-');
+
+function SignificanceBadge({ significant }: { significant: boolean }) {
+  return significant ? (
+    <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded">Significativa</span>
+  ) : (
+    <span className="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">No significativa</span>
+  );
+}
+
+function InferentialCard({ analysis, alpha }: { analysis: InferentialAnalysis; alpha: number }) {
+  const r = analysis.result;
+  return (
+    <div className="border rounded p-4">
+      <h4 className="font-semibold text-slate-800">
+        {analysis.label} <span className="text-slate-500 font-normal">({analysis.hypothesis} · {analysis.scale})</span>
+      </h4>
+      {!r ? (
+        <p className="text-sm text-slate-500 mt-2">Hace falta al menos 3 participantes analizados por grupo.</p>
+      ) : (
+        <div className="mt-3 space-y-4 text-sm">
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-left">
+              <thead className="text-slate-600">
+                <tr>
+                  <th className="pr-4 py-1 font-semibold">Grupo</th>
+                  <th className="pr-4 py-1 font-semibold">n</th>
+                  <th className="pr-4 py-1 font-semibold">M</th>
+                  <th className="pr-4 py-1 font-semibold">DE</th>
+                  <th className="pr-4 py-1 font-semibold">Mdn</th>
+                  <th className="pr-4 py-1 font-semibold">Shapiro-Wilk</th>
+                </tr>
+              </thead>
+              <tbody>
+                {r.groups.map((g, i) => {
+                  const sw = r.normality[i];
+                  return (
+                    <tr key={g.name} className="border-t">
+                      <td className="pr-4 py-1 capitalize">{g.name}</td>
+                      <td className="pr-4 py-1">{g.n}</td>
+                      <td className="pr-4 py-1">{formatStat(g.mean)}</td>
+                      <td className="pr-4 py-1">{formatStat(g.sd)}</td>
+                      <td className="pr-4 py-1">{formatStat(g.median, 1)}</td>
+                      <td className={`pr-4 py-1 ${sw.normal ? 'text-green-700' : 'text-red-600'}`}>
+                        {sw.w === null ? 'sin variabilidad' : `W = ${sw.w.toFixed(3)}, p ${formatP(sw.p)}`} {sw.normal ? '✓' : '✗'}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="bg-slate-50 rounded p-3 space-y-1">
+            <p>
+              <span className="font-medium">Normalidad:</span>{' '}
+              {r.allNormal ? 'se cumple en los 3 grupos.' : `no se cumple en ${r.normality.filter((g) => !g.normal).map((g) => g.name).join(', ')}.`}
+            </p>
+            <p>
+              <span className="font-medium">Homogeneidad de varianzas (Levene, mediana):</span>{' '}
+              F({r.levene.df1}, {r.levene.df2}) = {formatStat(r.levene.f)}, p {formatP(r.levene.p)}{' '}
+              {r.levene.homogeneous ? '✓' : '✗'}
+            </p>
+            <p>
+              <span className="font-medium">Prueba elegida:</span> {TEST_NAMES[r.test.kind]}
+              {r.test.kind === 'anova' && ' (normalidad y homogeneidad se cumplen)'}
+              {r.test.kind === 'welch' && ' (normalidad se cumple, varianzas distintas)'}
+              {r.test.kind === 'kruskal' && ' (normalidad no se cumple)'}
+            </p>
+          </div>
+
+          <p className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold">
+              {r.test.kind === 'kruskal'
+                ? `H(${r.test.df1}) = ${formatStat(r.test.statistic)}`
+                : `F(${r.test.df1}, ${r.test.kind === 'welch' ? formatStat(r.test.df2 ?? NaN) : r.test.df2}) = ${formatStat(r.test.statistic)}`}
+              , p {formatP(r.test.p)}, {r.test.effectSize.name} = {formatSmall(r.test.effectSize.value)}
+            </span>
+            <SignificanceBadge significant={r.test.significant} />
+          </p>
+
+          <div>
+            <p className="font-medium mb-1">Comparaciones entre pares ({r.postHoc.method})</p>
+            {!r.test.significant && (
+              <p className="text-xs text-slate-500 mb-1">La prueba global no es significativa: las comparaciones son solo de referencia.</p>
+            )}
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-left">
+                <thead className="text-slate-600">
+                  <tr>
+                    <th className="pr-4 py-1 font-semibold">Comparación</th>
+                    <th className="pr-4 py-1 font-semibold">{r.test.kind === 'kruskal' ? 'Dif. de rangos' : 'Dif. de medias'}</th>
+                    <th className="pr-4 py-1 font-semibold">{r.test.kind === 'kruskal' ? 'z' : 'q'}</th>
+                    <th className="pr-4 py-1 font-semibold">p{r.test.kind === 'kruskal' ? ' (Holm)' : ''}</th>
+                    <th className="pr-4 py-1 font-semibold"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {r.postHoc.comparisons.map((c) => (
+                    <tr key={`${c.a}-${c.b}`} className="border-t">
+                      <td className="pr-4 py-1 capitalize">{c.a} – {c.b}</td>
+                      <td className="pr-4 py-1">{formatStat(c.difference)}</td>
+                      <td className="pr-4 py-1">{formatStat(c.statistic)}</td>
+                      <td className="pr-4 py-1">p {formatP(c.p)}</td>
+                      <td className="pr-4 py-1">{c.p < alpha ? <span className="text-green-700 font-semibold">*</span> : ''}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function CountList({ counts }: { counts: Record<string, number> }) {
   const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   if (entries.length === 0) return <p className="text-slate-500">Sin datos</p>;
@@ -395,6 +528,26 @@ export default function AdminDashboard() {
                     })}
                   </tbody>
                 </table>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded shadow">
+              <h3 className="text-lg font-semibold text-slate-800 mb-1">Estadística Inferencial (Muestra Analizada)</h3>
+              <p className="text-xs text-slate-500 mb-4">
+                Primero los supuestos: normalidad en cada grupo (Shapiro-Wilk) y homogeneidad de varianzas (Levene).
+                Si se cumplen ambos, ANOVA de un factor (Tukey-Kramer); si solo la normalidad, ANOVA de Welch
+                (Games-Howell); si algún grupo no es normal, Kruskal-Wallis (Dunn con corrección de Holm). α = {stats.inferential.alpha}.
+              </p>
+              {stats.inferential.preliminary && (
+                <div className="bg-amber-50 border border-amber-300 text-amber-900 text-sm px-4 py-3 rounded mb-4">
+                  <strong>Resultados preliminares.</strong> Algún grupo tiene menos de {stats.targets.minPerGroup} participantes
+                  analizados. No decidir cuándo cortar la recolección según estos valores p: el corte es por tamaño de muestra.
+                </div>
+              )}
+              <div className="space-y-4">
+                {stats.inferential.analyses.map((analysis) => (
+                  <InferentialCard key={analysis.key} analysis={analysis} alpha={stats.inferential.alpha} />
+                ))}
               </div>
             </div>
 
