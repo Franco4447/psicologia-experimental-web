@@ -76,6 +76,8 @@ import {
   getStimulusAlternativePath
 } from '../../src/lib/assets.ts';
 
+import { STIMULUS_EXPOSURE_DURATION_SECONDS } from '../../src/lib/timing.ts';
+
 import type {
   ResponseCode,
   StimulusItem,
@@ -125,7 +127,7 @@ async function runAdversarialM2Suite() {
     // Verify it renders the reading screen title and stimulus container
     assert.ok(html.includes('Fase de Lectura'), 'Must indicate reading phase');
     assert.ok(html.includes('Noticia <strong class="text-slate-900">1</strong> de 20'));
-    assert.ok(html.includes('Tiempo de lectura obligatoria (10 segundos)'));
+    assert.ok(html.includes(`Tiempo de lectura obligatoria (${STIMULUS_EXPOSURE_DURATION_SECONDS} segundos)`));
 
     // Adversarial Check: Ensure there is NO button or link that allows the participant to skip!
     assert.equal(html.includes('<button'), false, 'Reading screen MUST NOT contain any <button> element');
@@ -642,11 +644,14 @@ async function runAdversarialM2Suite() {
       gender: 'Femenino',
       studiesPsychology: true,
       therapeuticOrientation: 'Psicoanálisis',
-      university: 'Favaloro'
+      university: 'Favaloro',
+      residence: 'Ciudad Autónoma de Buenos Aires',
+      hasMemoryCondition: false,
+      hasVisualDifficulty: false
     };
     state = experimentReducer(state, {
       type: 'SUBMIT_DEMOGRAPHICS',
-      payload: { demographics, assignedGroup: 'racional' }
+      payload: { demographics, assignedGroup: 'racional', participantId: generateParticipantId() }
     });
     state = experimentReducer(state, { type: 'ACKNOWLEDGE_INDUCTION' });
     assert.equal(state.stage, 'reading');
@@ -703,11 +708,14 @@ async function runAdversarialM2Suite() {
       gender: 'Masculino',
       studiesPsychology: true,
       therapeuticOrientation: 'Basada en Evidencia Científica',
-      university: 'Universidad Favaloro'
+      university: 'Universidad Favaloro',
+      residence: 'Provincia de Buenos Aires',
+      hasMemoryCondition: false,
+      hasVisualDifficulty: false
     };
     state = experimentReducer(state, {
       type: 'SUBMIT_DEMOGRAPHICS',
-      payload: { demographics, assignedGroup: 'emocional' }
+      payload: { demographics, assignedGroup: 'emocional', participantId: generateParticipantId() }
     });
     state = experimentReducer(state, { type: 'ACKNOWLEDGE_INDUCTION' });
 
@@ -783,8 +791,13 @@ async function runAdversarialM2Suite() {
       }
     }
 
-    // After trial 20, stage must transition to debriefing
-    assert.equal(state.stage, 'debriefing', 'Stage after trial 20 must be debriefing');
+    // After trial 20, the final questions (manipulation check) come before the debriefing
+    assert.equal(state.stage, 'manipulation_check', 'Stage after trial 20 must be the final questions');
+    state = experimentReducer(state, {
+      type: 'SUBMIT_MANIPULATION_CHECK',
+      payload: { reportedInduction: 'Emoción', emotionUsage: 4, reasonUsage: 3 }
+    });
+    assert.equal(state.stage, 'debriefing', 'Stage after the final questions must be debriefing');
 
     // Debriefing transition to thankyou
     state = experimentReducer(state, { type: 'COMPLETE_DEBRIEFING' });

@@ -46,12 +46,15 @@ describe('Milestone 2: Component Architecture & State Machine Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad Favaloro',
+        residence: 'Ciudad Autónoma de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const telemetry = captureClientTelemetry();
 
       state = experimentReducer(state, {
         type: 'SUBMIT_DEMOGRAPHICS',
-        payload: { demographics, telemetry, assignedGroup: 'emocional' },
+        payload: { demographics, telemetry, assignedGroup: 'emocional', participantId: crypto.randomUUID() },
       });
 
       assert.equal(state.stage, 'induction');
@@ -84,12 +87,15 @@ describe('Milestone 2: Component Architecture & State Machine Tests', () => {
         studiesPsychology: false, // Excluded
         therapeuticOrientation: 'Otros',
         university: 'UBA',
+        residence: 'Ciudad Autónoma de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const telemetry = captureClientTelemetry();
 
       state = experimentReducer(state, {
         type: 'SUBMIT_DEMOGRAPHICS',
-        payload: { demographics, telemetry },
+        payload: { demographics, telemetry, participantId: crypto.randomUUID() },
       });
 
       assert.equal(state.stage, 'induction');
@@ -99,7 +105,7 @@ describe('Milestone 2: Component Architecture & State Machine Tests', () => {
       assert.equal(state.deck.length, 20);
     });
 
-    test('M2.5: Full 20-trial loop transitions from reading to rating and concludes in debriefing', () => {
+    test('M2.5: Full 20-trial loop goes through the final questions and concludes in debriefing', () => {
       let state = getInitialExperimentState();
       state = experimentReducer(state, { type: 'START_CONSENT' });
       state = experimentReducer(state, { type: 'ACCEPT_CONSENT' });
@@ -110,10 +116,18 @@ describe('Milestone 2: Component Architecture & State Machine Tests', () => {
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'Universidad Favaloro',
+        residence: 'Provincia de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       state = experimentReducer(state, {
         type: 'SUBMIT_DEMOGRAPHICS',
-        payload: { demographics, telemetry: captureClientTelemetry(), assignedGroup: 'racional' },
+        payload: {
+          demographics,
+          telemetry: captureClientTelemetry(),
+          assignedGroup: 'racional',
+          participantId: crypto.randomUUID(),
+        },
       });
 
       // Induction acknowledge -> Trial 1 reading
@@ -157,8 +171,17 @@ describe('Milestone 2: Component Architecture & State Machine Tests', () => {
         }
       }
 
-      // After 20th trial, stage transitions to debriefing
+      // After 20th trial, the final questions (manipulation check) come first
+      assert.equal(state.stage, 'manipulation_check');
+
+      state = experimentReducer(state, {
+        type: 'SUBMIT_MANIPULATION_CHECK',
+        payload: { reportedInduction: 'Razón', emotionUsage: 2, reasonUsage: 5 },
+      });
       assert.equal(state.stage, 'debriefing');
+      assert.equal(state.mcReportedInduction, 'Razón');
+      assert.equal(state.mcEmotionUsage, 2);
+      assert.equal(state.mcReasonUsage, 5);
 
       // Complete debriefing -> thankyou
       state = experimentReducer(state, { type: 'COMPLETE_DEBRIEFING' });
