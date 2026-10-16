@@ -351,4 +351,17 @@ export interface AdminDashboardStats {
     orientation: Record<string, number>;
     residence: Record<string, number>;
   };
+
+  // Group comparisons on the analysed sample (src/lib/inferential.ts).
+  inferential: {
+    alpha: number;
+    preliminary: boolean;         // some group is still below targets.minPerGroup
+    analyses: {
+      key: string;
+      label: string;
+      hypothesis: string;
+      scale: string;
+      result: import('@/lib/inferential').GroupComparison | null; // null: a group has < 3
+    }[];
+  };
 }

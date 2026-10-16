@@ -203,6 +203,44 @@ describe('buildAdminStats', () => {
     assert.equal(row.therapeuticOrientation, 'Cognitivo-Conductual');
   });
 
+  test('runs no inferential test while a group has fewer than 3 participants', () => {
+    assert.equal(stats.inferential.preliminary, true);
+    assert.deepEqual(
+      stats.inferential.analyses.map((a) => a.hypothesis),
+      ['H1', 'C1', 'C2', 'C3', 'Control de la manipulación', 'Control de la manipulación']
+    );
+    assert.ok(stats.inferential.analyses.every((a) => a.result === null));
+  });
+
+  test('feeds each participant\'s counts and mean response time to the group comparison', () => {
+    const groupOf = ['racional', 'emocional', 'control'] as const;
+    const falseMemoriesByGroup = { racional: [1, 2, 3], emocional: [5, 6, 8], control: [0, 2, 1] };
+    const ps: ReturnType<typeof participant>[] = [];
+    const rs: ReturnType<typeof responsesFor> = [];
+    for (const group of groupOf) {
+      for (const count of falseMemoriesByGroup[group]) {
+        const p = participant({ induction_group: group });
+        ps.push(p);
+        rs.push(...responsesFor(p, count));
+      }
+    }
+    const result = buildAdminStats(ps, rs);
+    const h1 = result.inferential.analyses.find((a) => a.key === 'falseMemories')!;
+    assert.ok(h1.result);
+    assert.deepEqual(h1.result.groups.map((g) => [g.name, g.n, g.mean]), [
+      ['racional', 3, 2],
+      ['emocional', 3, 19 / 3],
+      ['control', 3, 1],
+    ]);
+    assert.deepEqual(
+      h1.result.postHoc.comparisons.map((c) => `${c.a}-${c.b}`),
+      ['emocional-racional', 'emocional-control', 'racional-control']
+    );
+    const rt = result.inferential.analyses.find((a) => a.key === 'responseTime')!;
+    assert.equal(rt.result!.groups[0].mean, 2);
+    assert.equal(result.inferential.preliminary, true);
+  });
+
   test('returns zeros, not NaN, with no data', () => {
     const empty = buildAdminStats([], []);
     assert.equal(empty.analysedParticipants, 0);

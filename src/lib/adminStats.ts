@@ -9,6 +9,7 @@
 
 import type { AdminDashboardStats, InductionGroup } from '@/types/experiment';
 import type { ParticipantRow, ResponseRow } from '@/lib/supabase';
+import { ALPHA, compareGroups } from '@/lib/inferential';
 
 /** Included and completed participants each group needs (team decision, 2026-10-16). */
 export const MIN_PER_GROUP = 25;
@@ -81,6 +82,99 @@ function calcKpis(responses: ResponseRow[]) {
     falseBeliefRate: rate(fake, 'is_false_belief'),
     trueMemoryRate: rate(real, 'is_true_memory'),
     avgResponseTimeMs: mean(responses.map((r) => r.response_time_ms || 0)),
+  };
+}
+
+/** Variables compared across groups, in the order of the report's analysis plan. */
+const INFERENTIAL_VARIABLES: {
+  key: string;
+  label: string;
+  hypothesis: string;
+  scale: string;
+  value: (p: ParticipantRow, responses: ResponseRow[]) => number | null;
+}[] = [
+  {
+    key: 'falseMemories',
+    label: 'Falsos recuerdos',
+    hypothesis: 'H1',
+    scale: '0-8',
+    value: (_, rs) => rs.filter((r) => r.is_false_memory).length,
+  },
+  {
+    key: 'falseBeliefs',
+    label: 'Falsas creencias',
+    hypothesis: 'C1',
+    scale: '0-8',
+    value: (_, rs) => rs.filter((r) => r.is_false_belief).length,
+  },
+  {
+    key: 'trueMemories',
+    label: 'Recuerdos verdaderos',
+    hypothesis: 'C2',
+    scale: '0-12',
+    value: (_, rs) => rs.filter((r) => r.is_true_memory).length,
+  },
+  {
+    key: 'responseTime',
+    label: 'Tiempo de respuesta promedio (s)',
+    hypothesis: 'C3',
+    scale: 'segundos',
+    value: (_, rs) => (rs.length > 0 ? mean(rs.map((r) => r.response_time_ms)) / 1000 : null),
+  },
+  {
+    key: 'emotionUsage',
+    label: 'Uso de emoción',
+    hypothesis: 'Control de la manipulación',
+    scale: '1-5',
+    value: (p) => p.mc_emotion_usage,
+  },
+  {
+    key: 'reasonUsage',
+    label: 'Uso de razón',
+    hypothesis: 'Control de la manipulación',
+    scale: '1-5',
+    value: (p) => p.mc_reason_usage,
+  },
+];
+
+// Emocional against the other two first: those are the comparisons H1 predicts.
+const COMPARISON_PAIRS: [number, number][] = [
+  [GROUPS.indexOf('emocional'), GROUPS.indexOf('racional')],
+  [GROUPS.indexOf('emocional'), GROUPS.indexOf('control')],
+  [GROUPS.indexOf('racional'), GROUPS.indexOf('control')],
+];
+
+function buildInferential(
+  analysed: ParticipantRow[],
+  responses: ResponseRow[],
+  preliminary: boolean
+): AdminDashboardStats['inferential'] {
+  const byParticipant = new Map<string, ResponseRow[]>();
+  for (const r of responses) {
+    const list = byParticipant.get(r.participant_id);
+    if (list) list.push(r);
+    else byParticipant.set(r.participant_id, [r]);
+  }
+
+  return {
+    alpha: ALPHA,
+    preliminary,
+    analyses: INFERENTIAL_VARIABLES.map((variable) => {
+      const named = GROUPS.map((group) => ({
+        name: group,
+        values: analysed
+          .filter((p) => p.induction_group === group)
+          .map((p) => variable.value(p, byParticipant.get(p.id) || []))
+          .filter((v): v is number => typeof v === 'number' && Number.isFinite(v)),
+      }));
+      return {
+        key: variable.key,
+        label: variable.label,
+        hypothesis: variable.hypothesis,
+        scale: variable.scale,
+        result: compareGroups(named, COMPARISON_PAIRS),
+      };
+    }),
   };
 }
 
@@ -186,5 +280,11 @@ export function buildAdminStats(
       // Participants registered before the residence question have no value.
       residence: countBy(analysed, (p) => p.residence || 'Sin dato'),
     },
+
+    inferential: buildInferential(
+      analysed,
+      analysedResponses,
+      analysedCounts.some((count) => count < MIN_PER_GROUP)
+    ),
   };
 }
