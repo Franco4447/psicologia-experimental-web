@@ -25,12 +25,24 @@ import {
 import {
   saveSessionToStorage,
   loadSessionFromStorage,
+  getHydratePayloadFromStorage,
   clearSessionFromStorage,
   SESSION_STORAGE_KEY,
   STORAGE_VERSION,
 } from '../src/lib/sessionRecovery.ts';
 import { captureClientTelemetry } from '../src/lib/telemetry.ts';
 import type { ParticipantDemographicsInput, ResponseCode } from '../src/types/experiment.ts';
+
+// After trial 20 the final questions (manipulation check) come before the debriefing
+function answerFinalQuestions(state: ExperimentState): ExperimentState {
+  assert.equal(state.stage, 'manipulation_check');
+  const next = experimentReducer(state, {
+    type: 'SUBMIT_MANIPULATION_CHECK',
+    payload: { reportedInduction: 'Razón', emotionUsage: 2, reasonUsage: 4 },
+  });
+  assert.equal(next.stage, 'debriefing');
+  return next;
+}
 
 // In-memory mock for browser window and sessionStorage
 class MockSessionStorage {
@@ -99,12 +111,15 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Universidad Favaloro',
+        residence: 'Ciudad Autónoma de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
       const telemetry = captureClientTelemetry();
 
       state = experimentReducer(state, {
         type: 'SUBMIT_DEMOGRAPHICS',
-        payload: { demographics, telemetry, assignedGroup: 'racional' },
+        payload: { demographics, participantId: crypto.randomUUID(), telemetry, assignedGroup: 'racional' },
       });
 
       assert.equal(state.stage, 'induction');
@@ -193,7 +208,7 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
           assert.equal(state.stage, 'reading');
           assert.equal(state.currentTrialIndex, trial + 1);
         } else {
-          assert.equal(state.stage, 'debriefing');
+          state = answerFinalQuestions(state);
         }
       }
 
@@ -215,11 +230,14 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         studiesPsychology: true,
         therapeuticOrientation: 'Basada en Evidencia Científica',
         university: 'UBA',
+        residence: 'Ciudad Autónoma de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       state = experimentReducer(state, {
         type: 'SUBMIT_DEMOGRAPHICS',
-        payload: { demographics, telemetry: captureClientTelemetry(), assignedGroup: 'emocional' },
+        payload: { demographics, participantId: crypto.randomUUID(), telemetry: captureClientTelemetry(), assignedGroup: 'emocional' },
       });
 
       assert.equal(state.isIncluded, true);
@@ -253,7 +271,7 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         });
       }
 
-      assert.equal(state.stage, 'debriefing');
+      state = answerFinalQuestions(state);
       state = experimentReducer(state, { type: 'COMPLETE_DEBRIEFING' });
       assert.equal(state.stage, 'thankyou');
       assert.equal(state.responses.length, 20);
@@ -270,11 +288,14 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         studiesPsychology: false, // Disqualifying criteria
         therapeuticOrientation: 'Psicoanálisis',
         university: 'UTN',
+        residence: 'Ciudad Autónoma de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       state = experimentReducer(state, {
         type: 'SUBMIT_DEMOGRAPHICS',
-        payload: { demographics, telemetry: captureClientTelemetry(), assignedGroup: 'racional' },
+        payload: { demographics, participantId: crypto.randomUUID(), telemetry: captureClientTelemetry(), assignedGroup: 'racional' },
       });
 
       assert.equal(state.isIncluded, false);
@@ -297,7 +318,7 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         });
       }
 
-      assert.equal(state.stage, 'debriefing');
+      state = answerFinalQuestions(state);
       state = experimentReducer(state, { type: 'COMPLETE_DEBRIEFING' });
       assert.equal(state.stage, 'thankyou');
     });
@@ -313,11 +334,14 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         studiesPsychology: true,
         therapeuticOrientation: 'Otros', // Disqualifying orientation
         university: 'Universidad Favaloro',
+        residence: 'Ciudad Autónoma de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       state = experimentReducer(state, {
         type: 'SUBMIT_DEMOGRAPHICS',
-        payload: { demographics, telemetry: captureClientTelemetry() },
+        payload: { demographics, participantId: crypto.randomUUID(), telemetry: captureClientTelemetry() },
       });
 
       assert.equal(state.isIncluded, false);
@@ -338,11 +362,14 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         studiesPsychology: true,
         therapeuticOrientation: 'Psicoanálisis',
         university: 'Secundario',
+        residence: 'Ciudad Autónoma de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
       };
 
       state = experimentReducer(state, {
         type: 'SUBMIT_DEMOGRAPHICS',
-        payload: { demographics, telemetry: captureClientTelemetry() },
+        payload: { demographics, participantId: crypto.randomUUID(), telemetry: captureClientTelemetry() },
       });
 
       assert.equal(state.isIncluded, false);
@@ -368,22 +395,7 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
 
       reloadedState = experimentReducer(reloadedState, {
         type: 'HYDRATE_STORAGE',
-        payload: {
-          stage: stored.stage,
-          participantId: stored.participantId,
-          createdAt: stored.createdAt,
-          completedAt: stored.completedAt,
-          demographics: stored.demographics,
-          isIncluded: stored.isIncluded,
-          exclusionReason: stored.exclusionReason,
-          inductionGroup: stored.inductionGroup,
-          fakeNewsSet: stored.fakeNewsSet,
-          deck: stored.deck,
-          currentTrialIndex: stored.currentTrialIndex,
-          currentReadingTimeMs: stored.currentReadingTimeMs,
-          responses: stored.responses,
-          telemetry: stored.telemetry,
-        },
+        payload: getHydratePayloadFromStorage(stored),
       });
 
       return reloadedState;
@@ -402,8 +414,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Universidad Favaloro',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
           assignedGroup: 'control',
         },
       });
@@ -436,8 +452,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Basada en Evidencia Científica',
             university: 'UBA',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
           assignedGroup: 'racional',
         },
       });
@@ -492,8 +512,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Universidad Favaloro',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
           assignedGroup: 'emocional',
         },
       });
@@ -546,8 +570,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Universidad Favaloro',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
         },
       });
       state = experimentReducer(state, { type: 'ACKNOWLEDGE_INDUCTION' });
@@ -561,7 +589,7 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
         });
       }
 
-      assert.equal(state.stage, 'debriefing');
+      state = answerFinalQuestions(state);
       assert.equal(state.responses.length, 20);
 
       // F5 at debriefing
@@ -569,6 +597,9 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
 
       assert.equal(state.stage, 'debriefing');
       assert.equal(state.responses.length, 20);
+      assert.equal(state.mcReportedInduction, 'Razón');
+      assert.equal(state.mcEmotionUsage, 2);
+      assert.equal(state.mcReasonUsage, 4);
 
       // Complete debriefing
       state = experimentReducer(state, { type: 'COMPLETE_DEBRIEFING' });
@@ -589,8 +620,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Basada en Evidencia Científica',
             university: 'UBA',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
         },
       });
 
@@ -642,7 +677,7 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
 
       // Finish trial 20
       state = experimentReducer(state, { type: 'RECORD_TRIAL_RESPONSE', payload: { responseOption: 4, responseTimeMs: 2000 } });
-      assert.equal(state.stage, 'debriefing');
+      state = answerFinalQuestions(state);
       assert.equal(state.responses.length, 20);
 
       // Reload 5 at debriefing
@@ -667,8 +702,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Universidad Favaloro',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
         },
       });
 
@@ -701,8 +740,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
               studiesPsychology: true,
               therapeuticOrientation: 'Psicoanálisis',
               university: 'UBA',
+              residence: 'Ciudad Autónoma de Buenos Aires',
+              hasMemoryCondition: false,
+              hasVisualDifficulty: false,
             },
             telemetry: captureClientTelemetry(),
+            participantId: crypto.randomUUID(),
           },
         },
         { type: 'ACKNOWLEDGE_INDUCTION' },
@@ -772,8 +815,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Universidad Favaloro',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
         },
       });
       state = experimentReducer(state, { type: 'ACKNOWLEDGE_INDUCTION' });
@@ -804,8 +851,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Universidad Favaloro',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
         },
       });
       state = experimentReducer(state, { type: 'ACKNOWLEDGE_INDUCTION' });
@@ -851,8 +902,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Universidad Favaloro',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
         },
       });
       state = experimentReducer(state, { type: 'ACKNOWLEDGE_INDUCTION' });
@@ -888,8 +943,12 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
             studiesPsychology: true,
             therapeuticOrientation: 'Psicoanálisis',
             university: 'Universidad Favaloro',
+            residence: 'Ciudad Autónoma de Buenos Aires',
+            hasMemoryCondition: false,
+            hasVisualDifficulty: false,
           },
           telemetry: captureClientTelemetry(),
+          participantId: crypto.randomUUID(),
         },
       });
       state = experimentReducer(state, { type: 'ACKNOWLEDGE_INDUCTION' });
@@ -901,6 +960,7 @@ describe('M2 Adversarial Challenge Suite: State Machine & Session Recovery', () 
           payload: { responseOption: 1, responseTimeMs: 1000 },
         });
       }
+      state = answerFinalQuestions(state);
       state = experimentReducer(state, { type: 'COMPLETE_DEBRIEFING' });
       assert.equal(state.stage, 'thankyou');
       assert.ok(state.completedAt);

@@ -246,51 +246,40 @@ export default function ExperimentPage() {
           inductionGroup={state.inductionGroup || 'control'}
           onSubmit={(data) => {
             dispatch({ type: 'SUBMIT_MANIPULATION_CHECK', payload: data });
+            // The session is complete once the final questions are answered, so a
+            // participant who closes the page on the debriefing keeps their data.
+            // The completion is queued (and persisted) before the debriefing shows.
+            completeSession(state.participantId, new Date().toISOString(), {
+              reportedInduction: data.reportedInduction,
+              emotionUsage: data.emotionUsage,
+              reasonUsage: data.reasonUsage,
+            });
           }}
         />
       );
 
-    case 'debriefing':
+    case 'debriefing': {
+      // Final flush gateway: retries whatever is still pending (trials or completion)
+      const finishDebriefing = async () => {
+        setIsFinalizingSession(true);
+        try {
+          await flushPendingSync(state.participantId, { timeoutMs: 5000 });
+        } catch (err) {
+          console.warn('[ExperimentPage] Final flush gateway caught warning:', err);
+        } finally {
+          setIsFinalizingSession(false);
+          dispatch({ type: 'COMPLETE_DEBRIEFING' });
+        }
+      };
+
       return (
         <DebriefingScreen
           responses={state.responses}
-          onConfirmDebriefing={async () => {
-            setIsFinalizingSession(true);
-            try {
-              const nowIso = new Date().toISOString();
-              completeSession(state.participantId, nowIso, {
-                reportedInduction: state.mcReportedInduction,
-                emotionUsage: state.mcEmotionUsage,
-                reasonUsage: state.mcReasonUsage,
-              });
-              // Final flush gateway: attempts batch sync of all trials and completion status
-              await flushPendingSync(state.participantId, { timeoutMs: 5000 });
-            } catch (err) {
-              console.warn('[ExperimentPage] Final flush gateway caught warning:', err);
-            } finally {
-              setIsFinalizingSession(false);
-              dispatch({ type: 'COMPLETE_DEBRIEFING' });
-            }
-          }}
-          onComplete={async () => {
-            setIsFinalizingSession(true);
-            try {
-              const nowIso = new Date().toISOString();
-              completeSession(state.participantId, nowIso, {
-                reportedInduction: state.mcReportedInduction,
-                emotionUsage: state.mcEmotionUsage,
-                reasonUsage: state.mcReasonUsage,
-              });
-              await flushPendingSync(state.participantId, { timeoutMs: 5000 });
-            } catch (err) {
-              console.warn('[ExperimentPage] Final flush gateway caught warning:', err);
-            } finally {
-              setIsFinalizingSession(false);
-              dispatch({ type: 'COMPLETE_DEBRIEFING' });
-            }
-          }}
+          onConfirmDebriefing={finishDebriefing}
+          onComplete={finishDebriefing}
         />
       );
+    }
 
       case 'thankyou':
         return (

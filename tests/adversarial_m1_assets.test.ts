@@ -314,7 +314,8 @@ async function runAdversarialSuite() {
       const result = evaluateInclusion({
         age: 22,
         studiesPsychology: true,
-        therapeuticOrientation: testCase.value as any
+        therapeuticOrientation: testCase.value as any,
+        residence: 'Ciudad Autónoma de Buenos Aires'
       });
 
       assert.strictEqual(
@@ -408,40 +409,40 @@ async function runAdversarialSuite() {
 
   check('5.1 Age boundary at exact 18', () => {
     assert.strictEqual(
-      evaluateInclusion({ age: 17.999, studiesPsychology: true, therapeuticOrientation: 'Psicoanálisis' }).isIncluded,
+      evaluateInclusion({ age: 17.999, studiesPsychology: true, therapeuticOrientation: 'Psicoanálisis', residence: 'Ciudad Autónoma de Buenos Aires' }).isIncluded,
       false
     );
     assert.strictEqual(
-      evaluateInclusion({ age: 17.999, studiesPsychology: true, therapeuticOrientation: 'Psicoanálisis' }).exclusionReason,
+      evaluateInclusion({ age: 17.999, studiesPsychology: true, therapeuticOrientation: 'Psicoanálisis', residence: 'Ciudad Autónoma de Buenos Aires' }).exclusionReason,
       'menor_de_edad'
     );
     assert.strictEqual(
-      evaluateInclusion({ age: 18, studiesPsychology: true, therapeuticOrientation: 'Psicoanálisis' }).isIncluded,
+      evaluateInclusion({ age: 18, studiesPsychology: true, therapeuticOrientation: 'Psicoanálisis', residence: 'Ciudad Autónoma de Buenos Aires' }).isIncluded,
       true
     );
     assert.strictEqual(
-      evaluateInclusion({ age: 18.001, studiesPsychology: true, therapeuticOrientation: 'Psicoanálisis' }).isIncluded,
+      evaluateInclusion({ age: 18.001, studiesPsychology: true, therapeuticOrientation: 'Psicoanálisis', residence: 'Ciudad Autónoma de Buenos Aires' }).isIncluded,
       true
     );
   });
 
   check('5.2 Psychology study status boundary', () => {
     assert.strictEqual(
-      evaluateInclusion({ age: 25, studiesPsychology: false, therapeuticOrientation: 'Psicoanálisis' }).isIncluded,
+      evaluateInclusion({ age: 25, studiesPsychology: false, therapeuticOrientation: 'Psicoanálisis', residence: 'Ciudad Autónoma de Buenos Aires' }).isIncluded,
       false
     );
     assert.strictEqual(
-      evaluateInclusion({ age: 25, studiesPsychology: false, therapeuticOrientation: 'Psicoanálisis' }).exclusionReason,
+      evaluateInclusion({ age: 25, studiesPsychology: false, therapeuticOrientation: 'Psicoanálisis', residence: 'Ciudad Autónoma de Buenos Aires' }).exclusionReason,
       'no_estudia_psicologia'
     );
   });
 
   check('5.3 Precedence of exclusion reasons: age < 18 precedes psychology status and orientation', () => {
-    const res = evaluateInclusion({ age: 16, studiesPsychology: false, therapeuticOrientation: 'Otros' });
+    const res = evaluateInclusion({ age: 16, studiesPsychology: false, therapeuticOrientation: 'Otros', residence: 'Ciudad Autónoma de Buenos Aires' });
     assert.strictEqual(res.isIncluded, false);
     assert.strictEqual(res.exclusionReason, 'menor_de_edad');
 
-    const res2 = evaluateInclusion({ age: 20, studiesPsychology: false, therapeuticOrientation: 'Otros' });
+    const res2 = evaluateInclusion({ age: 20, studiesPsychology: false, therapeuticOrientation: 'Otros', residence: 'Ciudad Autónoma de Buenos Aires' });
     assert.strictEqual(res2.isIncluded, false);
     assert.strictEqual(res2.exclusionReason, 'no_estudia_psicologia');
   });
