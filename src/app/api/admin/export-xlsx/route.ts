@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { isAdminRequest } from '@/lib/adminAuth';
+import { exportFileDate, fetchAllRows } from '@/lib/adminStats';
 import { buildParticipantsXlsx } from '@/lib/participantsXlsx';
 
 export const runtime = 'nodejs';
@@ -9,7 +10,6 @@ export const dynamic = 'force-dynamic';
 
 // Vista con una fila por participante (ver supabase/schema.sql, sección 10).
 const VIEW_NAME = process.env.PARTICIPANTS_VIEW_NAME || 'v_dataset_participantes';
-const PAGE_SIZE = 1000; // Límite por defecto de PostgREST por consulta.
 
 export async function GET() {
   if (!isAdminRequest()) {
@@ -23,18 +23,12 @@ export async function GET() {
     );
   }
 
-  const rows: Record<string, unknown>[] = [];
+  let rows: Record<string, unknown>[];
   try {
-    for (let from = 0; ; from += PAGE_SIZE) {
-      const { data, error } = await (supabaseAdmin as any)
-        .from(VIEW_NAME)
-        .select('*')
-        .order('id_participante', { ascending: true })
-        .range(from, from + PAGE_SIZE - 1);
-      if (error) throw error;
-      rows.push(...(data || []));
-      if (!data || data.length < PAGE_SIZE) break;
-    }
+    const db = supabaseAdmin as any;
+    rows = await fetchAllRows((from, to) =>
+      db.from(VIEW_NAME).select('*').order('id_participante', { ascending: true }).range(from, to)
+    );
   } catch (error) {
     console.error(`Error fetching ${VIEW_NAME} from Supabase:`, error);
     return NextResponse.json(
@@ -49,7 +43,7 @@ export async function GET() {
     headers: {
       'Content-Type':
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'Content-Disposition': 'attachment; filename="participantes.xlsx"',
+      'Content-Disposition': `attachment; filename="participantes_${exportFileDate()}.xlsx"`,
       'Cache-Control': 'no-store',
     },
   });

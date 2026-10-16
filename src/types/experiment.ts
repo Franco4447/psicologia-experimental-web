@@ -286,7 +286,8 @@ export interface CsvExportRow {
 }
 
 /**
- * Aggregate summary metrics for Admin Dashboard
+ * Aggregate summary metrics for Admin Dashboard (built by src/lib/adminStats.ts).
+ * "Analysed" means included and completed: the sample the report analyses.
  */
 export interface AdminDashboardStats {
   totalParticipants: number;
@@ -294,25 +295,19 @@ export interface AdminDashboardStats {
   includedParticipants: number;
   excludedParticipants: number;
   completionRate: number;         // percentage (0-100)
-  groups: {
-    racional: number;
-    emocional: number;
-    control: number;
-  };
-  orientations: {
-    psicoanalisis: number;
-    evidencia: number;
-    otros: number;
-  };
-  isBalanced: boolean;            // max discrepancy <= 2 across included induction groups
+  inProgressParticipants: number; // sessions still open (started / reading)
+  analysedParticipants: number;
+  targets: { minPerGroup: number; idealPerGroup: number };
+  groupProgress: Record<InductionGroup, { analysed: number; inProgress: number }>;
+  isBalanced: boolean;            // max discrepancy <= 2 across analysed groups
   maxDiscrepancy: number;
 
-  // New fields
   participantsList: {
     id: string;
+    createdAt: string | null;
     age: number;
     gender: string;
-    university: string;
+    residence: string | null;
     therapeuticOrientation: string;
     inductionGroup: string;
     status: string;
@@ -323,33 +318,37 @@ export interface AdminDashboardStats {
 
   exclusionBreakdown: Record<string, number>;
 
+  // Over the analysed sample. Reading time is not reported: it is fixed at 15 s.
   kpis: {
     overall: {
       falseMemoryRate: number;
       falseBeliefRate: number;
       trueMemoryRate: number;
-      avgReadingTimeMs: number;
       avgResponseTimeMs: number;
     };
     byGroup: Record<string, {
       falseMemoryRate: number;
       falseBeliefRate: number;
       trueMemoryRate: number;
-      avgReadingTimeMs: number;
       avgResponseTimeMs: number;
     }>;
   };
 
   manipulationCheck: {
-    reportedInduction: Record<string, number>;
+    // Assigned group -> forced choice answer (Emoción / Razón) -> count.
+    reportedByGroup: Record<string, Record<string, number>>;
     scoresByGroup: Record<string, {
-      avgEmotionUsage: number;
-      avgReasonUsage: number;
+      n: number;
+      avgEmotionUsage: number;      // 1-5 scale
+      avgReasonUsage: number;       // 1-5 scale
     }>;
   };
 
+  // Over the analysed sample; sd is the sample standard deviation (n - 1).
   demographics: {
     age: { mean: number; sd: number; min: number; max: number };
     gender: Record<string, number>;
+    orientation: Record<string, number>;
+    residence: Record<string, number>;
   };
 }
