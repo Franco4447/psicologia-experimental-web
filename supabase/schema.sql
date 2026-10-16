@@ -59,10 +59,13 @@ CREATE TABLE IF NOT EXISTS public.participants (
         CHECK (mc_emotion_usage IS NULL OR (mc_emotion_usage >= 1 AND mc_emotion_usage <= 5)),
     CONSTRAINT chk_participant_mc_reason_usage 
         CHECK (mc_reason_usage IS NULL OR (mc_reason_usage >= 1 AND mc_reason_usage <= 5)),
-    CONSTRAINT chk_participant_exclusion_logic 
+    -- Excluded by criteria -> control/control_random. Abandoned by timeout keeps the
+    -- condition it was assigned (cleanup_abandoned_sessions only changes status).
+    CONSTRAINT chk_participant_exclusion_logic
         CHECK (
-            (is_included = true) OR 
-            (is_included = false AND induction_group = 'control' AND fake_news_set = 'control_random')
+            (is_included = true) OR
+            (induction_group = 'control' AND fake_news_set = 'control_random') OR
+            (exclusion_reason = 'session_timeout_1h')
         )
 );
 
@@ -329,33 +332,11 @@ DROP POLICY IF EXISTS "Allow anonymous response insertion" ON public.responses;
 DROP POLICY IF EXISTS "Service role full access to participants" ON public.participants;
 DROP POLICY IF EXISTS "Service role full access to responses" ON public.responses;
 
--- Policy 1: Anonymous public participants can create sessions
-CREATE POLICY "Allow anonymous participant insertion"
-    ON public.participants
-    FOR INSERT
-    TO anon, authenticated
-    WITH CHECK (true);
+-- No policies for `anon` or `authenticated`: participants never talk to the database
+-- directly. Session creation, trial responses, completion, stats and exports all go
+-- through the Next.js API routes, which use `service_role`.
 
--- Policy 2: Anonymous participants can update their session status upon completion
-CREATE POLICY "Allow anonymous update of own session completion"
-    ON public.participants
-    FOR UPDATE
-    TO anon, authenticated
-    USING (true)
-    WITH CHECK (true);
-
--- Policy 3: Anonymous participants can insert trial responses
-CREATE POLICY "Allow anonymous response insertion"
-    ON public.responses
-    FOR INSERT
-    TO anon, authenticated
-    WITH CHECK (true);
-
--- Note: NO public SELECT policy is defined for `anon`.
--- All SELECT queries by public participants return 0 rows (default deny).
--- Researcher queries, stats, and CSV exports use `service_role` via Next.js API routes.
-
--- Policy 4 & 5: Service role full access
+-- Service role full access
 CREATE POLICY "Service role full access to participants"
     ON public.participants
     FOR ALL
@@ -374,8 +355,8 @@ CREATE POLICY "Service role full access to responses"
 -- 9. Permissions & Grants
 -- ----------------------------------------------------------------------------
 GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
-GRANT INSERT, UPDATE ON TABLE public.participants TO anon, authenticated;
-GRANT INSERT ON TABLE public.responses TO anon, authenticated;
+-- Supabase grants table privileges to anon/authenticated by default: revoke them.
+REVOKE ALL ON TABLE public.participants, public.responses FROM anon, authenticated;
 GRANT ALL ON TABLE public.participants TO service_role;
 GRANT ALL ON TABLE public.responses TO service_role;
 
