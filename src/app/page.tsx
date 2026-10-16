@@ -127,7 +127,7 @@ export default function ExperimentPage() {
     );
   }
 
-  // Loading overlay during demographics server registration (max 2500ms)
+  // Loading overlay during demographics server registration (max SESSION_INIT_TIMEOUT_MS)
   if (isRegisteringSession) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 gap-4">
@@ -173,7 +173,7 @@ export default function ExperimentPage() {
             setIsRegisteringSession(true);
             try {
               // Asynchronously registers session with /api/session (server balanced RPC).
-              // Falls back to local balanced allocation if offline or timeout (>2500ms).
+              // Falls back to local balanced allocation if offline or timeout (SESSION_INIT_TIMEOUT_MS).
               const sessionResult = await registerSession(demographics, telemetry);
               dispatch({
                 type: 'SUBMIT_DEMOGRAPHICS',
