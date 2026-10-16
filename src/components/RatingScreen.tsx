@@ -209,7 +209,7 @@ export const RatingScreen: React.FC<RatingScreenProps> = ({
             {isSubmitting
               ? 'Registrando...'
               : isFinalTrial
-              ? 'Finalizar y continuar al debriefing'
+              ? 'Continuar a las preguntas finales'
               : 'Siguiente noticia'}
           </span>
           {!isSubmitting && <ArrowRight className="w-4 h-4" />}
