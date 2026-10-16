@@ -95,6 +95,20 @@ const INDUCTION_GROUPS: readonly InductionGroup[] = ['racional', 'emocional', 'c
 // Postgres unique_violation: the request the client aborted had already been saved.
 const UNIQUE_VIOLATION = '23505';
 
+/** 500 for a failed database write, so the client keeps the request queued and retries. */
+function databaseErrorResponse(error: unknown) {
+  const { message, code } = (error ?? {}) as { message?: string; code?: string };
+  return jsonResponse(
+    {
+      success: false,
+      error: 'Database write failed',
+      message: message || (error instanceof Error ? error.message : 'Unknown error'),
+      code,
+    },
+    500
+  );
+}
+
 export async function POST(req: NextRequest) {
   try {
     let body: SessionCreateBody;
@@ -290,9 +304,9 @@ export async function POST(req: NextRequest) {
               .eq('id', participantId);
             if (updateError) {
               console.error('[Session Route] Supabase fallback group update error:', updateError);
-            } else {
-              persistedToDb = true;
+              return databaseErrorResponse(updateError);
             }
+            persistedToDb = true;
           } else {
             const { data: existing } = await client
               .from('participants')
@@ -305,12 +319,14 @@ export async function POST(req: NextRequest) {
             persistedToDb = true;
           }
         } else {
+          // Answer with an error (not a mock success) so the client keeps the
+          // registration pending and replays it; otherwise the session is lost.
           console.error('[Session Route] Supabase participant insert error:', insertError);
-          mockStore.createParticipant(participantData);
+          return databaseErrorResponse(insertError);
         }
       } catch (insertErr) {
         console.error('[Session Route] Supabase insert threw exception:', insertErr);
-        mockStore.createParticipant(participantData);
+        return databaseErrorResponse(insertErr);
       }
     } else {
       mockStore.createParticipant(participantData);
@@ -447,12 +463,13 @@ export async function PATCH(req: NextRequest) {
         if (!updateError) {
           updatedInDb = true;
         } else {
-          console.warn('[Session Route] Supabase participant update error:', updateError);
-          mockStore.updateParticipant(participantId, updatePayload);
+          // An error keeps the completion pending on the client so it is retried
+          console.error('[Session Route] Supabase participant update error:', updateError);
+          return databaseErrorResponse(updateError);
         }
       } catch (updateErr) {
-        console.warn('[Session Route] Supabase update threw exception:', updateErr);
-        mockStore.updateParticipant(participantId, updatePayload);
+        console.error('[Session Route] Supabase update threw exception:', updateErr);
+        return databaseErrorResponse(updateErr);
       }
     } else {
       mockStore.updateParticipant(participantId, updatePayload);
