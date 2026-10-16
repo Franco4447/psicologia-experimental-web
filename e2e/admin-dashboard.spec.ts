@@ -20,13 +20,13 @@ test.describe('Admin Dashboard & CSV Export', () => {
     await expect(page.getByRole('heading', { name: /Dashboard del Experimento/i })).toBeVisible();
     await expect(page.getByText('Total Participantes')).toBeVisible();
     await expect(page.getByText('Completados')).toBeVisible();
-    await expect(page.getByText('Asignación de Grupos')).toBeVisible();
+    await expect(page.getByText('Avance por Grupo')).toBeVisible();
 
     // CSV Export verification
     const downloadPromise = page.waitForEvent('download');
-    await page.getByRole('link', { name: /Exportar Datos CSV/i }).click();
+    await page.getByRole('link', { name: /Exportar CSV/i }).click();
     const download = await downloadPromise;
 
-    expect(download.suggestedFilename()).toBe('experiment_data.csv');
+    expect(download.suggestedFilename()).toMatch(/^respuestas_\d{4}-\d{2}-\d{2}\.csv$/);
   });
 });
