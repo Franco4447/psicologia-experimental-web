@@ -142,6 +142,35 @@ export function loadSessionFromStorage(): StoredSessionPayload | null {
 }
 
 /**
+ * Maps a stored session back to the state restored on reload (F5). Includes the
+ * manipulation check answers: without them a reload on the debriefing screen
+ * completes the session with no check data.
+ */
+export function getHydratePayloadFromStorage(
+  stored: StoredSessionPayload
+): Omit<StoredSessionPayload, 'version' | 'savedAt'> {
+  return {
+    stage: stored.stage,
+    participantId: stored.participantId,
+    createdAt: stored.createdAt,
+    completedAt: stored.completedAt,
+    demographics: stored.demographics,
+    isIncluded: stored.isIncluded,
+    exclusionReason: stored.exclusionReason,
+    inductionGroup: stored.inductionGroup,
+    fakeNewsSet: stored.fakeNewsSet,
+    deck: stored.deck,
+    currentTrialIndex: stored.currentTrialIndex,
+    currentReadingTimeMs: stored.currentReadingTimeMs,
+    responses: stored.responses,
+    telemetry: stored.telemetry,
+    mcReportedInduction: stored.mcReportedInduction,
+    mcEmotionUsage: stored.mcEmotionUsage,
+    mcReasonUsage: stored.mcReasonUsage,
+  };
+}
+
+/**
  * Clears stored session upon test reset or experiment restart.
  */
 export function clearSessionFromStorage(): void {

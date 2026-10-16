@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { NextResponse } from 'next/server';
 import { mockStore, supabaseAdmin } from '@/lib/supabase';
-import { cookies } from 'next/headers';
+import { isAdminRequest } from '@/lib/adminAuth';
 
 function escapeCsv(value: any) {
   if (value === null || value === undefined) return '';
@@ -23,10 +23,7 @@ function jsonToCsv(items: any[]) {
 }
 
 export async function GET() {
-  const cookieStore = cookies();
-  const session = cookieStore.get('admin_session');
-  
-  if (session?.value !== 'authenticated') {
+  if (!isAdminRequest()) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

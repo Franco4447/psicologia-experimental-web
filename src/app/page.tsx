@@ -10,6 +10,7 @@ import { captureClientTelemetry } from '@/lib/telemetry';
 import {
   saveSessionToStorage,
   loadSessionFromStorage,
+  getHydratePayloadFromStorage,
 } from '@/lib/sessionRecovery';
 import {
   registerSession,
@@ -47,22 +48,7 @@ export default function ExperimentPage() {
       syncedResponsesCountRef.current = stored.responses?.length || 0;
       dispatch({
         type: 'HYDRATE_STORAGE',
-        payload: {
-          stage: stored.stage,
-          participantId: stored.participantId,
-          createdAt: stored.createdAt,
-          completedAt: stored.completedAt,
-          demographics: stored.demographics,
-          isIncluded: stored.isIncluded,
-          exclusionReason: stored.exclusionReason,
-          inductionGroup: stored.inductionGroup,
-          fakeNewsSet: stored.fakeNewsSet,
-          deck: stored.deck,
-          currentTrialIndex: stored.currentTrialIndex,
-          currentReadingTimeMs: stored.currentReadingTimeMs,
-          responses: stored.responses,
-          telemetry: stored.telemetry,
-        },
+        payload: getHydratePayloadFromStorage(stored),
       });
     } else {
       dispatch({ type: 'HYDRATE_STORAGE', payload: {} });

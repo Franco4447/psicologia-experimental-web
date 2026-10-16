@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { supabaseAdmin } from '@/lib/supabase';
+import { isAdminRequest } from '@/lib/adminAuth';
 import { buildParticipantsXlsx } from '@/lib/participantsXlsx';
 
 export const runtime = 'nodejs';
@@ -12,8 +12,7 @@ const VIEW_NAME = process.env.PARTICIPANTS_VIEW_NAME || 'v_dataset_participantes
 const PAGE_SIZE = 1000; // Límite por defecto de PostgREST por consulta.
 
 export async function GET() {
-  const session = cookies().get('admin_session');
-  if (session?.value !== 'authenticated') {
+  if (!isAdminRequest()) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
