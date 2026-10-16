@@ -83,7 +83,17 @@ export interface SessionCreateBody {
   screenResolution?: string;
   userAgent?: string;
   clientTimestamp?: string;
+  /**
+   * Only sent when the client timed out and fell back to a local group: it is the
+   * induction the participant was shown, so it overrides the server allocation.
+   */
+  inductionGroup?: InductionGroup;
 }
+
+const INDUCTION_GROUPS: readonly InductionGroup[] = ['racional', 'emocional', 'control'];
+
+// Postgres unique_violation: the request the client aborted had already been saved.
+const UNIQUE_VIOLATION = '23505';
 
 export async function POST(req: NextRequest) {
   try {
@@ -112,6 +122,7 @@ export async function POST(req: NextRequest) {
       screenResolution,
       userAgent,
       clientTimestamp,
+      inductionGroup: clientInductionGroup,
     } = body;
 
     // 1. Rigorous Demographics Validation
@@ -158,6 +169,10 @@ export async function POST(req: NextRequest) {
       errors.push('Debe indicar si presenta alguna dificultad visual no corregida (booleano).');
     }
 
+    if (clientInductionGroup !== undefined && !INDUCTION_GROUPS.includes(clientInductionGroup)) {
+      errors.push("Grupo de inducción no válido. Opciones: 'racional', 'emocional', 'control'.");
+    }
+
     if (errors.length > 0) {
       return jsonResponse(
         {
@@ -201,10 +216,13 @@ export async function POST(req: NextRequest) {
         fakeNewsSet = 'evidencia';
       }
 
-      // Group allocation: Call Supabase RPC assign_induction_group() or fallback to local balancing
+      // Group allocation: keep the client's fallback group (already shown to the participant),
+      // otherwise call Supabase RPC assign_induction_group() or fall back to local balancing
       let assignedFromDb = false;
 
-      if (liveDbAvailable) {
+      if (clientInductionGroup) {
+        inductionGroup = clientInductionGroup;
+      } else if (liveDbAvailable) {
         try {
           const { data: rpcGroup, error: rpcError } = await client.rpc('assign_induction_group');
           if (!rpcError && rpcGroup && ['racional', 'emocional', 'control'].includes(rpcGroup)) {
@@ -219,7 +237,7 @@ export async function POST(req: NextRequest) {
       }
 
       // Fallback balancing via in-memory mock store if live RPC was not used
-      if (!assignedFromDb) {
+      if (!clientInductionGroup && !assignedFromDb) {
         inductionGroup = mockStore.assignGroup(true);
       }
     }
@@ -261,6 +279,31 @@ export async function POST(req: NextRequest) {
 
         if (!insertError) {
           persistedToDb = true;
+        } else if (insertError.code === UNIQUE_VIOLATION) {
+          // A replay of a request the client aborted after the server had saved it.
+          // With a fallback group, store the induction actually shown; otherwise
+          // answer with the group already stored.
+          if (clientInductionGroup) {
+            const { error: updateError } = await client
+              .from('participants')
+              .update({ induction_group: clientInductionGroup })
+              .eq('id', participantId);
+            if (updateError) {
+              console.error('[Session Route] Supabase fallback group update error:', updateError);
+            } else {
+              persistedToDb = true;
+            }
+          } else {
+            const { data: existing } = await client
+              .from('participants')
+              .select('induction_group')
+              .eq('id', participantId)
+              .maybeSingle();
+            if (existing && INDUCTION_GROUPS.includes(existing.induction_group as InductionGroup)) {
+              inductionGroup = existing.induction_group as InductionGroup;
+            }
+            persistedToDb = true;
+          }
         } else {
           console.error('[Session Route] Supabase participant insert error:', insertError);
           mockStore.createParticipant(participantData);

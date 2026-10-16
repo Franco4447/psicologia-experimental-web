@@ -245,6 +245,49 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
       assert.equal(data.session.status, 'started');
     });
 
+    test('2.3b: POST keeps the client fallback group for included participants and rejects invalid ones', async () => {
+      const base = {
+        age: 22,
+        gender: 'Femenino',
+        studiesPsychology: true,
+        therapeuticOrientation: 'Psicoanálisis',
+        university: 'Universidad Favaloro',
+        residence: 'Ciudad Autónoma de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      };
+
+      // Every group must survive allocation unchanged, whatever the balancer would pick
+      for (const group of ['racional', 'emocional', 'control'] as InductionGroup[]) {
+        const res = await sessionPost(
+          new NextRequest('http://localhost:3000/api/session', {
+            method: 'POST',
+            body: JSON.stringify({ ...base, participantId: crypto.randomUUID(), inductionGroup: group }),
+          })
+        );
+        assert.equal(res.status, 201);
+        const data = await res.json();
+        assert.equal(data.session.inductionGroup, group);
+      }
+
+      // Excluded participants stay in control even if the client sent another group
+      const resExcluded = await sessionPost(
+        new NextRequest('http://localhost:3000/api/session', {
+          method: 'POST',
+          body: JSON.stringify({ ...base, studiesPsychology: false, inductionGroup: 'emocional' }),
+        })
+      );
+      assert.equal((await resExcluded.json()).session.inductionGroup, 'control');
+
+      const resInvalid = await sessionPost(
+        new NextRequest('http://localhost:3000/api/session', {
+          method: 'POST',
+          body: JSON.stringify({ ...base, inductionGroup: 'intuitivo' }),
+        })
+      );
+      assert.equal(resInvalid.status, 400);
+    });
+
     test('2.4: POST correctly routes and marks excluded participant (non-psychology student)', async () => {
       const req = new NextRequest('http://localhost:3000/api/session', {
         method: 'POST',
@@ -670,6 +713,49 @@ describe('Milestone 3: Database, Balanced RPC, API Routes & Client Sync', () => 
       assert.ok(['racional', 'emocional', 'control'].includes(result.inductionGroup));
       assert.equal(result.fakeNewsSet, 'evidencia');
       assert.equal(result.isOffline, true);
+    });
+
+    test('4.2b: the replayed registration carries the fallback group the participant was shown', async () => {
+      globalThis.fetch = async () => {
+        throw new Error('Connection timeout');
+      };
+
+      const demographics: ParticipantDemographicsInput = {
+        age: 30,
+        gender: 'Femenino',
+        studiesPsychology: true,
+        therapeuticOrientation: 'Psicoanálisis',
+        university: 'Favaloro',
+        residence: 'Provincia de Buenos Aires',
+        hasMemoryCondition: false,
+        hasVisualDifficulty: false,
+      };
+      const telemetry: ClientTelemetry = {
+        deviceType: 'mobile',
+        screenResolution: '390x844',
+        userAgent: 'MockAgent',
+      };
+
+      const result = await registerSession(demographics, telemetry, {
+        participantId: 'part-uuid-replay',
+        timeoutMs: 100,
+      });
+      assert.equal(result.isOffline, true);
+
+      const replayedBodies: Record<string, unknown>[] = [];
+      globalThis.fetch = async (url: RequestInfo | URL, init?: RequestInit) => {
+        if (String(url).includes('/api/session')) {
+          replayedBodies.push(JSON.parse(String(init?.body)));
+          return new Response(JSON.stringify({ success: true }), { status: 201 });
+        }
+        return new Response(JSON.stringify({ success: true }), { status: 200 });
+      };
+
+      await flushPendingSync('part-uuid-replay', { timeoutMs: 1000 });
+
+      assert.equal(replayedBodies.length, 1);
+      assert.equal(replayedBodies[0].participantId, 'part-uuid-replay');
+      assert.equal(replayedBodies[0].inductionGroup, result.inductionGroup);
     });
 
     test('4.3: syncTrialResponse executes synchronously in < 10ms with zero UI blocking', () => {

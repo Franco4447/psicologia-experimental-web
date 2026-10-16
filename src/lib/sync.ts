@@ -16,6 +16,7 @@ import type {
 import { evaluateInclusion } from '@/data/stimuli';
 import { getBalancedLocalGroup, generateParticipantId } from '@/lib/experimentState';
 import type { ClientTelemetry } from '@/lib/telemetry';
+import { SESSION_REGISTRATION_TIMEOUT_MS } from '@/lib/timing';
 
 // ============================================================================
 // Storage Keys & Constants
@@ -27,7 +28,7 @@ export const PENDING_COMPLETION_KEY = 'favaloro_pending_completion_v1';
 export const SYNC_STATUS_KEY = 'favaloro_sync_status_v1';
 
 export const DEFAULT_REQUEST_TIMEOUT_MS = 5000;
-export const SESSION_INIT_TIMEOUT_MS = 2500;
+export const SESSION_INIT_TIMEOUT_MS = SESSION_REGISTRATION_TIMEOUT_MS;
 export const MAX_RETRY_COUNT = 5;
 
 // In-memory fallback if localStorage is unavailable (e.g. strict Safari private mode, SSR)
@@ -61,6 +62,11 @@ export interface SessionRegistrationPayload {
   deviceType: DeviceType;
   screenResolution: string;
   userAgent: string;
+  /**
+   * Group the client fell back to (and showed) when the server did not answer in time.
+   * Sent on the replay so the server stores the induction the participant actually saw.
+   */
+  inductionGroup?: InductionGroup;
 }
 
 export interface SessionRegistrationResult {
@@ -270,6 +276,7 @@ export async function registerSession(
     currentSyncStatus = 'offline';
     emitSyncStatus();
     const localGroup: InductionGroup = !isIncluded ? 'control' : getBalancedLocalGroup();
+    safeSetItem(PENDING_SESSION_KEY, JSON.stringify({ ...payload, inductionGroup: localGroup }));
     return {
       success: true,
       participantId,
@@ -334,8 +341,10 @@ export async function registerSession(
     currentSyncStatus = checkIsOnline() ? 'error' : 'offline';
     emitSyncStatus();
 
-    // Fall back gracefully to local balanced group heuristic
+    // Fall back gracefully to local balanced group heuristic. The group travels with the
+    // pending payload so the replay stores the induction this participant is shown.
     const localGroup: InductionGroup = !isIncluded ? 'control' : getBalancedLocalGroup();
+    safeSetItem(PENDING_SESSION_KEY, JSON.stringify({ ...payload, inductionGroup: localGroup }));
 
     return {
       success: true,
