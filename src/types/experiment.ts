@@ -285,6 +285,21 @@ export interface CsvExportRow {
   mc_reason_usage: number;
 }
 
+/** Median and quartiles by linear interpolation (R's default, numpy's default). */
+export interface Quartiles {
+  n: number;
+  q1: number;
+  median: number;
+  q3: number;
+}
+
+/** sd is the sample standard deviation (n - 1); 0 with fewer than 2 values. */
+export interface MeanSd {
+  n: number;
+  mean: number;
+  sd: number;
+}
+
 /**
  * Aggregate summary metrics for Admin Dashboard (built by src/lib/adminStats.ts).
  * "Analysed" means included and completed: the sample the report analyses.
@@ -350,6 +365,53 @@ export interface AdminDashboardStats {
     gender: Record<string, number>;
     orientation: Record<string, number>;
     residence: Record<string, number>;
+  };
+
+  // Over the analysed sample. Response counts are indexed by response option - 1.
+  descriptive: {
+    // Random assignment check: the groups should look alike.
+    groupEquivalence: Record<InductionGroup | 'total', {
+      n: number;
+      age: MeanSd;
+      gender: Record<string, number>;
+      orientation: Record<string, number>;
+    }>;
+    // Analysed participants without the 20 responses, or with the same option in all
+    // of them, by the 8-character id shown in the participants table.
+    dataQuality: {
+      incompleteIds: string[];
+      sameOptionIds: string[];
+      sessionDurationMs: Quartiles | null; // created_at -> completed_at
+    };
+    // histogram[k] = participants with k false memories (0-8).
+    falseMemoryDistribution: Record<InductionGroup, {
+      n: number;
+      histogram: number[];
+      atLeastOne: number;
+      quartiles: Quartiles | null;
+    }>;
+    responseDistribution: Record<InductionGroup, { fake: number[]; true: number[] }>;
+    // Each orientation sees its own set of 8 fake news.
+    falseMemoriesByOrientation: {
+      orientation: string;
+      byGroup: Record<InductionGroup, MeanSd>;
+      total: MeanSd;
+    }[];
+    // Each participant's median response time, then quartiles across the group.
+    responseTimeMs: Record<InductionGroup, {
+      fake: Quartiles | null;
+      true: Quartiles | null;
+      all: Quartiles | null;
+    }>;
+    // True news by id, then fake news by set and id.
+    items: {
+      id: number;
+      title: string;
+      isFake: boolean;
+      set: string | null;           // fake news set, by the orientation that sees it
+      options: number[];
+      byGroup: Record<InductionGroup, { shown: number; clearMemory: number }>;
+    }[];
   };
 
   // Group comparisons on the analysed sample (src/lib/inferential.ts).

@@ -137,6 +137,8 @@ El proyecto incluye un dashboard de monitoreo en **`/admin`**.
 - **Funciones:**
   - Visualizar la cantidad de participantes completados versus desertores.
   - Ver el balance de los grupos asignados (Control, Emocional, Racional).
+  - Estadística descriptiva de la muestra analizada: equivalencia de los grupos (edad, género, orientación), calidad de los datos (respuestas faltantes, misma opción en las 20 noticias, duración), distribución de falsos recuerdos por participante, distribución de las 4 opciones de respuesta por tipo de noticia, falsos recuerdos según orientación (set de noticias falsas), tiempo de respuesta (mediana y cuartiles) y análisis por ítem.
+  - Estadística inferencial: comparación de los 3 grupos con comprobación de supuestos.
   - Exportación: Contiene un botón para generar y descargar un archivo **CSV** consolidado (Export CSV) listo para ser procesado estadísticamente (ej. en SPSS, R o JASP).
 
 ---

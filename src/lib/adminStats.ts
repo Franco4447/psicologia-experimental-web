@@ -7,9 +7,10 @@
  * session: it is the sample the report analyses and the one the group targets count.
  */
 
-import type { AdminDashboardStats, InductionGroup } from '@/types/experiment';
+import type { AdminDashboardStats, InductionGroup, MeanSd, Quartiles } from '@/types/experiment';
 import type { ParticipantRow, ResponseRow } from '@/lib/supabase';
-import { ALPHA, compareGroups } from '@/lib/inferential';
+import { ALPHA, compareGroups, median } from '@/lib/inferential';
+import { STIMULI } from '@/data/stimuli';
 
 /** Included and completed participants each group needs (team decision, 2026-10-16). */
 export const MIN_PER_GROUP = 25;
@@ -68,6 +69,28 @@ function countBy<T>(items: T[], key: (item: T) => string | null | undefined): Re
 
 function mean(values: number[]): number {
   return values.length > 0 ? values.reduce((a, b) => a + b, 0) / values.length : 0;
+}
+
+function meanSd(values: number[]): MeanSd {
+  const m = mean(values);
+  const sd =
+    values.length > 1
+      ? Math.sqrt(values.reduce((sum, v) => sum + (v - m) ** 2, 0) / (values.length - 1))
+      : 0;
+  return { n: values.length, mean: m, sd };
+}
+
+/** Quartiles by linear interpolation between order statistics (R type 7). */
+export function quartiles(values: number[]): Quartiles | null {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const at = (p: number) => {
+    const h = (sorted.length - 1) * p;
+    const lo = Math.floor(h);
+    const hi = Math.min(lo + 1, sorted.length - 1);
+    return sorted[lo] + (h - lo) * (sorted[hi] - sorted[lo]);
+  };
+  return { n: sorted.length, q1: at(0.25), median: at(0.5), q3: at(0.75) };
 }
 
 type ResponseFlag = 'is_false_memory' | 'is_false_belief' | 'is_true_memory';
@@ -144,18 +167,21 @@ const COMPARISON_PAIRS: [number, number][] = [
   [GROUPS.indexOf('racional'), GROUPS.indexOf('control')],
 ];
 
-function buildInferential(
-  analysed: ParticipantRow[],
-  responses: ResponseRow[],
-  preliminary: boolean
-): AdminDashboardStats['inferential'] {
+function groupByParticipant(responses: ResponseRow[]): Map<string, ResponseRow[]> {
   const byParticipant = new Map<string, ResponseRow[]>();
   for (const r of responses) {
     const list = byParticipant.get(r.participant_id);
     if (list) list.push(r);
     else byParticipant.set(r.participant_id, [r]);
   }
+  return byParticipant;
+}
 
+function buildInferential(
+  analysed: ParticipantRow[],
+  byParticipant: Map<string, ResponseRow[]>,
+  preliminary: boolean
+): AdminDashboardStats['inferential'] {
   return {
     alpha: ALPHA,
     preliminary,
@@ -178,6 +204,144 @@ function buildInferential(
   };
 }
 
+const NEWS_PER_PARTICIPANT = 20;
+const FAKE_NEWS_PER_PARTICIPANT = 8;
+const RESPONSE_OPTIONS = [1, 2, 3, 4];
+
+/** Fake news sets by the orientation that sees them (src/data/stimuli.ts). */
+const FAKE_SET_LABELS: Record<string, string> = {
+  psicoanalisis: 'Psicoanálisis',
+  evidencia: 'Cognitivo-Conductual',
+};
+const ORIENTATION_ORDER = ['Psicoanálisis', 'Cognitivo-Conductual'];
+
+function byOrientationOrder(a: string, b: string): number {
+  const rank = (o: string) => (ORIENTATION_ORDER.includes(o) ? ORIENTATION_ORDER.indexOf(o) : ORIENTATION_ORDER.length);
+  return rank(a) - rank(b) || a.localeCompare(b);
+}
+
+function optionCounts(responses: ResponseRow[]): number[] {
+  return RESPONSE_OPTIONS.map((option) => responses.filter((r) => r.response_option === option).length);
+}
+
+function buildDescriptive(
+  analysed: ParticipantRow[],
+  byParticipant: Map<string, ResponseRow[]>
+): AdminDashboardStats['descriptive'] {
+  const responsesOf = (p: ParticipantRow) => byParticipant.get(p.id) || [];
+  const falseMemoriesOf = (p: ParticipantRow) => responsesOf(p).filter((r) => r.is_false_memory).length;
+  const orientationOf = (p: ParticipantRow) => orientationLabel(p.therapeutic_orientation);
+  const shortId = (p: ParticipantRow) => String(p.id).substring(0, 8);
+  const membersByGroup = {} as Record<InductionGroup, ParticipantRow[]>;
+  for (const group of GROUPS) membersByGroup[group] = analysed.filter((p) => p.induction_group === group);
+
+  const profile = (members: ParticipantRow[]) => ({
+    n: members.length,
+    age: meanSd(members.map((p) => p.age).filter((a): a is number => typeof a === 'number')),
+    gender: countBy(members, (p) => p.gender),
+    orientation: countBy(members, (p) => p.therapeutic_orientation && orientationOf(p)),
+  });
+  const groupEquivalence = { total: profile(analysed) } as AdminDashboardStats['descriptive']['groupEquivalence'];
+
+  const falseMemoryDistribution = {} as AdminDashboardStats['descriptive']['falseMemoryDistribution'];
+  const responseDistribution = {} as AdminDashboardStats['descriptive']['responseDistribution'];
+  const responseTimeMs = {} as AdminDashboardStats['descriptive']['responseTimeMs'];
+
+  // Each participant's median, so one trial left open for minutes does not weigh in.
+  const medianTimes = (members: ParticipantRow[], keep: (r: ResponseRow) => boolean) =>
+    quartiles(
+      members
+        .map((p) => responsesOf(p).filter(keep).map((r) => r.response_time_ms))
+        .filter((times) => times.length > 0)
+        .map(median)
+    );
+
+  for (const group of GROUPS) {
+    const members = membersByGroup[group];
+    groupEquivalence[group] = profile(members);
+
+    const counts = members.map(falseMemoriesOf);
+    const histogram: number[] = new Array(Math.max(FAKE_NEWS_PER_PARTICIPANT, ...counts) + 1).fill(0);
+    for (const count of counts) histogram[count] += 1;
+    falseMemoryDistribution[group] = {
+      n: members.length,
+      histogram,
+      atLeastOne: counts.filter((count) => count > 0).length,
+      quartiles: quartiles(counts),
+    };
+
+    const groupResponses = members.flatMap(responsesOf);
+    responseDistribution[group] = {
+      fake: optionCounts(groupResponses.filter((r) => r.is_fake)),
+      true: optionCounts(groupResponses.filter((r) => !r.is_fake)),
+    };
+
+    responseTimeMs[group] = {
+      fake: medianTimes(members, (r) => r.is_fake),
+      true: medianTimes(members, (r) => !r.is_fake),
+      all: medianTimes(members, () => true),
+    };
+  }
+
+  const orientations = Array.from(new Set(analysed.map(orientationOf).filter(Boolean))).sort(byOrientationOrder);
+  const falseMemoriesByOrientation = orientations.map((orientation) => {
+    const byGroup = {} as Record<InductionGroup, MeanSd>;
+    for (const group of GROUPS) {
+      byGroup[group] = meanSd(membersByGroup[group].filter((p) => orientationOf(p) === orientation).map(falseMemoriesOf));
+    }
+    return {
+      orientation,
+      byGroup,
+      total: meanSd(analysed.filter((p) => orientationOf(p) === orientation).map(falseMemoriesOf)),
+    };
+  });
+
+  const durations = analysed
+    .map((p) => (p.created_at && p.completed_at ? Date.parse(p.completed_at) - Date.parse(p.created_at) : NaN))
+    .filter((ms) => Number.isFinite(ms) && ms >= 0);
+
+  const groupOf = new Map(analysed.map((p) => [p.id, p.induction_group]));
+  const analysedResponses = analysed.flatMap(responsesOf);
+  const items = STIMULI.map((stimulus) => {
+    const shown = analysedResponses.filter((r) => r.news_id === stimulus.id);
+    const byGroup = {} as Record<InductionGroup, { shown: number; clearMemory: number }>;
+    for (const group of GROUPS) {
+      const inGroup = shown.filter((r) => groupOf.get(r.participant_id) === group);
+      byGroup[group] = { shown: inGroup.length, clearMemory: inGroup.filter((r) => r.response_option === 1).length };
+    }
+    return {
+      id: stimulus.id,
+      title: stimulus.title,
+      isFake: stimulus.isFake,
+      set: stimulus.isFake ? FAKE_SET_LABELS[stimulus.congruence] || stimulus.congruence : null,
+      options: optionCounts(shown),
+      byGroup,
+    };
+  }).sort(
+    (a, b) =>
+      Number(a.isFake) - Number(b.isFake) || byOrientationOrder(a.set || '', b.set || '') || a.id - b.id
+  );
+
+  return {
+    groupEquivalence,
+    dataQuality: {
+      incompleteIds: analysed.filter((p) => responsesOf(p).length < NEWS_PER_PARTICIPANT).map(shortId),
+      sameOptionIds: analysed
+        .filter((p) => {
+          const rs = responsesOf(p);
+          return rs.length > 1 && rs.every((r) => r.response_option === rs[0].response_option);
+        })
+        .map(shortId),
+      sessionDurationMs: quartiles(durations),
+    },
+    falseMemoryDistribution,
+    responseDistribution,
+    falseMemoriesByOrientation,
+    responseTimeMs,
+    items,
+  };
+}
+
 export function buildAdminStats(
   participants: ParticipantRow[],
   responses: ResponseRow[]
@@ -185,6 +349,7 @@ export function buildAdminStats(
   const analysed = participants.filter((p) => p.is_included && p.status === 'completed');
   const analysedIds = new Set(analysed.map((p) => p.id));
   const analysedResponses = responses.filter((r) => analysedIds.has(r.participant_id));
+  const responsesByParticipant = groupByParticipant(analysedResponses);
   const completed = participants.filter((p) => p.status === 'completed');
 
   const groupProgress = {} as AdminDashboardStats['groupProgress'];
@@ -226,11 +391,7 @@ export function buildAdminStats(
   }
 
   const ages = analysed.map((p) => p.age).filter((a): a is number => typeof a === 'number');
-  const ageMean = mean(ages);
-  const ageSd =
-    ages.length > 1
-      ? Math.sqrt(ages.reduce((sum, a) => sum + (a - ageMean) ** 2, 0) / (ages.length - 1))
-      : 0;
+  const age = meanSd(ages);
 
   return {
     totalParticipants: participants.length,
@@ -270,8 +431,8 @@ export function buildAdminStats(
 
     demographics: {
       age: {
-        mean: ageMean,
-        sd: ageSd,
+        mean: age.mean,
+        sd: age.sd,
         min: ages.length > 0 ? Math.min(...ages) : 0,
         max: ages.length > 0 ? Math.max(...ages) : 0,
       },
@@ -281,9 +442,11 @@ export function buildAdminStats(
       residence: countBy(analysed, (p) => p.residence || 'Sin dato'),
     },
 
+    descriptive: buildDescriptive(analysed, responsesByParticipant),
+
     inferential: buildInferential(
       analysed,
-      analysedResponses,
+      responsesByParticipant,
       analysedCounts.some((count) => count < MIN_PER_GROUP)
     ),
   };

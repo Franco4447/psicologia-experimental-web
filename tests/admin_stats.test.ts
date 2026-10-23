@@ -13,7 +13,9 @@ import {
   fetchAllRows,
   IDEAL_PER_GROUP,
   MIN_PER_GROUP,
+  quartiles,
 } from '../src/lib/adminStats.ts';
+import { EBP_CONGRUENT_FAKE_IDS, PSA_CONGRUENT_FAKE_IDS } from '../src/data/stimuli.ts';
 
 let nextId = 0;
 function participant(overrides: Record<string, unknown> = {}) {
@@ -37,13 +39,17 @@ function participant(overrides: Record<string, unknown> = {}) {
   };
 }
 
-function responsesFor(p: { id: string }, falseMemories: number) {
-  // 8 fake news (the first `falseMemories` remembered) and 12 true news (all remembered).
+function responsesFor(p: { id: string; therapeutic_orientation: string }, falseMemories: number) {
+  // 8 fake news of the participant's set (the first `falseMemories` clearly remembered,
+  // the rest "creo que sucedió") and 12 true news (all clearly remembered).
+  const fakeIds = p.therapeutic_orientation === 'Psicoanálisis' ? PSA_CONGRUENT_FAKE_IDS : EBP_CONGRUENT_FAKE_IDS;
   return Array.from({ length: 20 }, (_, i) => {
     const isFake = i < 8;
     const remembered = isFake ? i < falseMemories : true;
     return {
       participant_id: p.id,
+      news_id: isFake ? fakeIds[i] : i - 7,
+      response_option: remembered ? 1 : 2,
       is_fake: isFake,
       is_false_memory: isFake && remembered,
       is_false_belief: isFake && !remembered,
@@ -248,5 +254,113 @@ describe('buildAdminStats', () => {
     assert.equal(empty.kpis.overall.falseMemoryRate, 0);
     assert.deepEqual(empty.demographics.age, { mean: 0, sd: 0, min: 0, max: 0 });
     assert.equal(empty.isBalanced, true);
+    assert.deepEqual(empty.descriptive.groupEquivalence.total.age, { n: 0, mean: 0, sd: 0 });
+    assert.equal(empty.descriptive.falseMemoryDistribution.control.quartiles, null);
+    assert.equal(empty.descriptive.dataQuality.sessionDurationMs, null);
+    assert.equal(empty.descriptive.items.length, 28);
+    assert.ok(empty.descriptive.items.every((item) => item.options.every((count) => count === 0)));
+  });
+
+  describe('descriptive statistics', () => {
+    const d = stats.descriptive;
+
+    test('profiles each group and the whole analysed sample', () => {
+      assert.equal(d.groupEquivalence.total.n, 3);
+      assert.deepEqual(d.groupEquivalence.total.age, { n: 3, mean: 25, sd: 5 });
+      assert.equal(d.groupEquivalence.racional.age.mean, 25);
+      assert.ok(Math.abs(d.groupEquivalence.racional.age.sd - Math.sqrt(50)) < 1e-12);
+      assert.deepEqual(d.groupEquivalence.racional.orientation, { Psicoanálisis: 2 });
+      assert.deepEqual(d.groupEquivalence.emocional.orientation, { 'Cognitivo-Conductual': 1 });
+      assert.deepEqual(d.groupEquivalence.control, { n: 0, age: { n: 0, mean: 0, sd: 0 }, gender: {}, orientation: {} });
+    });
+
+    test('counts participants by number of false memories', () => {
+      const racional = d.falseMemoryDistribution.racional;
+      assert.deepEqual(racional.histogram, [0, 0, 1, 0, 1, 0, 0, 0, 0]);
+      assert.equal(racional.atLeastOne, 2);
+      assert.deepEqual(racional.quartiles, { n: 2, q1: 2.5, median: 3, q3: 3.5 });
+      assert.deepEqual(d.falseMemoryDistribution.emocional.histogram, [0, 0, 0, 0, 0, 0, 0, 0, 1]);
+      assert.deepEqual(d.falseMemoryDistribution.control, {
+        n: 0,
+        histogram: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        atLeastOne: 0,
+        quartiles: null,
+      });
+    });
+
+    test('splits the response options by news type, without excluded participants', () => {
+      // racional: (4 + 2) fake news clearly remembered, (4 + 6) "creo que sucedió".
+      assert.deepEqual(d.responseDistribution.racional, { fake: [6, 10, 0, 0], true: [24, 0, 0, 0] });
+      assert.deepEqual(d.responseDistribution.emocional, { fake: [8, 0, 0, 0], true: [12, 0, 0, 0] });
+      assert.deepEqual(d.responseDistribution.control, { fake: [0, 0, 0, 0], true: [0, 0, 0, 0] });
+    });
+
+    test('describes false memories by orientation and group', () => {
+      assert.deepEqual(
+        d.falseMemoriesByOrientation.map((row) => row.orientation),
+        ['Psicoanálisis', 'Cognitivo-Conductual']
+      );
+      const [psa, cc] = d.falseMemoriesByOrientation;
+      assert.equal(psa.byGroup.racional.mean, 3);
+      assert.ok(Math.abs(psa.byGroup.racional.sd - Math.SQRT2) < 1e-12);
+      assert.deepEqual(psa.byGroup.emocional, { n: 0, mean: 0, sd: 0 });
+      assert.deepEqual(cc.byGroup.emocional, { n: 1, mean: 8, sd: 0 });
+      assert.deepEqual(cc.total, { n: 1, mean: 8, sd: 0 });
+    });
+
+    test('flags incomplete and same-option participants and times the session', () => {
+      // The emocional participant answered option 1 to all 20 news.
+      assert.deepEqual(d.dataQuality.incompleteIds, []);
+      assert.deepEqual(d.dataQuality.sameOptionIds, [String(emocional.id).substring(0, 8)]);
+      assert.deepEqual(d.dataQuality.sessionDurationMs, { n: 3, q1: 1200000, median: 1200000, q3: 1200000 });
+
+      const p = participant();
+      const partial = buildAdminStats([p], responsesFor(p, 3).slice(0, 19));
+      assert.deepEqual(partial.descriptive.dataQuality.incompleteIds, [String(p.id).substring(0, 8)]);
+    });
+
+    test('lists true news, then each fake news set, with clear memories by group', () => {
+      assert.deepEqual(
+        d.items.map((item) => item.id),
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, ...PSA_CONGRUENT_FAKE_IDS, ...EBP_CONGRUENT_FAKE_IDS]
+      );
+      const byId = new Map(d.items.map((item) => [item.id, item]));
+      assert.deepEqual(byId.get(1)!.options, [3, 0, 0, 0]);
+      assert.equal(byId.get(1)!.set, null);
+      // Fake news 18 is the 3rd of the psychoanalysis set: only racional1 (4 false memories) remembers it.
+      assert.equal(byId.get(18)!.set, 'Psicoanálisis');
+      assert.deepEqual(byId.get(18)!.options, [1, 1, 0, 0]);
+      assert.deepEqual(byId.get(18)!.byGroup, {
+        racional: { shown: 2, clearMemory: 1 },
+        emocional: { shown: 0, clearMemory: 0 },
+        control: { shown: 0, clearMemory: 0 },
+      });
+      assert.equal(byId.get(13)!.set, 'Cognitivo-Conductual');
+      assert.deepEqual(byId.get(13)!.byGroup.emocional, { shown: 1, clearMemory: 1 });
+    });
+
+    test('takes each participant\'s median response time before describing the group', () => {
+      const a = participant();
+      const b = participant();
+      const withTimes = (p: ReturnType<typeof participant>, fakeMs: number[], trueMs: number) =>
+        responsesFor(p, 0).map((r, i) => ({ ...r, response_time_ms: r.is_fake ? fakeMs[i] : trueMs }));
+      // One fake news left open for 10 minutes does not move a's median.
+      const rs = [
+        ...withTimes(a, [4000, 4000, 4000, 4000, 4000, 4000, 4000, 600000], 2000),
+        ...withTimes(b, new Array(8).fill(6000), 3000),
+      ];
+      const rt = buildAdminStats([a, b], rs).descriptive.responseTimeMs.racional;
+      assert.deepEqual(rt.fake, { n: 2, q1: 4500, median: 5000, q3: 5500 });
+      assert.deepEqual(rt.true, { n: 2, q1: 2250, median: 2500, q3: 2750 });
+      assert.deepEqual(rt.all, { n: 2, q1: 2250, median: 2500, q3: 2750 });
+    });
+  });
+});
+
+describe('quartiles', () => {
+  test('interpolates linearly between order statistics, like R and numpy', () => {
+    assert.deepEqual(quartiles([4, 1, 3, 2]), { n: 4, q1: 1.75, median: 2.5, q3: 3.25 });
+    assert.deepEqual(quartiles([7]), { n: 1, q1: 7, median: 7, q3: 7 });
+    assert.equal(quartiles([]), null);
   });
 });
