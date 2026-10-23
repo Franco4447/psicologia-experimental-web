@@ -164,6 +164,398 @@ function InferentialCard({ analysis, alpha }: { analysis: InferentialAnalysis; a
   );
 }
 
+type Descriptive = AdminDashboardStats['descriptive'];
+type Quartiles = NonNullable<Descriptive['dataQuality']['sessionDurationMs']>;
+
+const GENDER_ORDER = ['Femenino', 'Masculino', 'Otro'];
+const ORIENTATION_ORDER = ['Psicoanálisis', 'Cognitivo-Conductual'];
+
+// Ordinal blue ramp, darkest for the strongest endorsement (option 1).
+const RESPONSE_OPTION_STYLES = [
+  { short: 'Recuerdo claramente', bg: '#104281', fg: '#ffffff' },
+  { short: 'Creo que sucedió', bg: '#256abf', fg: '#ffffff' },
+  { short: 'Lo recuerdo diferente', bg: '#5598e7', fg: '#0b0b0b' },
+  { short: 'No lo recuerdo', bg: '#86b6ef', fg: '#0b0b0b' },
+];
+
+// Sequential blue ramp (light -> dark) for the share of a group.
+const SHARE_RAMP = [
+  '#cde2fb', '#b7d3f6', '#9ec5f4', '#86b6ef', '#6da7ec', '#5598e7', '#3987e5',
+  '#2a78d6', '#256abf', '#1c5cab', '#184f95', '#104281', '#0d366b',
+];
+
+function shareStyle(share: number): React.CSSProperties | undefined {
+  if (!(share > 0)) return undefined;
+  const step = Math.min(SHARE_RAMP.length - 1, Math.ceil(share * SHARE_RAMP.length) - 1);
+  return { backgroundColor: SHARE_RAMP[step], color: step >= 7 ? '#ffffff' : '#0b0b0b' };
+}
+
+const percent = (part: number, total: number, digits = 0) =>
+  total > 0 ? `${((part / total) * 100).toFixed(digits)}%` : '-';
+
+const countWithPercent = (part: number, total: number) => (total > 0 ? `${part} (${percent(part, total)})` : '-');
+
+const formatMeanSd = (m: { n: number; mean: number; sd: number }) =>
+  m.n === 0 ? '-' : m.n === 1 ? m.mean.toFixed(2) : `${m.mean.toFixed(2)} (${m.sd.toFixed(2)})`;
+
+const formatQuartiles = (q: Quartiles | null, scale = 1, digits = 1) =>
+  q ? `${(q.median / scale).toFixed(digits)} [${(q.q1 / scale).toFixed(digits)}–${(q.q3 / scale).toFixed(digits)}]` : '-';
+
+/** Known categories first, in a fixed order, then any other value present. */
+function orderedKeys(counts: Record<string, number>, order: string[]): string[] {
+  return [...order, ...Object.keys(counts).filter((k) => !order.includes(k)).sort()];
+}
+
+function DescriptiveBlock({ title, why, children }: { title: string; why: string; children: React.ReactNode }) {
+  return (
+    <div className="border rounded p-4">
+      <h4 className="font-semibold text-slate-800">{title}</h4>
+      <p className="text-xs text-slate-500 mt-1 mb-3">{why}</p>
+      {children}
+    </div>
+  );
+}
+
+function ResponseLegend() {
+  return (
+    <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
+      {RESPONSE_OPTION_STYLES.map((opt, i) => (
+        <span key={opt.short} className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: opt.bg }} />
+          {i + 1}. {opt.short}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function StackedResponseBar({ counts, label }: { counts: number[]; label: string }) {
+  const total = counts.reduce((a, b) => a + b, 0);
+  if (total === 0) return <div className="h-6 flex items-center text-xs text-slate-500">Sin respuestas</div>;
+  return (
+    <div className="flex h-6 w-full gap-[2px]" role="img" aria-label={`${label}: ${counts.map((c, i) => `${RESPONSE_OPTION_STYLES[i].short} ${percent(c, total)}`).join(', ')}`}>
+      {counts.map((count, i) => {
+        if (count === 0) return null;
+        const opt = RESPONSE_OPTION_STYLES[i];
+        const share = count / total;
+        return (
+          <div
+            key={i}
+            className="min-w-0 flex items-center justify-center text-[11px] font-medium last:rounded-r"
+            style={{ flexGrow: count, flexBasis: 0, backgroundColor: opt.bg, color: opt.fg }}
+            title={`${label} · ${opt.short}: ${count} de ${total} (${percent(count, total, 1)})`}
+          >
+            {share >= 0.15 ? percent(count, total) : ''}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ItemTable({ items, isFake }: { items: Descriptive['items']; isFake: boolean }) {
+  const rows = items.filter((item) => item.isFake === isFake);
+  return (
+    <div className="overflow-x-auto">
+      <table className="min-w-full text-left text-sm tabular-nums">
+        <thead className="text-slate-600">
+          <tr>
+            <th className="pr-3 py-1 font-semibold">ID</th>
+            <th className="pr-3 py-1 font-semibold">Titular</th>
+            {isFake && <th className="pr-3 py-1 font-semibold">Set</th>}
+            <th className="pr-3 py-1 font-semibold">n</th>
+            <th className="pr-3 py-1 font-semibold">{isFake ? 'Falso recuerdo' : 'Recuerdo verdadero'}</th>
+            {GROUPS.map((g) => (
+              <th key={g} className="pr-3 py-1 font-semibold capitalize">{g}</th>
+            ))}
+            <th className="pr-3 py-1 font-semibold">{isFake ? 'Falsa creencia' : 'Creo que sucedió'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((item) => {
+            const shown = item.options.reduce((a, b) => a + b, 0);
+            return (
+              <tr key={item.id} className="border-t">
+                <td className="pr-3 py-1">{item.id}</td>
+                <td className="pr-3 py-1 max-w-[280px] truncate" title={item.title}>{item.title}</td>
+                {isFake && <td className="pr-3 py-1 whitespace-nowrap">{item.set}</td>}
+                <td className="pr-3 py-1">{shown}</td>
+                <td className="pr-3 py-1 font-semibold">{percent(item.options[0], shown)}</td>
+                {GROUPS.map((g) => (
+                  <td key={g} className="pr-3 py-1" title={`${item.byGroup[g].clearMemory} de ${item.byGroup[g].shown}`}>
+                    {percent(item.byGroup[g].clearMemory, item.byGroup[g].shown)}
+                  </td>
+                ))}
+                <td className="pr-3 py-1">{percent(item.options[1], shown)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function DescriptiveSection({ d, analysed }: { d: Descriptive; analysed: number }) {
+  if (analysed === 0) return <p className="text-sm text-slate-500">Todavía no hay participantes analizados.</p>;
+  const eq = d.groupEquivalence;
+  const columns = [...GROUPS, 'total'] as const;
+  const quality = d.dataQuality;
+  const histogramLength = Math.max(...GROUPS.map((g) => d.falseMemoryDistribution[g].histogram.length));
+
+  return (
+    <div className="space-y-4">
+      <DescriptiveBlock
+        title="Equivalencia de los grupos"
+        why="La asignación es aleatoria: los grupos deberían parecerse en edad, género y orientación. La orientación además define qué set de noticias falsas ve cada participante, así que un desbalance acá confunde el efecto de la inducción."
+      >
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-left text-sm tabular-nums">
+            <thead className="text-slate-600">
+              <tr>
+                <th className="pr-4 py-1 font-semibold"></th>
+                {columns.map((c) => (
+                  <th key={c} className="pr-4 py-1 font-semibold capitalize">{c}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t">
+                <td className="pr-4 py-1 text-slate-600">n</td>
+                {columns.map((c) => <td key={c} className="pr-4 py-1">{eq[c].n}</td>)}
+              </tr>
+              <tr className="border-t">
+                <td className="pr-4 py-1 text-slate-600">Edad, M (DE)</td>
+                {columns.map((c) => <td key={c} className="pr-4 py-1">{formatMeanSd(eq[c].age)}</td>)}
+              </tr>
+              {orderedKeys(eq.total.gender, GENDER_ORDER).map((gender) => (
+                <tr key={gender} className="border-t">
+                  <td className="pr-4 py-1 text-slate-600">{gender}, n (%)</td>
+                  {columns.map((c) => <td key={c} className="pr-4 py-1">{countWithPercent(eq[c].gender[gender] || 0, eq[c].n)}</td>)}
+                </tr>
+              ))}
+              {orderedKeys(eq.total.orientation, ORIENTATION_ORDER).map((orientation) => (
+                <tr key={orientation} className="border-t">
+                  <td className="pr-4 py-1 text-slate-600">{orientation}, n (%)</td>
+                  {columns.map((c) => <td key={c} className="pr-4 py-1">{countWithPercent(eq[c].orientation[orientation] || 0, eq[c].n)}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </DescriptiveBlock>
+
+      <DescriptiveBlock
+        title="Calidad de los datos"
+        why="Un participante analizado sin las 20 respuestas tiene sus conteos subestimados. Elegir la misma opción en las 20 noticias puede indicar que respondió sin leer: conviene revisarlo en el detalle de participantes."
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+          <div className="bg-slate-50 rounded p-3">
+            <p className="text-slate-600">Con las 20 respuestas</p>
+            <p className="text-2xl font-bold text-slate-800 mt-1">{analysed - quality.incompleteIds.length} / {analysed}</p>
+            {quality.incompleteIds.length > 0 && (
+              <p className="text-xs text-red-600 mt-1">Incompletos: <span className="font-mono">{quality.incompleteIds.join(', ')}</span></p>
+            )}
+          </div>
+          <div className="bg-slate-50 rounded p-3">
+            <p className="text-slate-600">Misma opción en las 20</p>
+            <p className="text-2xl font-bold text-slate-800 mt-1">{quality.sameOptionIds.length}</p>
+            {quality.sameOptionIds.length > 0 && (
+              <p className="text-xs text-amber-700 mt-1">Revisar: <span className="font-mono">{quality.sameOptionIds.join(', ')}</span></p>
+            )}
+          </div>
+          <div className="bg-slate-50 rounded p-3">
+            <p className="text-slate-600">Duración de la sesión, Mdn [Q1–Q3]</p>
+            <p className="text-2xl font-bold text-slate-800 mt-1">{formatQuartiles(quality.sessionDurationMs, 60000)} <span className="text-sm font-normal text-slate-500">min</span></p>
+          </div>
+        </div>
+      </DescriptiveBlock>
+
+      <DescriptiveBlock
+        title="Falsos recuerdos por participante (0–8)"
+        why="Forma de la distribución de la variable de H1. Si se acumula en 0 (efecto suelo) las medias engañan y conviene mirar la mediana; «≥ 1» es la proporción de participantes con al menos un falso recuerdo."
+      >
+        <div className="overflow-x-auto">
+          <table className="text-sm tabular-nums border-separate" style={{ borderSpacing: 2 }}>
+            <thead className="text-slate-600">
+              <tr>
+                <th className="pr-3 py-1 text-left font-semibold">Grupo</th>
+                {Array.from({ length: histogramLength }, (_, k) => (
+                  <th key={k} className="w-12 min-w-[2.75rem] py-1 text-center font-semibold">{k}</th>
+                ))}
+                <th className="pl-3 pr-3 py-1 text-left font-semibold whitespace-nowrap">≥ 1</th>
+                <th className="pr-3 py-1 text-left font-semibold whitespace-nowrap">Mdn [Q1–Q3]</th>
+              </tr>
+            </thead>
+            <tbody>
+              {GROUPS.map((g) => {
+                const dist = d.falseMemoryDistribution[g];
+                return (
+                  <tr key={g}>
+                    <td className="pr-3 py-1 capitalize font-medium">{g} <span className="text-slate-500 font-normal">({dist.n})</span></td>
+                    {Array.from({ length: histogramLength }, (_, k) => {
+                      const count = dist.histogram[k] || 0;
+                      return (
+                        <td
+                          key={k}
+                          className="w-12 min-w-[2.75rem] h-10 text-center rounded bg-slate-50 leading-tight"
+                          style={shareStyle(dist.n > 0 ? count / dist.n : 0)}
+                          title={`${g}: ${count} de ${dist.n} participantes con ${k} falsos recuerdos (${percent(count, dist.n, 1)})`}
+                        >
+                          <div className="font-semibold">{count}</div>
+                          <div className="text-[10px] opacity-80">{percent(count, dist.n)}</div>
+                        </td>
+                      );
+                    })}
+                    <td className="pl-3 pr-3 py-1 font-semibold whitespace-nowrap">{countWithPercent(dist.atLeastOne, dist.n)}</td>
+                    <td className="pr-3 py-1 whitespace-nowrap">{formatQuartiles(dist.quartiles, 1, 1)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-slate-500 mt-2">Cada celda: participantes del grupo con ese número de falsos recuerdos; más oscuro = mayor % del grupo.</p>
+      </DescriptiveBlock>
+
+      <DescriptiveBlock
+        title="Distribución de respuestas por tipo de noticia"
+        why="Perfil completo de la escala de 4 opciones. En las falsas, 1 = falso recuerdo y 2 = falsa creencia; en las verdaderas, 1 = recuerdo verdadero. Muestra si una inducción mueve respuestas de «No lo recuerdo» a «Creo que sucedió» sin llegar al recuerdo."
+      >
+        <ResponseLegend />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-3">
+          {(['fake', 'true'] as const).map((kind) => (
+            <div key={kind}>
+              <p className="text-sm font-medium text-slate-700 mb-2">{kind === 'fake' ? 'Noticias falsas' : 'Noticias verdaderas'}</p>
+              <div className="space-y-2">
+                {GROUPS.map((g) => (
+                  <div key={g} className="flex items-center gap-2">
+                    <span className="w-20 shrink-0 text-sm capitalize text-slate-600">{g}</span>
+                    <StackedResponseBar counts={d.responseDistribution[g][kind]} label={`${g} · ${kind === 'fake' ? 'falsas' : 'verdaderas'}`} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <details className="mt-3 text-sm">
+          <summary className="cursor-pointer text-slate-600">Ver tabla</summary>
+          <div className="overflow-x-auto mt-2">
+            <table className="min-w-full text-left tabular-nums">
+              <thead className="text-slate-600">
+                <tr>
+                  <th className="pr-3 py-1 font-semibold">Noticias</th>
+                  <th className="pr-3 py-1 font-semibold">Grupo</th>
+                  {RESPONSE_OPTION_STYLES.map((opt, i) => (
+                    <th key={opt.short} className="pr-3 py-1 font-semibold">{i + 1}. {opt.short}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(['fake', 'true'] as const).flatMap((kind) =>
+                  GROUPS.map((g) => {
+                    const counts = d.responseDistribution[g][kind];
+                    const total = counts.reduce((a, b) => a + b, 0);
+                    return (
+                      <tr key={`${kind}-${g}`} className="border-t">
+                        <td className="pr-3 py-1">{kind === 'fake' ? 'Falsas' : 'Verdaderas'}</td>
+                        <td className="pr-3 py-1 capitalize">{g}</td>
+                        {counts.map((c, i) => <td key={i} className="pr-3 py-1">{countWithPercent(c, total)}</td>)}
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </DescriptiveBlock>
+
+      <DescriptiveBlock
+        title="Falsos recuerdos según orientación, M (DE)"
+        why="Cada orientación ve un set distinto de 8 noticias falsas, congruente con su postura. Si el efecto de la inducción aparece en un solo set, la diferencia global puede deberse a los ítems y no a la inducción."
+      >
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-left text-sm tabular-nums">
+            <thead className="text-slate-600">
+              <tr>
+                <th className="pr-4 py-1 font-semibold">Orientación (set)</th>
+                {columns.map((c) => (
+                  <th key={c} className="pr-4 py-1 font-semibold capitalize">{c}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {d.falseMemoriesByOrientation.map((row) => (
+                <tr key={row.orientation} className="border-t">
+                  <td className="pr-4 py-1">{row.orientation}</td>
+                  {columns.map((c) => {
+                    const cell = c === 'total' ? row.total : row.byGroup[c];
+                    return (
+                      <td key={c} className="pr-4 py-1">
+                        {formatMeanSd(cell)} <span className="text-xs text-slate-500">n = {cell.n}</span>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </DescriptiveBlock>
+
+      <DescriptiveBlock
+        title="Tiempo de respuesta (s), Mdn [Q1–Q3]"
+        why="Mediana de cada participante y luego mediana y cuartiles del grupo. El tiempo de respuesta es ilimitado y tiene cola larga (alguien puede dejar la pestaña abierta), así que la mediana describe mejor la deliberación (C3) que la media."
+      >
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-left text-sm tabular-nums">
+            <thead className="text-slate-600">
+              <tr>
+                <th className="pr-4 py-1 font-semibold">Grupo</th>
+                <th className="pr-4 py-1 font-semibold">Noticias falsas</th>
+                <th className="pr-4 py-1 font-semibold">Noticias verdaderas</th>
+                <th className="pr-4 py-1 font-semibold">Todas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {GROUPS.map((g) => {
+                const rt = d.responseTimeMs[g];
+                return (
+                  <tr key={g} className="border-t">
+                    <td className="pr-4 py-1 capitalize">{g}</td>
+                    <td className="pr-4 py-1">{formatQuartiles(rt.fake, 1000, 2)}</td>
+                    <td className="pr-4 py-1">{formatQuartiles(rt.true, 1000, 2)}</td>
+                    <td className="pr-4 py-1">{formatQuartiles(rt.all, 1000, 2)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </DescriptiveBlock>
+
+      <details className="border rounded p-4">
+        <summary className="cursor-pointer font-semibold text-slate-800">Análisis por ítem</summary>
+        <p className="text-xs text-slate-500 mt-1 mb-3">
+          Porcentaje de «Recuerdo claramente» por titular, en total y por grupo. Ítems cerca de 0% o de 100% aportan poca
+          información; un ítem muy distinto a los demás de su set puede estar empujando los resultados.
+        </p>
+        <div className="space-y-4">
+          <div>
+            <p className="text-sm font-medium text-slate-700 mb-1">Noticias falsas (cada set lo ve una orientación)</p>
+            <ItemTable items={d.items} isFake={true} />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-slate-700 mb-1">Noticias verdaderas (las ven todos)</p>
+            <ItemTable items={d.items} isFake={false} />
+          </div>
+        </div>
+      </details>
+    </div>
+  );
+}
+
 function CountList({ counts }: { counts: Record<string, number> }) {
   const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   if (entries.length === 0) return <p className="text-slate-500">Sin datos</p>;
@@ -529,6 +921,15 @@ export default function AdminDashboard() {
                   </tbody>
                 </table>
               </div>
+            </div>
+
+            <div className="bg-white p-6 rounded shadow">
+              <h3 className="text-lg font-semibold text-slate-800 mb-1">Estadística Descriptiva (Muestra Analizada)</h3>
+              <p className="text-xs text-slate-500 mb-4">
+                Antes de comparar los grupos: si son equivalentes, si los datos están completos y cómo se distribuyen las
+                respuestas que miden H1 y las hipótesis complementarias.
+              </p>
+              <DescriptiveSection d={stats.descriptive} analysed={stats.analysedParticipants} />
             </div>
 
             <div className="bg-white p-6 rounded shadow">
