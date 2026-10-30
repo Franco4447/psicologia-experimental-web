@@ -34,3 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# simulated participants: the export of real participants is never committed
+/scripts/simulacion/reales*.json
+/scripts/simulacion/__pycache__/

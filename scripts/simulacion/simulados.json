@@ -1,0 +1,3710 @@
+{
+ "seed": 20261030,
+ "end": "2026-10-30T20:30:00.000Z",
+ "window_days": 7,
+ "real_participants": 49,
+ "style_shrink": 1.05,
+ "speed_shrink": 0.8,
+ "participants": [
+  {
+   "id": "286354ad-06d7-4930-9777-25c56218abfd",
+   "created_at": "2026-10-24T16:46:52.838Z",
+   "completed_at": "2026-10-24T16:54:38.959Z",
+   "client_timestamp": "2026-10-24T16:46:52.838Z",
+   "age": 39,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad de Palermo",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "racional",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "393x852",
+   "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+   "mc_reported_induction": "Razón",
+   "mc_emotion_usage": 3,
+   "mc_reason_usage": 2,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 12977,
+     "created_at": "2026-10-24T16:47:38.597Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 22,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7664,
+     "created_at": "2026-10-24T16:48:01.549Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 15,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 13666,
+     "created_at": "2026-10-24T16:48:30.301Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 28,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3885,
+     "created_at": "2026-10-24T16:48:49.317Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2483,
+     "created_at": "2026-10-24T16:49:06.894Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 10,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3720,
+     "created_at": "2026-10-24T16:49:25.709Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3625,
+     "created_at": "2026-10-24T16:49:44.410Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 4,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5620,
+     "created_at": "2026-10-24T16:50:05.120Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3901,
+     "created_at": "2026-10-24T16:50:24.320Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3639,
+     "created_at": "2026-10-24T16:50:42.976Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 1,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4862,
+     "created_at": "2026-10-24T16:51:02.939Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2916,
+     "created_at": "2026-10-24T16:51:20.872Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 2,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5121,
+     "created_at": "2026-10-24T16:51:41.084Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 3,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4056,
+     "created_at": "2026-10-24T16:52:00.231Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 5,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2528,
+     "created_at": "2026-10-24T16:52:17.778Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 11,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5025,
+     "created_at": "2026-10-24T16:52:37.877Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 24,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3368,
+     "created_at": "2026-10-24T16:52:56.269Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 17,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2781,
+     "created_at": "2026-10-24T16:53:14.165Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2924,
+     "created_at": "2026-10-24T16:53:32.196Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 9,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3947,
+     "created_at": "2026-10-24T16:53:51.210Z"
+    }
+   ]
+  },
+  {
+   "id": "d5cee8b1-b2cc-44de-96a9-f6fdb2f6c691",
+   "created_at": "2026-10-25T19:27:59.439Z",
+   "completed_at": "2026-10-25T19:37:50.384Z",
+   "client_timestamp": "2026-10-25T19:27:59.439Z",
+   "age": 44,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad Favaloro",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "emocional",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "360x800",
+   "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/30.0 Chrome/143.0.0.0 Mobile Safari/537.36",
+   "mc_reported_induction": "Razón",
+   "mc_emotion_usage": 1,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4814,
+     "created_at": "2026-10-25T19:28:48.269Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3726,
+     "created_at": "2026-10-25T19:29:07.127Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3436,
+     "created_at": "2026-10-25T19:29:25.583Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 2,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9646,
+     "created_at": "2026-10-25T19:29:50.307Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2015,
+     "created_at": "2026-10-25T19:30:07.532Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1621,
+     "created_at": "2026-10-25T19:30:24.246Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1454,
+     "created_at": "2026-10-25T19:30:40.725Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 24,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1511,
+     "created_at": "2026-10-25T19:30:57.276Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 11,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8922,
+     "created_at": "2026-10-25T19:31:21.340Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 4,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1544,
+     "created_at": "2026-10-25T19:31:37.976Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1539,
+     "created_at": "2026-10-25T19:31:54.584Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 28,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1295,
+     "created_at": "2026-10-25T19:32:10.891Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 5,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1917,
+     "created_at": "2026-10-25T19:32:27.907Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 1,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1794,
+     "created_at": "2026-10-25T19:32:44.900Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 17,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1288,
+     "created_at": "2026-10-25T19:33:01.204Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1562,
+     "created_at": "2026-10-25T19:33:17.902Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 7,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2731,
+     "created_at": "2026-10-25T19:33:35.664Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1702,
+     "created_at": "2026-10-25T19:33:52.479Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1145,
+     "created_at": "2026-10-25T19:34:08.760Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 15,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1245,
+     "created_at": "2026-10-25T19:34:25.102Z"
+    }
+   ]
+  },
+  {
+   "id": "2df78522-ed2a-4240-9f63-a2e2436cb6e5",
+   "created_at": "2026-10-25T19:32:47.138Z",
+   "completed_at": "2026-10-25T19:39:47.845Z",
+   "client_timestamp": "2026-10-25T19:32:47.138Z",
+   "age": 45,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad Favaloro",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "racional",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "430x932",
+   "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_6_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/155.0.8059.37 Mobile/15E148 Safari/604.1",
+   "mc_reported_induction": "Razón",
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 4,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4571,
+     "created_at": "2026-10-25T19:33:30.936Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 11,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6858,
+     "created_at": "2026-10-25T19:33:52.904Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2421,
+     "created_at": "2026-10-25T19:34:10.474Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 16,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7422,
+     "created_at": "2026-10-25T19:34:33.037Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 1,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4552,
+     "created_at": "2026-10-25T19:34:52.605Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 25,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1929,
+     "created_at": "2026-10-25T19:35:09.562Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2053,
+     "created_at": "2026-10-25T19:35:26.736Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1349,
+     "created_at": "2026-10-25T19:35:43.321Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 2,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5859,
+     "created_at": "2026-10-25T19:36:04.195Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 18,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6837,
+     "created_at": "2026-10-25T19:36:26.044Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 21,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1360,
+     "created_at": "2026-10-25T19:36:42.536Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 27,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2866,
+     "created_at": "2026-10-25T19:37:00.421Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 7,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5977,
+     "created_at": "2026-10-25T19:37:21.497Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 5,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2300,
+     "created_at": "2026-10-25T19:37:39.055Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1983,
+     "created_at": "2026-10-25T19:37:56.080Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 20,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7008,
+     "created_at": "2026-10-25T19:38:18.111Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 9,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1878,
+     "created_at": "2026-10-25T19:38:35.111Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1277,
+     "created_at": "2026-10-25T19:38:51.427Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 4,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1789,
+     "created_at": "2026-10-25T19:39:08.352Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 14,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3305,
+     "created_at": "2026-10-25T19:39:26.762Z"
+    }
+   ]
+  },
+  {
+   "id": "17c5c5b2-b6bd-446c-b772-a595b4692b3a",
+   "created_at": "2026-10-25T19:53:17.101Z",
+   "completed_at": "2026-10-25T20:00:03.526Z",
+   "client_timestamp": "2026-10-25T19:53:17.101Z",
+   "age": 43,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad de Buenos Aires (UBA)",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "control",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "360x800",
+   "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+   "mc_reported_induction": null,
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 3,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6793,
+     "created_at": "2026-10-25T19:54:10.582Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2222,
+     "created_at": "2026-10-25T19:54:27.825Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1645,
+     "created_at": "2026-10-25T19:54:44.502Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 1,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3456,
+     "created_at": "2026-10-25T19:55:03.308Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 11,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2676,
+     "created_at": "2026-10-25T19:55:21.077Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 2,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1442,
+     "created_at": "2026-10-25T19:55:37.612Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1453,
+     "created_at": "2026-10-25T19:55:54.227Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 3,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2005,
+     "created_at": "2026-10-25T19:56:11.352Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 16,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1933,
+     "created_at": "2026-10-25T19:56:28.462Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3498,
+     "created_at": "2026-10-25T19:56:47.041Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 4,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1736,
+     "created_at": "2026-10-25T19:57:03.901Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2200,
+     "created_at": "2026-10-25T19:57:21.203Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 27,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 855,
+     "created_at": "2026-10-25T19:57:37.139Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 20,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1179,
+     "created_at": "2026-10-25T19:57:53.451Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 14,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1884,
+     "created_at": "2026-10-25T19:58:10.450Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 18,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2636,
+     "created_at": "2026-10-25T19:58:28.282Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 25,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1387,
+     "created_at": "2026-10-25T19:58:44.790Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 21,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1356,
+     "created_at": "2026-10-25T19:59:01.419Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 5,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4215,
+     "created_at": "2026-10-25T19:59:20.757Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 957,
+     "created_at": "2026-10-25T19:59:36.737Z"
+    }
+   ]
+  },
+  {
+   "id": "8c0b33d2-c8b7-468e-8af4-c8254c1bbee3",
+   "created_at": "2026-10-25T20:20:14.480Z",
+   "completed_at": "2026-10-25T20:28:13.054Z",
+   "client_timestamp": "2026-10-25T20:20:14.480Z",
+   "age": 18,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad Favaloro",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "emocional",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "360x800",
+   "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+   "mc_reported_induction": "Emoción",
+   "mc_emotion_usage": 3,
+   "mc_reason_usage": 3,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 17,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 14952,
+     "created_at": "2026-10-25T20:21:36.606Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 11,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4934,
+     "created_at": "2026-10-25T20:21:56.561Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 10,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7279,
+     "created_at": "2026-10-25T20:22:18.943Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6094,
+     "created_at": "2026-10-25T20:22:40.336Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 5,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5479,
+     "created_at": "2026-10-25T20:23:00.914Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 4,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4214,
+     "created_at": "2026-10-25T20:23:20.151Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3318,
+     "created_at": "2026-10-25T20:23:38.700Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 7,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 11607,
+     "created_at": "2026-10-25T20:24:05.376Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2800,
+     "created_at": "2026-10-25T20:24:23.245Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1993,
+     "created_at": "2026-10-25T20:24:40.319Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3454,
+     "created_at": "2026-10-25T20:24:58.909Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 8,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4381,
+     "created_at": "2026-10-25T20:25:18.380Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 15,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6415,
+     "created_at": "2026-10-25T20:25:39.886Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 24,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2298,
+     "created_at": "2026-10-25T20:25:57.211Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 2,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1728,
+     "created_at": "2026-10-25T20:26:13.958Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2674,
+     "created_at": "2026-10-25T20:26:31.771Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 3,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1795,
+     "created_at": "2026-10-25T20:26:48.590Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 28,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8455,
+     "created_at": "2026-10-25T20:27:12.112Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 1,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2161,
+     "created_at": "2026-10-25T20:27:29.424Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3651,
+     "created_at": "2026-10-25T20:27:48.378Z"
+    }
+   ]
+  },
+  {
+   "id": "90619077-b1d4-4d90-8b11-63e04b9a5c71",
+   "created_at": "2026-10-25T20:23:03.097Z",
+   "completed_at": "2026-10-25T20:31:40.351Z",
+   "client_timestamp": "2026-10-25T20:23:03.097Z",
+   "age": 26,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad de Buenos Aires (UBA)",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "racional",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "384x854",
+   "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+   "mc_reported_induction": "Razón",
+   "mc_emotion_usage": 1,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 12399,
+     "created_at": "2026-10-25T20:24:01.777Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 21,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3163,
+     "created_at": "2026-10-25T20:24:19.973Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 18,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2646,
+     "created_at": "2026-10-25T20:24:37.635Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 2,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 52137,
+     "created_at": "2026-10-25T20:25:44.799Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 11,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 15942,
+     "created_at": "2026-10-25T20:26:15.832Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 3,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4153,
+     "created_at": "2026-10-25T20:26:35.177Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 20,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 16454,
+     "created_at": "2026-10-25T20:27:06.651Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 1,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1950,
+     "created_at": "2026-10-25T20:27:23.845Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 5,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2341,
+     "created_at": "2026-10-25T20:27:41.288Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 27,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3656,
+     "created_at": "2026-10-25T20:27:59.965Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2091,
+     "created_at": "2026-10-25T20:28:17.264Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 4,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1642,
+     "created_at": "2026-10-25T20:28:33.926Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1136,
+     "created_at": "2026-10-25T20:28:50.083Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 25,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1019,
+     "created_at": "2026-10-25T20:29:06.470Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 14,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1871,
+     "created_at": "2026-10-25T20:29:23.418Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2153,
+     "created_at": "2026-10-25T20:29:40.592Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 10,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1583,
+     "created_at": "2026-10-25T20:29:57.284Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 6,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 16449,
+     "created_at": "2026-10-25T20:30:28.830Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 16,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1395,
+     "created_at": "2026-10-25T20:30:45.237Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7933,
+     "created_at": "2026-10-25T20:31:08.180Z"
+    }
+   ]
+  },
+  {
+   "id": "20f5b07e-e419-49cd-9bad-4812974505a2",
+   "created_at": "2026-10-26T13:16:34.354Z",
+   "completed_at": "2026-10-26T13:24:18.026Z",
+   "client_timestamp": "2026-10-26T13:16:34.354Z",
+   "age": 21,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad de Flores (UFLO)",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "racional",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "414x896",
+   "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_6_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/23G90 Instagram 452.0.1.39.54 (iPhone12,1; iOS 26_6_2; es_LA; es; scale=2.00; 828x1792; IABMV/1; 1093431980) Safari/604.1",
+   "mc_reported_induction": "Razón",
+   "mc_emotion_usage": 3,
+   "mc_reason_usage": 4,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 15,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 14472,
+     "created_at": "2026-10-26T13:17:27.760Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 5,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4920,
+     "created_at": "2026-10-26T13:17:47.857Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2148,
+     "created_at": "2026-10-26T13:18:05.020Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2996,
+     "created_at": "2026-10-26T13:18:23.098Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3143,
+     "created_at": "2026-10-26T13:18:41.382Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2669,
+     "created_at": "2026-10-26T13:18:59.108Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 24,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1735,
+     "created_at": "2026-10-26T13:19:15.950Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 3,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5914,
+     "created_at": "2026-10-26T13:19:36.933Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 11,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1771,
+     "created_at": "2026-10-26T13:19:53.808Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 7,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3687,
+     "created_at": "2026-10-26T13:20:12.512Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 4,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1611,
+     "created_at": "2026-10-26T13:20:29.187Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 10,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1800,
+     "created_at": "2026-10-26T13:20:46.068Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 2,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4016,
+     "created_at": "2026-10-26T13:21:05.169Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 6,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2128,
+     "created_at": "2026-10-26T13:21:22.314Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 8,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1520,
+     "created_at": "2026-10-26T13:21:38.906Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 28,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3440,
+     "created_at": "2026-10-26T13:21:57.374Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 13,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1142,
+     "created_at": "2026-10-26T13:22:13.607Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 9,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1828,
+     "created_at": "2026-10-26T13:22:30.581Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 17,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1233,
+     "created_at": "2026-10-26T13:22:46.824Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 1,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4871,
+     "created_at": "2026-10-26T13:23:06.798Z"
+    }
+   ]
+  },
+  {
+   "id": "60a8bda8-1b5d-4e86-a5ea-f5c037641ced",
+   "created_at": "2026-10-26T13:42:55.544Z",
+   "completed_at": "2026-10-26T13:51:23.079Z",
+   "client_timestamp": "2026-10-26T13:42:55.544Z",
+   "age": 47,
+   "gender": "Masculino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad de Morón (UM)",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "control",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "desktop",
+   "screen_resolution": "1536x864",
+   "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+   "mc_reported_induction": null,
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 4,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 10416,
+     "created_at": "2026-10-26T13:43:47.448Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9084,
+     "created_at": "2026-10-26T13:44:11.550Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 5,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9842,
+     "created_at": "2026-10-26T13:44:36.417Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2315,
+     "created_at": "2026-10-26T13:44:53.745Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 10,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9719,
+     "created_at": "2026-10-26T13:45:18.541Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 11,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5754,
+     "created_at": "2026-10-26T13:45:39.397Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 2,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2476,
+     "created_at": "2026-10-26T13:45:56.968Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 15,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 21171,
+     "created_at": "2026-10-26T13:46:33.181Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1566,
+     "created_at": "2026-10-26T13:46:49.991Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 11544,
+     "created_at": "2026-10-26T13:47:16.628Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1468,
+     "created_at": "2026-10-26T13:47:33.207Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7890,
+     "created_at": "2026-10-26T13:47:56.113Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 28,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5251,
+     "created_at": "2026-10-26T13:48:16.600Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2951,
+     "created_at": "2026-10-26T13:48:34.568Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 1,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 10682,
+     "created_at": "2026-10-26T13:49:00.356Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 24,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4677,
+     "created_at": "2026-10-26T13:49:20.043Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2998,
+     "created_at": "2026-10-26T13:49:38.142Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 12,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1919,
+     "created_at": "2026-10-26T13:49:55.188Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 17,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8882,
+     "created_at": "2026-10-26T13:50:19.177Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 6,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 24659,
+     "created_at": "2026-10-26T13:50:58.926Z"
+    }
+   ]
+  },
+  {
+   "id": "d18cae46-1aa0-4b44-8091-a19b2569bca3",
+   "created_at": "2026-10-26T13:53:34.932Z",
+   "completed_at": "2026-10-26T14:01:16.781Z",
+   "client_timestamp": "2026-10-26T13:53:34.932Z",
+   "age": 32,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad de Buenos Aires (UBA)",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "emocional",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "tablet",
+   "screen_resolution": "360x803",
+   "user_agent": "Mozilla/5.0 (Linux; Android 15; SM-A146M Build/AP3A.240905.015.A2; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/157.0.8103.22 Mobile Safari/537.36 Instagram 454.0.0.0.46 Android (35/15; 480dpi; 1080x2408; samsung; SM-A146M; a14x; s5e8535; es_US; 1100124125; IABMV/1)",
+   "mc_reported_induction": "Razón",
+   "mc_emotion_usage": 1,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 8,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 13017,
+     "created_at": "2026-10-26T13:54:16.934Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 4,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2828,
+     "created_at": "2026-10-26T13:54:34.853Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 11,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3862,
+     "created_at": "2026-10-26T13:54:53.813Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 20,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3242,
+     "created_at": "2026-10-26T13:55:12.184Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 10,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1903,
+     "created_at": "2026-10-26T13:55:29.159Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 7,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2457,
+     "created_at": "2026-10-26T13:55:46.632Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 1,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2039,
+     "created_at": "2026-10-26T13:56:03.765Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 9,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3671,
+     "created_at": "2026-10-26T13:56:22.520Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 5,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2317,
+     "created_at": "2026-10-26T13:56:39.884Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 14,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1853,
+     "created_at": "2026-10-26T13:56:56.836Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 16,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1109,
+     "created_at": "2026-10-26T13:57:13.061Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1096,
+     "created_at": "2026-10-26T13:57:29.174Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 2,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3270,
+     "created_at": "2026-10-26T13:57:47.702Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 27,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3625,
+     "created_at": "2026-10-26T13:58:06.432Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 3,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2045,
+     "created_at": "2026-10-26T13:58:23.540Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 18,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2665,
+     "created_at": "2026-10-26T13:58:41.311Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 25,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3513,
+     "created_at": "2026-10-26T13:58:59.953Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1202,
+     "created_at": "2026-10-26T13:59:16.254Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 21,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1727,
+     "created_at": "2026-10-26T13:59:32.998Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 6,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1456,
+     "created_at": "2026-10-26T13:59:49.532Z"
+    }
+   ]
+  },
+  {
+   "id": "436bdb1c-7058-434f-b9fd-0d7047c5fd43",
+   "created_at": "2026-10-28T01:50:48.832Z",
+   "completed_at": "2026-10-28T01:57:17.492Z",
+   "client_timestamp": "2026-10-28T01:50:48.832Z",
+   "age": 43,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad Abierta Interamericana (UAI)",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "control",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "desktop",
+   "screen_resolution": "1280x720",
+   "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+   "mc_reported_induction": null,
+   "mc_emotion_usage": 1,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5388,
+     "created_at": "2026-10-28T01:51:20.986Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2589,
+     "created_at": "2026-10-28T01:51:38.707Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2057,
+     "created_at": "2026-10-28T01:51:55.828Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 5,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1916,
+     "created_at": "2026-10-28T01:52:12.824Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1856,
+     "created_at": "2026-10-28T01:52:29.692Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1803,
+     "created_at": "2026-10-28T01:52:46.512Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 4,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2548,
+     "created_at": "2026-10-28T01:53:04.153Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 11,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2148,
+     "created_at": "2026-10-28T01:53:21.313Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1919,
+     "created_at": "2026-10-28T01:53:38.323Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 15,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1644,
+     "created_at": "2026-10-28T01:53:55.054Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 28,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3139,
+     "created_at": "2026-10-28T01:54:13.225Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 17,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1319,
+     "created_at": "2026-10-28T01:54:29.680Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1834,
+     "created_at": "2026-10-28T01:54:46.615Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 2,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2010,
+     "created_at": "2026-10-28T01:55:03.647Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1919,
+     "created_at": "2026-10-28T01:55:20.625Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3045,
+     "created_at": "2026-10-28T01:55:38.760Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1343,
+     "created_at": "2026-10-28T01:55:55.208Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 1,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1615,
+     "created_at": "2026-10-28T01:56:11.928Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 9,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1749,
+     "created_at": "2026-10-28T01:56:28.737Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 24,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1304,
+     "created_at": "2026-10-28T01:56:45.181Z"
+    }
+   ]
+  },
+  {
+   "id": "8406ec1f-21ef-4c20-9acf-6c083456ab47",
+   "created_at": "2026-10-28T02:07:00.047Z",
+   "completed_at": "2026-10-28T02:15:48.474Z",
+   "client_timestamp": "2026-10-28T02:07:00.047Z",
+   "age": 28,
+   "gender": "Masculino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad de Buenos Aires (UBA)",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "emocional",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "desktop",
+   "screen_resolution": "1280x720",
+   "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+   "mc_reported_induction": "Emoción",
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 14,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5050,
+     "created_at": "2026-10-28T02:07:47.474Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 25,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2296,
+     "created_at": "2026-10-28T02:08:04.793Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 2,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9173,
+     "created_at": "2026-10-28T02:08:28.989Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 16,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6001,
+     "created_at": "2026-10-28T02:08:50.067Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3189,
+     "created_at": "2026-10-28T02:09:08.347Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2721,
+     "created_at": "2026-10-28T02:09:26.160Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2664,
+     "created_at": "2026-10-28T02:09:43.854Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 6,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 17900,
+     "created_at": "2026-10-28T02:10:16.851Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 4,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2475,
+     "created_at": "2026-10-28T02:10:34.382Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1482,
+     "created_at": "2026-10-28T02:10:50.876Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1589,
+     "created_at": "2026-10-28T02:11:07.556Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 18,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1016,
+     "created_at": "2026-10-28T02:11:23.923Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 27,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1446,
+     "created_at": "2026-10-28T02:11:40.386Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 5,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2058,
+     "created_at": "2026-10-28T02:11:57.472Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 11,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1438,
+     "created_at": "2026-10-28T02:12:13.983Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 21,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1404,
+     "created_at": "2026-10-28T02:12:30.489Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2415,
+     "created_at": "2026-10-28T02:12:47.918Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1288,
+     "created_at": "2026-10-28T02:13:04.292Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 20,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1155,
+     "created_at": "2026-10-28T02:13:20.493Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 1,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4373,
+     "created_at": "2026-10-28T02:13:39.937Z"
+    }
+   ]
+  },
+  {
+   "id": "a713196b-11ab-4e20-867e-e6bf0abb618f",
+   "created_at": "2026-10-28T19:53:17.834Z",
+   "completed_at": "2026-10-28T20:02:38.875Z",
+   "client_timestamp": "2026-10-28T19:53:17.834Z",
+   "age": 20,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad Favaloro",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "control",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "390x844",
+   "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0.1 Mobile/15E148 Safari/604.1",
+   "mc_reported_induction": null,
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 4,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6796,
+     "created_at": "2026-10-28T19:54:16.374Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 15,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3949,
+     "created_at": "2026-10-28T19:54:36.323Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 1,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8762,
+     "created_at": "2026-10-28T19:55:00.101Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 7,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4122,
+     "created_at": "2026-10-28T19:55:19.304Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 24897,
+     "created_at": "2026-10-28T19:55:59.232Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 3,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4066,
+     "created_at": "2026-10-28T19:56:18.698Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2036,
+     "created_at": "2026-10-28T19:56:35.885Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 9,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 12369,
+     "created_at": "2026-10-28T19:57:03.368Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 26,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5085,
+     "created_at": "2026-10-28T19:57:23.576Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 24,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 12240,
+     "created_at": "2026-10-28T19:57:50.839Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 6,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3510,
+     "created_at": "2026-10-28T19:58:09.371Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 5,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2441,
+     "created_at": "2026-10-28T19:58:26.840Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 11,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2385,
+     "created_at": "2026-10-28T19:58:44.303Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2129,
+     "created_at": "2026-10-28T19:59:01.530Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 17,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6864,
+     "created_at": "2026-10-28T19:59:23.419Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 10,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 10668,
+     "created_at": "2026-10-28T19:59:49.211Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2160,
+     "created_at": "2026-10-28T20:00:06.394Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 28,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2942,
+     "created_at": "2026-10-28T20:00:24.431Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4227,
+     "created_at": "2026-10-28T20:00:43.683Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 2,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9368,
+     "created_at": "2026-10-28T20:01:08.169Z"
+    }
+   ]
+  },
+  {
+   "id": "078188a1-8048-470c-abf3-154448b765ab",
+   "created_at": "2026-10-28T20:02:36.429Z",
+   "completed_at": "2026-10-28T20:09:50.759Z",
+   "client_timestamp": "2026-10-28T20:02:36.429Z",
+   "age": 34,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad Favaloro",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "emocional",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "tablet",
+   "screen_resolution": "432x960",
+   "user_agent": "Mozilla/5.0 (Linux; Android 16; moto g35 5G Build/WUOAS36.66-36-3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/157.0.8103.22 Mobile Safari/537.36 Instagram 454.0.0.0.46 Android (36/16; 400dpi; 1080x2400; motorola; moto g35 5G; manila; ums9620_2h10; es_US; 1100124125; IABMV/1)",
+   "mc_reported_induction": "Emoción",
+   "mc_emotion_usage": 4,
+   "mc_reason_usage": 2,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 4,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4414,
+     "created_at": "2026-10-28T20:03:29.407Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 15,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3359,
+     "created_at": "2026-10-28T20:03:48.054Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 17,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2428,
+     "created_at": "2026-10-28T20:04:05.546Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 5,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2310,
+     "created_at": "2026-10-28T20:04:22.946Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 24,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4426,
+     "created_at": "2026-10-28T20:04:42.497Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 9,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3770,
+     "created_at": "2026-10-28T20:05:01.426Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2652,
+     "created_at": "2026-10-28T20:05:20.078Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 1,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2726,
+     "created_at": "2026-10-28T20:05:37.909Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2724,
+     "created_at": "2026-10-28T20:05:55.788Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1664,
+     "created_at": "2026-10-28T20:06:12.568Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2417,
+     "created_at": "2026-10-28T20:06:30.051Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2334,
+     "created_at": "2026-10-28T20:06:47.455Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 11,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6382,
+     "created_at": "2026-10-28T20:07:08.920Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2228,
+     "created_at": "2026-10-28T20:07:26.228Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 12226,
+     "created_at": "2026-10-28T20:07:53.548Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1883,
+     "created_at": "2026-10-28T20:08:10.452Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1932,
+     "created_at": "2026-10-28T20:08:27.399Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 28,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2410,
+     "created_at": "2026-10-28T20:08:45.008Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1904,
+     "created_at": "2026-10-28T20:09:01.947Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 2,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2501,
+     "created_at": "2026-10-28T20:09:19.531Z"
+    }
+   ]
+  },
+  {
+   "id": "0b0c9ed1-aad6-40f8-a2a8-3c3fccaf994a",
+   "created_at": "2026-10-29T16:39:55.418Z",
+   "completed_at": "2026-10-29T16:46:50.077Z",
+   "client_timestamp": "2026-10-29T16:39:55.418Z",
+   "age": 30,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad Favaloro",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "control",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "360x800",
+   "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+   "mc_reported_induction": null,
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 4,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9039,
+     "created_at": "2026-10-29T16:40:42.926Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 17,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5152,
+     "created_at": "2026-10-29T16:41:03.216Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2032,
+     "created_at": "2026-10-29T16:41:20.342Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 13,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2464,
+     "created_at": "2026-10-29T16:41:38.171Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 24,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3271,
+     "created_at": "2026-10-29T16:41:56.513Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 12,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3641,
+     "created_at": "2026-10-29T16:42:15.296Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 10,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3045,
+     "created_at": "2026-10-29T16:42:33.352Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2939,
+     "created_at": "2026-10-29T16:42:51.404Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 28,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1927,
+     "created_at": "2026-10-29T16:43:08.342Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 11,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3319,
+     "created_at": "2026-10-29T16:43:26.745Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 4,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1994,
+     "created_at": "2026-10-29T16:43:43.888Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 5,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4492,
+     "created_at": "2026-10-29T16:44:03.405Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8998,
+     "created_at": "2026-10-29T16:44:27.468Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 15,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3033,
+     "created_at": "2026-10-29T16:44:45.774Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2592,
+     "created_at": "2026-10-29T16:45:03.459Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1956,
+     "created_at": "2026-10-29T16:45:20.502Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 2,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3059,
+     "created_at": "2026-10-29T16:45:38.581Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1100,
+     "created_at": "2026-10-29T16:45:54.764Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1752,
+     "created_at": "2026-10-29T16:46:11.541Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 1,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1619,
+     "created_at": "2026-10-29T16:46:28.240Z"
+    }
+   ]
+  },
+  {
+   "id": "11b8b754-c8e3-4806-b3d1-803f03962fb5",
+   "created_at": "2026-10-29T16:43:55.462Z",
+   "completed_at": "2026-10-29T16:53:04.838Z",
+   "client_timestamp": "2026-10-29T16:43:55.462Z",
+   "age": 46,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad Nacional de Lomas de Zamora (UNLZ)",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "emocional",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "360x780",
+   "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+   "mc_reported_induction": "Emoción",
+   "mc_emotion_usage": 3,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 8,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 26625,
+     "created_at": "2026-10-29T16:44:54.439Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 2,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9172,
+     "created_at": "2026-10-29T16:45:18.685Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 27,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2239,
+     "created_at": "2026-10-29T16:45:36.010Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 28772,
+     "created_at": "2026-10-29T16:46:19.812Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 10,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8531,
+     "created_at": "2026-10-29T16:46:43.366Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4509,
+     "created_at": "2026-10-29T16:47:03.058Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 1,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3456,
+     "created_at": "2026-10-29T16:47:21.879Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 25,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4305,
+     "created_at": "2026-10-29T16:47:41.293Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 20,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2296,
+     "created_at": "2026-10-29T16:47:58.693Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 25040,
+     "created_at": "2026-10-29T16:48:38.757Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 14,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2689,
+     "created_at": "2026-10-29T16:48:56.473Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 4,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 16873,
+     "created_at": "2026-10-29T16:49:28.491Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 18,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3291,
+     "created_at": "2026-10-29T16:49:46.914Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 5,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6370,
+     "created_at": "2026-10-29T16:50:08.513Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 22303,
+     "created_at": "2026-10-29T16:50:45.901Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 21792,
+     "created_at": "2026-10-29T16:51:22.796Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 21,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4511,
+     "created_at": "2026-10-29T16:51:42.323Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 16,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2854,
+     "created_at": "2026-10-29T16:52:00.295Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 11,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2547,
+     "created_at": "2026-10-29T16:52:18.087Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2716,
+     "created_at": "2026-10-29T16:52:35.826Z"
+    }
+   ]
+  },
+  {
+   "id": "308220db-d5bb-45bd-9ff7-b124877c4bd0",
+   "created_at": "2026-10-30T12:30:02.109Z",
+   "completed_at": "2026-10-30T12:39:21.605Z",
+   "client_timestamp": "2026-10-30T12:30:02.109Z",
+   "age": 20,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad Favaloro",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "racional",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "tablet",
+   "screen_resolution": "384x832",
+   "user_agent": "Mozilla/5.0 (Linux; Android 16; SM-A256E Build/BP2A.250605.031.A3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/157.0.8103.22 Mobile Safari/537.36 Instagram 454.0.0.0.46 Android (36/16; 450dpi; 1080x2340; samsung; SM-A256E; a25x; s5e8825; es_US; 1100124125; IABMV/1)",
+   "mc_reported_induction": "Razón",
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 28,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 12622,
+     "created_at": "2026-10-30T12:30:56.887Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 4,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2922,
+     "created_at": "2026-10-30T12:31:14.833Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 5,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6171,
+     "created_at": "2026-10-30T12:31:36.128Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 9,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 18480,
+     "created_at": "2026-10-30T12:32:09.700Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3445,
+     "created_at": "2026-10-30T12:32:28.162Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 10,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9342,
+     "created_at": "2026-10-30T12:32:52.594Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 13276,
+     "created_at": "2026-10-30T12:33:20.966Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8675,
+     "created_at": "2026-10-30T12:33:44.667Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 7,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9476,
+     "created_at": "2026-10-30T12:34:09.160Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 15,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 13058,
+     "created_at": "2026-10-30T12:34:37.338Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8814,
+     "created_at": "2026-10-30T12:35:01.235Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9601,
+     "created_at": "2026-10-30T12:35:25.852Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1425,
+     "created_at": "2026-10-30T12:35:42.367Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 24,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1995,
+     "created_at": "2026-10-30T12:35:59.413Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1949,
+     "created_at": "2026-10-30T12:36:16.473Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 11,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1406,
+     "created_at": "2026-10-30T12:36:32.949Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 17,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1848,
+     "created_at": "2026-10-30T12:36:50.050Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1818,
+     "created_at": "2026-10-30T12:37:06.984Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 2,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8891,
+     "created_at": "2026-10-30T12:37:30.897Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 1,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7755,
+     "created_at": "2026-10-30T12:37:53.720Z"
+    }
+   ]
+  },
+  {
+   "id": "dc195020-b6f8-404f-b228-031d9e3befc9",
+   "created_at": "2026-10-30T12:34:29.761Z",
+   "completed_at": "2026-10-30T12:43:54.132Z",
+   "client_timestamp": "2026-10-30T12:34:29.761Z",
+   "age": 60,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad de Buenos Aires (UBA)",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "control",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "393x852",
+   "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+   "mc_reported_induction": null,
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 4,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 25927,
+     "created_at": "2026-10-30T12:35:28.989Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 14,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 10294,
+     "created_at": "2026-10-30T12:35:54.296Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 20,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2574,
+     "created_at": "2026-10-30T12:36:12.144Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 18,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 11854,
+     "created_at": "2026-10-30T12:36:39.016Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4446,
+     "created_at": "2026-10-30T12:36:58.556Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 11151,
+     "created_at": "2026-10-30T12:37:24.805Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 4,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5542,
+     "created_at": "2026-10-30T12:37:45.370Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 2,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2002,
+     "created_at": "2026-10-30T12:38:02.388Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 1,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3747,
+     "created_at": "2026-10-30T12:38:21.208Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 11,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 49167,
+     "created_at": "2026-10-30T12:39:25.488Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 16,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3112,
+     "created_at": "2026-10-30T12:39:43.691Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 21,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1901,
+     "created_at": "2026-10-30T12:40:00.659Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 25,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 42117,
+     "created_at": "2026-10-30T12:40:57.874Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 12,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 13083,
+     "created_at": "2026-10-30T12:41:26.058Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5627,
+     "created_at": "2026-10-30T12:41:46.707Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 5,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1664,
+     "created_at": "2026-10-30T12:42:03.403Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 27,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2539,
+     "created_at": "2026-10-30T12:42:21.030Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4399,
+     "created_at": "2026-10-30T12:42:40.493Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3727,
+     "created_at": "2026-10-30T12:42:59.344Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 7,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7740,
+     "created_at": "2026-10-30T12:43:22.201Z"
+    }
+   ]
+  },
+  {
+   "id": "8b651634-7db2-4798-b1a0-d2102f69ba8d",
+   "created_at": "2026-10-30T12:39:19.374Z",
+   "completed_at": "2026-10-30T12:50:07.738Z",
+   "client_timestamp": "2026-10-30T12:39:19.374Z",
+   "age": 21,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Basada en Evidencia Científica",
+   "university": "Universidad Favaloro",
+   "residence": "Provincia de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "racional",
+   "fake_news_set": "evidencia",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "393x852",
+   "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0.1 Mobile/15E148 Safari/604.1",
+   "mc_reported_induction": "Razón",
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 5,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 5267,
+     "created_at": "2026-10-30T12:40:09.752Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 17,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1832,
+     "created_at": "2026-10-30T12:40:26.669Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 12,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3736,
+     "created_at": "2026-10-30T12:40:45.428Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 19,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1478,
+     "created_at": "2026-10-30T12:41:01.970Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 15,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 8226,
+     "created_at": "2026-10-30T12:41:25.255Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 22,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2178,
+     "created_at": "2026-10-30T12:41:42.576Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 5,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4735,
+     "created_at": "2026-10-30T12:42:02.403Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 28,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6801,
+     "created_at": "2026-10-30T12:42:24.277Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 4,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6400,
+     "created_at": "2026-10-30T12:42:45.698Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 24,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 9701,
+     "created_at": "2026-10-30T12:43:10.478Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 1,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 941,
+     "created_at": "2026-10-30T12:43:26.484Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 11,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3849,
+     "created_at": "2026-10-30T12:43:45.553Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1385,
+     "created_at": "2026-10-30T12:44:01.948Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 9,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2215,
+     "created_at": "2026-10-30T12:44:19.271Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4289,
+     "created_at": "2026-10-30T12:44:38.659Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1041,
+     "created_at": "2026-10-30T12:44:54.906Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 2,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2793,
+     "created_at": "2026-10-30T12:45:12.716Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 13,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 6088,
+     "created_at": "2026-10-30T12:45:33.957Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 26,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 700,
+     "created_at": "2026-10-30T12:45:49.760Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 7,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1482,
+     "created_at": "2026-10-30T12:46:06.330Z"
+    }
+   ]
+  },
+  {
+   "id": "56bcde38-7799-46cd-a270-5aac450956cc",
+   "created_at": "2026-10-30T12:53:15.974Z",
+   "completed_at": "2026-10-30T13:04:42.711Z",
+   "client_timestamp": "2026-10-30T12:53:15.974Z",
+   "age": 30,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad de Buenos Aires (UBA)",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "emocional",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "tablet",
+   "screen_resolution": "384x832",
+   "user_agent": "Mozilla/5.0 (Linux; Android 16; SM-A356E Build/BP2A.250605.031.A3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/157.0.8103.22 Mobile Safari/537.36 Instagram 454.0.0.0.46 Android (36/16; 450dpi; 1080x2340; samsung; SM-A356E; a35x; s5e8835; es_US; 1100124125; IABMV/1)",
+   "mc_reported_induction": "Emoción",
+   "mc_emotion_usage": 2,
+   "mc_reason_usage": 3,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 1,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 19118,
+     "created_at": "2026-10-30T12:54:15.355Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 14,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2864,
+     "created_at": "2026-10-30T12:54:33.314Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 10,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4540,
+     "created_at": "2026-10-30T12:54:52.920Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 27,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1648,
+     "created_at": "2026-10-30T12:55:09.591Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4353,
+     "created_at": "2026-10-30T12:55:29.055Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 25,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1549,
+     "created_at": "2026-10-30T12:55:45.670Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1942,
+     "created_at": "2026-10-30T12:56:02.764Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 4,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1368,
+     "created_at": "2026-10-30T12:56:19.151Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 18,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1911,
+     "created_at": "2026-10-30T12:56:36.184Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 2,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1380,
+     "created_at": "2026-10-30T12:56:52.586Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 7,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1926,
+     "created_at": "2026-10-30T12:57:09.580Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 20,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1604,
+     "created_at": "2026-10-30T12:57:26.327Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 5,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 4092,
+     "created_at": "2026-10-30T12:57:45.635Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 16,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1516,
+     "created_at": "2026-10-30T12:58:02.227Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1614,
+     "created_at": "2026-10-30T12:58:18.940Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1592,
+     "created_at": "2026-10-30T12:58:35.546Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1020,
+     "created_at": "2026-10-30T12:58:51.586Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 11,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1193,
+     "created_at": "2026-10-30T12:59:07.806Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 21,
+     "response_option": 3,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2616,
+     "created_at": "2026-10-30T12:59:25.590Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2050,
+     "created_at": "2026-10-30T12:59:42.714Z"
+    }
+   ]
+  },
+  {
+   "id": "fa555a4b-d4b2-4e64-9094-d89271fe1224",
+   "created_at": "2026-10-30T13:20:24.480Z",
+   "completed_at": "2026-10-30T13:26:48.109Z",
+   "client_timestamp": "2026-10-30T13:20:24.480Z",
+   "age": 26,
+   "gender": "Femenino",
+   "studies_psychology": true,
+   "therapeutic_orientation": "Psicoanálisis",
+   "university": "Universidad Favaloro",
+   "residence": "Ciudad Autónoma de Buenos Aires",
+   "is_included": true,
+   "exclusion_reason": null,
+   "induction_group": "control",
+   "fake_news_set": "psicoanalisis",
+   "status": "completed",
+   "device_type": "mobile",
+   "screen_resolution": "412x915",
+   "user_agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+   "mc_reported_induction": null,
+   "mc_emotion_usage": 3,
+   "mc_reason_usage": 3,
+   "responses": [
+    {
+     "presentation_order": 1,
+     "news_id": 2,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 7801,
+     "created_at": "2026-10-30T13:21:05.439Z"
+    },
+    {
+     "presentation_order": 2,
+     "news_id": 18,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2200,
+     "created_at": "2026-10-30T13:21:22.829Z"
+    },
+    {
+     "presentation_order": 3,
+     "news_id": 16,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1021,
+     "created_at": "2026-10-30T13:21:38.983Z"
+    },
+    {
+     "presentation_order": 4,
+     "news_id": 12,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1123,
+     "created_at": "2026-10-30T13:21:55.179Z"
+    },
+    {
+     "presentation_order": 5,
+     "news_id": 4,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2562,
+     "created_at": "2026-10-30T13:22:12.763Z"
+    },
+    {
+     "presentation_order": 6,
+     "news_id": 5,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1108,
+     "created_at": "2026-10-30T13:22:29.009Z"
+    },
+    {
+     "presentation_order": 7,
+     "news_id": 7,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1845,
+     "created_at": "2026-10-30T13:22:45.978Z"
+    },
+    {
+     "presentation_order": 8,
+     "news_id": 21,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1363,
+     "created_at": "2026-10-30T13:23:02.364Z"
+    },
+    {
+     "presentation_order": 9,
+     "news_id": 11,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1314,
+     "created_at": "2026-10-30T13:23:18.798Z"
+    },
+    {
+     "presentation_order": 10,
+     "news_id": 10,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 2198,
+     "created_at": "2026-10-30T13:23:36.996Z"
+    },
+    {
+     "presentation_order": 11,
+     "news_id": 6,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1634,
+     "created_at": "2026-10-30T13:23:53.719Z"
+    },
+    {
+     "presentation_order": 12,
+     "news_id": 8,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1671,
+     "created_at": "2026-10-30T13:24:10.406Z"
+    },
+    {
+     "presentation_order": 13,
+     "news_id": 1,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1039,
+     "created_at": "2026-10-30T13:24:26.460Z"
+    },
+    {
+     "presentation_order": 14,
+     "news_id": 27,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1019,
+     "created_at": "2026-10-30T13:24:42.490Z"
+    },
+    {
+     "presentation_order": 15,
+     "news_id": 20,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1178,
+     "created_at": "2026-10-30T13:24:58.692Z"
+    },
+    {
+     "presentation_order": 16,
+     "news_id": 9,
+     "response_option": 2,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1369,
+     "created_at": "2026-10-30T13:25:15.134Z"
+    },
+    {
+     "presentation_order": 17,
+     "news_id": 23,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 703,
+     "created_at": "2026-10-30T13:25:30.869Z"
+    },
+    {
+     "presentation_order": 18,
+     "news_id": 14,
+     "response_option": 1,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1404,
+     "created_at": "2026-10-30T13:25:47.626Z"
+    },
+    {
+     "presentation_order": 19,
+     "news_id": 3,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 3290,
+     "created_at": "2026-10-30T13:26:05.928Z"
+    },
+    {
+     "presentation_order": 20,
+     "news_id": 25,
+     "response_option": 4,
+     "reading_time_ms": 15000,
+     "response_time_ms": 1049,
+     "created_at": "2026-10-30T13:26:21.991Z"
+    }
+   ]
+  }
+ ]
+}
